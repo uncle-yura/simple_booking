@@ -22,13 +22,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-x9-5w5rix&5(-o$lgplwo!kvxl(a3p9o=0l6!c%$5fm4n#32-!'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-x9-5w5rix&5(-o$lgplwo!kvxl(a3p9o=0l6!c%$5fm4n#32-!')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('SERVERNAMES', '').split(' ')
 
+SECURE_HSTS_SECONDS = 3600
+
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+SECURE_HSTS_PRELOAD = True
+
+SECURE_SSL_REDIRECT = True
+
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SECURE = True
+
+UNDER_CONSTRUCTION = bool( os.environ.get('DJANGO_UNDER_CONSTRUCTION', True) )
 
 # Application definition
 
@@ -39,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_underconstruction',
     'booking_calendar.apps.BookingCalendarConfig',
 ]
 
@@ -50,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_underconstruction.middleware.UnderConstructionMiddleware',
 ]
 
 ROOT_URLCONF = 'simple_booking.urls'
