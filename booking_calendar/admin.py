@@ -1,32 +1,37 @@
-from booking_calendar.models import Work, WorkType
+from booking_calendar.models import Order, JobType, Profile, User
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
 # Register your models here.
 
-class WorksInline(admin.TabularInline):
-    model = Work
+class OrdersInline(admin.TabularInline):
+    model = Order
 
 
-# @admin.register(Client)
-# class ClientAdmin(admin.ModelAdmin):
-#     list_display = ('first_name', 'last_name', 'phone_number',)
-#     fieldsets = (
-#         ('Main', {
-#             'fields': ('first_name', 'last_name', 'phone_number')
-#         }),
-#         ('Additional', {
-#             'fields': ('comment',)
-#         }),
-#     )
-#     #inlines = [WorksInline]
-
-
-@admin.register(Work)
-class WorkAdmin(admin.ModelAdmin):
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
     list_display = ('client', 'booking_date',)
-    list_filter = ('booking_date',)
+    list_filter = ('booking_date', 'master')
 
 
-@admin.register(WorkType)
-class WorkTypeAdmin(admin.ModelAdmin):
+@admin.register(JobType)
+class JobTypeAdmin(admin.ModelAdmin):
     pass
+
+class ProfileInline(admin.StackedInline):
+    model = Profile
+    can_delete = False
+    verbose_name_plural = 'Profile'
+    fk_name = 'user'
+
+class CustomUserAdmin(UserAdmin):
+    inlines = (ProfileInline, )
+
+    def get_inline_instances(self, request, obj=None):
+        if not obj:
+            return list()
+        return super(CustomUserAdmin, self).get_inline_instances(request, obj)
+
+
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)

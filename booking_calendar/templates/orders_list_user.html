@@ -1,19 +1,19 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Borrowed books</h1>
+    <h1>Orders</h1>
 
-    {% if work_list %}
+    {% if orders_list %}
     <ul>
 
-      {% for work in work_list %}
+      {% for order in orders_list %}
       <li>
-        {{work.booking_date}}
+        {{order.booking_date}}
       </li>
       {% endfor %}
     </ul>
 
     {% else %}
-      <p>There are no books borrowed.</p>
+      <p>There are no booked orders.</p>
     {% endif %}
 {% endblock %}

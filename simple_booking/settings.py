@@ -27,21 +27,22 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-x9-5w5rix&5(-o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
 
-ALLOWED_HOSTS = os.environ.get('SERVERNAMES', '').split(' ')
+ALLOWED_HOSTS = os.environ.get('SERVERNAMES', '').split()
 
-SECURE_HSTS_SECONDS = 3600
+if not DEBUG:
+    SECURE_HSTS_SECONDS = os.environ.get('SERVER_HSTS_SECONDS', 3600)
 
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_PRELOAD = True
 
-SECURE_SSL_REDIRECT = True
+    SECURE_SSL_REDIRECT = True
 
-SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
 
-CSRF_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
-UNDER_CONSTRUCTION = bool( os.environ.get('DJANGO_UNDER_CONSTRUCTION', True) )
+UNDER_CONSTRUCTION = bool( os.environ.get('DJANGO_UNDER_CONSTRUCTION', False) )
 
 # Application definition
 
@@ -132,6 +133,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Static files (CSS, JavaScript, Images)
@@ -141,6 +146,7 @@ STATIC_URL = '/static/'
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
