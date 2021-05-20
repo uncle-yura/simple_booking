@@ -6,5 +6,7 @@ urlpatterns = [
 ]
 
 urlpatterns += [
+    path('user/', views.userpage, name="user"), 
+    path('register/', views.register, name="register"), 
     path('myorders/', views.OrdersByUserListView.as_view(), name='my-orders'),
 ]

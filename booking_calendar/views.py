@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
-from booking_calendar.models import Order, Profile, JobType
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import login
 
-# Create your views here.
+from booking_calendar.models import Order, Profile, JobType
+from booking_calendar.forms import NewUserForm, UserForm, ProfileForm
+
+
 def index(request):
-    # Generate counts of some of the main objects
     num_jobs = JobType.objects.all().count()
     num_clients = Profile.objects.all().count()
     num_masters = Profile.objects.all().filter(is_master=True).count()
@@ -16,9 +18,30 @@ def index(request):
         'num_masters': num_masters,
     }
 
-    # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
 
+def register(request):
+	if request.method == "POST":
+		form = NewUserForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			login(request, user)
+			return redirect('user')
+	form = NewUserForm
+	return render (request=request, template_name="register.html", context={"form":form})
+
+def userpage(request):
+    if request.method == "POST":
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid():
+            user_form.save()
+        elif profile_form.is_valid():
+            profile_form.save()
+        return redirect ('user')
+    user_form = UserForm(instance=request.user)
+    profile_form = ProfileForm(instance=request.user.profile)
+    return render(request=request, template_name="user.html", context={"user":request.user, "user_form":user_form, "profile_form":profile_form })
 
 class OrdersByUserListView(LoginRequiredMixin,generic.ListView):
     model = Order
