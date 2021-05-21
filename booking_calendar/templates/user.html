@@ -1,5 +1,9 @@
 {% extends "base_generic.html" %}
 
+{% load crispy_forms_tags %}
+
+{% load static %}
+
 {% block content %}
 
 <div>
@@ -40,9 +44,9 @@
           <div class="modal-body">
               <form method="post">
                     {% csrf_token %}
-                    {{ user_form }}
+                    {{ user_form|crispy }}
                     {% if user.profile.is_master %}
-                    {{ profile_form }}
+                    {{ profile_form|crispy }}
                     {% endif %}
           </div>
             <div class="modal-footer">

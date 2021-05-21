@@ -1,5 +1,9 @@
 {% extends "base_generic.html" %}
 
+{% load crispy_forms_tags %}
+
+{% load static %}
+
 {% block content %}
 
 <div>
@@ -8,7 +12,7 @@
     <br>
     <form method="POST">
         {% csrf_token %}
-        {{ form }}                    
+        {{ form|crispy }}                    
         <br>
         <button type="submit">Register</button>
     </form>
