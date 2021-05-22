@@ -8,14 +8,11 @@
   <h1 class="font-weight-bold">Login</h1>
   <hr>
   <br>
-  {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
-  {% endif %}
-
+ 
   <form method="post" action="{% url 'login' %}">
-		{% csrf_token %}
-			{{ form|crispy }}
-			<br>
+    {% csrf_token %}
+      {{ form|crispy }}
+      <br>
     <input class="btn btn-primary" type="submit" value="login" />
     <input type="hidden" name="next" value="{{ next }}" />
   </form>

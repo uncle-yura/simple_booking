@@ -1,12 +1,16 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Simple Booking</h1>
-  <p>Welcome to simple booking site</p>
-  <p>We now have the following record counts: </p>
-  <ul>
-    <li><strong>Jobs:</strong> {{ num_jobs }}</li>
-    <li><strong>Clients:</strong> {{ num_clients }}</li>
-    <li><strong>Masters:</strong> {{ num_masters }}</li>
-  </ul>
+
+<div class="container">
+    <h1>Simple Booking</h1>
+    <p>Welcome to simple booking site</p>
+    <p>We now have the following record counts: </p>
+    <ul>
+      <li><strong>Jobs:</strong> {{ num_jobs }}</li>
+      <li><strong>Clients:</strong> {{ num_clients }}</li>
+      <li><strong>Masters:</strong> {{ num_masters }}</li>
+    </ul>
+</div>
+
 {% endblock %}
