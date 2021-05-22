@@ -2,59 +2,67 @@
 
 {% load crispy_forms_tags %}
 
-{% load static %}
-
 {% block content %}
 
-<div>
-    <h4>Hello, {{ user.username }}</h4>
-    <p>Username:</p>
-    <p>{{ user.username }}</p>
-    <p>Name:</p>
-    <p>{{ user.first_name }} {{ user.last_name }}</p>
-    <p>Email:</p>
-    <p>{{ user.email }} </p>
-</div>
+<br><br>
+<div class="container mx-auto">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-3 pb-4">
+            <div class="card p-4">
+                <h4 class="card-title font-weight-bold text-center">Hello, {{ user.username|title }}</h4>
+                  <hr>
+                <div class="card-text">
+                    <p class="text-muted mb-0" style="font-size: 12px">Username:</p>
+                    <p>{{ user.username }}</p>
+                    <p class="text-muted mb-0" style="font-size: 12px">Name:</p>
+                      <p>{{ user.first_name }} {{ user.last_name }}</p>
+                      <p class="text-muted mb-0" style="font-size: 12px">Email:</p>
+                      <p>{{ user.email }} </p>
 
-<div>
-    <p>Phone:</p>
-    <p>{{ user.profile.phone_number }} </p>
-    
-    {% if user.profile.is_master %}
-    <p>Key:</p>
-    <p> {{ user.profile.gcal_key }} </p>
-    <p>Link:</p>
-    <p> {{ user.profile.gcal_link }} </p>
-    {% endif %}
-</div>
-
-<div class="text-right">
-    <button type="button" data-toggle="modal" data-target="#profileModal">Edit Profile</button>
+                      <p class="text-muted mb-0"  style="font-size: 12px">Phone:</p>
+                      <p>{{ user.profile.phone_number }} </p>
+                      
+                      {% if user.profile.is_master %}
+                      <p class="text-muted mb-0"  style="font-size: 12px">Key:</p>
+                      <p> {{ user.profile.gcal_key }} </p>
+                      <p class="text-muted mb-0"  style="font-size: 12px">Link:</p>
+                      <p> {{ user.profile.gcal_link }} </p>
+                      {% endif %}
+                    <div class="text-right">
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileModal">Edit Profile</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        <div class="col-sm-12 col-md-12 col-lg-9 pb-4">
+            ...
+        </div> 
+    </div>
 </div>
 
 <div class="modal fade" tabindex="-1" id="profileModal" role="dialog">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
+        <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Edit Profile</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title">Edit Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              <form method="post">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
                     {% csrf_token %}
                     {{ user_form|crispy }}
                     {% if user.profile.is_master %}
                     {{ profile_form|crispy }}
                     {% endif %}
-          </div>
+            </div>
             <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary">Save changes</button>
-              </form> 
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-      </div>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>
 

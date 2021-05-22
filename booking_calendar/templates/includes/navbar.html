@@ -1,0 +1,35 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto"> 
+        </ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a class="navbar-brand" href="{% url 'index' %}" style="font-size:30px">
+        <img src="{% static "img/logo.png" %}" width="35" height="35" alt="logo"> Encore
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+            </li>
+            <li class="nav-item">
+            <a class="btn btn-outline-primary" href="{% url 'user'%}">{{user.username|title}}</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'login'%}?next={{request.path}}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-outline-primary" href="{% url 'register'%}">Register</a>
+            </li>
+        {% endif %}
+        </ul>
+    </div>
+</nav>
