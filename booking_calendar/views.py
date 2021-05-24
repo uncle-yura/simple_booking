@@ -5,19 +5,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib import messages
 
-from booking_calendar.models import Order, Profile, JobType
-from booking_calendar.forms import NewUserForm, UserForm, ProfileForm
+from booking_calendar.models import *
+from booking_calendar.forms import *
 
 
 def index(request):
     num_jobs = JobType.objects.all().count()
     num_clients = Profile.objects.all().count()
-    num_masters = Profile.objects.all().filter(is_master=True).count()
 
     context = {
         'num_jobs': num_jobs,
         'num_clients': num_clients,
-        'num_masters': num_masters,
     }
 
     return render(request, 'index.html', context=context)
@@ -45,8 +43,18 @@ def userpage(request):
             messages.error(request,('Unable to complete request'))
         return redirect ('user')
     user_form = UserForm(instance=request.user)
-    profile_form = ProfileForm(instance=request.user.profile)
+
+    if request.user.groups.filter(name="Master").exists():
+        profile_form = ProfileForm(instance=request.user.profile)
+    else:
+        profile_form = RestrictedProfileForm(instance=request.user.profile)
+    
     return render(request=request, template_name="user.html", context={"user":request.user, "user_form":user_form, "profile_form":profile_form })
+
+@login_required
+def neworder(request):
+    form = NewOrderForm(instance=request.user.profile)
+    return render(request=request, template_name="new_order.html", context={"user":request.user, "form":form })
 
 class OrdersByUserListView(LoginRequiredMixin,generic.ListView):
     model = Order
