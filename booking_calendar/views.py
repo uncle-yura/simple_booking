@@ -43,13 +43,10 @@ def userpage(request):
             messages.error(request,('Unable to complete request'))
         return redirect ('user')
     user_form = UserForm(instance=request.user)
-
-    if request.user.groups.filter(name="Master").exists():
-        profile_form = ProfileForm(instance=request.user.profile)
-    else:
-        profile_form = RestrictedProfileForm(instance=request.user.profile)
+    profile_form = ProfileForm(instance=request.user.profile)
+    master_form = MasterProfileForm(instance=request.user.profile)
     
-    return render(request=request, template_name="user.html", context={"user":request.user, "user_form":user_form, "profile_form":profile_form })
+    return render(request=request, template_name="user.html", context={"user":request.user, "user_form":user_form, "profile_form":profile_form , "master_form":master_form })
 
 @login_required
 def neworder(request):

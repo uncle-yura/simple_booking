@@ -16,6 +16,12 @@ class JobType(models.Model):
         return f'{self.name}'
 
 class Profile(models.Model):
+    class TIME_TABLE(models.TextChoices):
+        ALL = 'A', 'All'
+        MY = 'M', 'My clients'
+        VERIFIED = 'V', 'Verified clients'
+        NOBODY = 'N', 'Nobody'
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+380123456789'.")
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True) # validators should be a list
@@ -26,6 +32,7 @@ class Profile(models.Model):
     clients = models.ManyToManyField('self', through='Order', through_fields=('master', 'client',),)
     gcal_key = models.CharField(max_length=54, blank=True)
     gcal_link = models.CharField(max_length=42, blank=True)
+    timetable = models.CharField(max_length=1, choices=TIME_TABLE.choices, default=TIME_TABLE.ALL)
 
     def __str__(self):
         return f'{self.user}'

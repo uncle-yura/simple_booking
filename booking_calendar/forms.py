@@ -19,19 +19,24 @@ class NewUserForm(UserCreationForm):
 			user.save()
 		return user
 
+
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email',)
 
+
 class ProfileForm(forms.ModelForm):
     class Meta: 
         model = Profile
-        fields = ('phone_number', 'gcal_key', 'gcal_link',)
+        fields = ('phone_number', )        
 
-class RestrictedProfileForm(ProfileForm):
-    class Meta(ProfileForm.Meta):
-        exclude = ( 'gcal_key', 'gcal_link',)
+
+class MasterProfileForm(forms.ModelForm):
+    class Meta: 
+        model = Profile
+        fields = ( 'gcal_key', 'gcal_link', 'timetable', )
+
 
 class NewOrderForm(forms.ModelForm):
     class Meta:
@@ -41,5 +46,13 @@ class NewOrderForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(NewOrderForm, self).__init__(*args, **kwargs)
         if 'instance' in kwargs:
-            self.fields['master'].queryset = Profile.objects.filter(id__in=kwargs['instance'].masters.all())
-
+            query_set = Profile.objects.filter(user__groups__name='Master')
+            exclude_id = []
+            for master in query_set:
+                timetable = master.timetable 
+                if timetable is not "A" \
+                   and not (timetable is "M" and master.clients.filter(id__exact=kwargs['instance'].id).count()>0 ) \
+                    and not (timetable is "V" and kwargs['instance'].orders.count()>0):
+                    exclude_id.append(master.id)
+            query_set = query_set.exclude(id__in=exclude_id)
+            self.fields['master'].queryset = query_set
