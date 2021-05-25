@@ -1,4 +1,4 @@
-from booking_calendar.models import Order, JobType, Profile, User
+from booking_calendar.models import *
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
@@ -18,11 +18,18 @@ class OrderAdmin(admin.ModelAdmin):
 class JobTypeAdmin(admin.ModelAdmin):
     pass
 
+
+@admin.register(PriceList)
+class PriceListAdmin(admin.ModelAdmin):
+    pass
+
+
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
     verbose_name_plural = 'Profile'
     fk_name = 'user'
+
 
 class CustomUserAdmin(UserAdmin):
     inlines = (ProfileInline, )

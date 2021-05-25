@@ -30,17 +30,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-12 col-lg-3 pb-4">
-            <div class="card p-4">
-                <h4 class="card-title font-weight-bold text-center">Your masters</h4>
-                <hr>
-                <div class="card-text">
-                    {% for member in user.profile.masters.all %}
-                        {{ member }}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
         {% if request.user|has_group:"Master" %}
         <div class="col-sm-12 col-md-12 col-lg-3 pb-4">
             <div class="card p-4">
@@ -65,6 +54,17 @@
             </div>
         </div> 
         {% endif %}
+        <div class="col-sm-12 col-md-12 col-lg-3 pb-4">
+            <div class="card p-4">
+                <h4 class="card-title font-weight-bold text-center">Your masters</h4>
+                <hr>
+                <div class="card-text">
+                    {% for member in user.profile.masters.all %}
+                        {{ member }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

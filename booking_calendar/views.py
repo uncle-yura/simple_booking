@@ -53,10 +53,30 @@ def neworder(request):
     form = NewOrderForm(instance=request.user.profile)
     return render(request=request, template_name="new_order.html", context={"user":request.user, "form":form })
 
+
 class OrdersByUserListView(LoginRequiredMixin,generic.ListView):
     model = Order
     template_name = 'orders_list_user.html'
     paginate_by = 10
 
     def get_queryset(self):
-        return Order.objects.filter(client=self.request.user).order_by('booking_date')
+        return Order.objects.filter(client=self.request.user.profile).order_by('booking_date')
+
+
+class ClientsByUserListView(LoginRequiredMixin,generic.ListView):
+    model = Profile
+    template_name = 'clients_list_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return self.request.user.profile.clients.all()
+
+
+class PriceByUserListView(LoginRequiredMixin,generic.ListView):
+    model = PriceList
+    template_name = 'price_list_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return self.request.user.profile.prices.all()
+

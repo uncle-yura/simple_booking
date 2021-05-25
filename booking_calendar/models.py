@@ -15,6 +15,7 @@ class JobType(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+
 class Profile(models.Model):
     class TIME_TABLE(models.TextChoices):
         ALL = 'A', 'All'
@@ -47,6 +48,18 @@ class Profile(models.Model):
         if not hasattr(instance, "profile"):
             Profile.objects.create(user=instance)
         instance.profile.save()
+
+
+class PriceList(models.Model):
+    class Meta:
+        unique_together = ('profile', 'job',)
+
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="prices")
+    job = models.ForeignKey(JobType, on_delete=models.CASCADE, related_name="prices")
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f'{self.job}, {self.profile}' 
 
 
 class Order(models.Model):

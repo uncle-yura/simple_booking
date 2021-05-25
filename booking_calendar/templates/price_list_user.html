@@ -1,19 +1,19 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Orders</h1>
+    <h1>Price</h1>
 
-    {% if order_list %}
+    {% if pricelist_list %}
     <ul>
 
-      {% for order in order_list %}
+      {% for price in pricelist_list %}
       <li>
-        {{order.booking_date}}
+        {{price}}
       </li>
       {% endfor %}
     </ul>
 
     {% else %}
-      <p>There are no booked orders.</p>
+      <p>There are no prices.</p>
     {% endif %}
 {% endblock %}
