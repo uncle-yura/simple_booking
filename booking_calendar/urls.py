@@ -9,7 +9,14 @@ urlpatterns += [
     path('user/', views.userpage, name="user"), 
     path('neworder/', views.neworder, name="new-order"), 
     path('register/', views.register, name="register"), 
-    path('myorders/', views.OrdersByUserListView.as_view(), name='my-orders'),
-    path('myclients/', views.ClientsByUserListView.as_view(), name='my-clients'),
-    path('myprices/', views.PriceByUserListView.as_view(), name='my-prices'),
+    
+    path('orders/', views.OrdersByUserListView.as_view(), name='my-orders'),
+
+    path('clients/', views.ClientsByUserListView.as_view(), name='my-clients'),
+
+    path('pricelist/', views.PriceListView.as_view(), name='my-prices'),
+    path('pricelist/<int:pk>', views.PublicPriceListView.as_view(), name='public-prices'),
+    path('prices/<int:pk>', views.PriceListUpdate.as_view(), name='price-update'),
+    path('price/add/', views.PriceListCreate.as_view(), name='price-add'),
+    path('price/<int:pk>', views.PriceListDelete.as_view(), name='price-delete'),
 ]

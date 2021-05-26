@@ -36,16 +36,15 @@
                 <h4 class="card-title font-weight-bold text-center">Master profile</h4>
                 <hr>
                 <div class="card-text">
+                    <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'my-prices'%}">My prices</a>
+                    <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'my-clients'%}">My clients</a>
+                    <hr>
                     <p class="text-muted mb-0"  style="font-size: 12px">Timetable:</p>
                     <p> {{ user.profile.get_timetable_display  }} </p>
                     <p class="text-muted mb-0"  style="font-size: 12px">Key:</p>
                     <p> {{ user.profile.gcal_key }} </p>
                     <p class="text-muted mb-0"  style="font-size: 12px">Link:</p>
                     <p> {{ user.profile.gcal_link }} </p>
-                    <p class="text-muted mb-0"  style="font-size: 12px">Clients:</p>
-                    {% for member in user.profile.clients.all %}
-                        {{ member }}
-                    {% endfor %}
 
                     <div class="text-right">
                         <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileMasterModal">Edit Profile</button>
@@ -56,9 +55,12 @@
         {% endif %}
         <div class="col-sm-12 col-md-12 col-lg-3 pb-4">
             <div class="card p-4">
-                <h4 class="card-title font-weight-bold text-center">Your masters</h4>
+                <h4 class="card-title font-weight-bold text-center">Your orders</h4>
                 <hr>
                 <div class="card-text">
+                <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'my-orders'%}">My orders</a>
+                <hr>
+                <p class="text-muted mb-0"  style="font-size: 12px">Your masters:</p>
                     {% for member in user.profile.masters.all %}
                         {{ member }}
                     {% endfor %}

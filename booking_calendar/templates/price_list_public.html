@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    {% if pricelist_list %}
+    <h1>Price for {{ name }}</h1>
+
+    <ul>
+
+      {% for price in pricelist_list %}
+      <li>
+        {{price}} 
+      </li>
+      {% endfor %}
+      
+    </ul>
+
+    {% else %}
+      <p>There are no prices.</p>
+    {% endif %}
+{% endblock %}

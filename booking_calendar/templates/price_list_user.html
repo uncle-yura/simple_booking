@@ -8,12 +8,17 @@
 
       {% for price in pricelist_list %}
       <li>
-        {{price}}
+        {{price}} 
+        <a href="{% url 'price-update' price.pk %}">edit</a>
+        <a href="{% url 'price-delete' price.pk %}">del</a>
       </li>
       {% endfor %}
+      
     </ul>
 
     {% else %}
       <p>There are no prices.</p>
     {% endif %}
+    <a href="{% url 'price-add' %}">add</a>
+    <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'public-prices' request.user.profile.pk%}">Share link</a>
 {% endblock %}
