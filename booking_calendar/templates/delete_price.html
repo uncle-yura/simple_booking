@@ -1,12 +1,17 @@
 {% extends "base_generic.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
-    <h2></h2>
+<div class="container py-5">
+    <h1 class="font-weight-bold">Delete price</h1>
     <hr>
-    <div>
-        <form action="" method="post">{% csrf_token %}
-            <p>Are you sure you want to delete "{{ object }}"?</p>
-            <input type="submit" value="Confirm"/>
-        </form>
-    </div>
+    <br>
+    <form action="" method="post">{% csrf_token %}
+        <p>Are you sure you want to delete "{{ object }}"?</p>
+        <input class="btn btn-primary" type="submit" value="Confirm"/>
+        <a class="btn btn-outline-primary" href="{% url 'my-prices' %}">Cancel</a>
+    </form>
+    <br><br>
+</div>
 {% endblock %}

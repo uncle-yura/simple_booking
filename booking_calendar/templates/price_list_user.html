@@ -1,24 +1,38 @@
 {% extends "base_generic.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
-    <h1>Price</h1>
-
+<div class="container py-5">
+  <h1 class="font-weight-bold">Price list</h1>
+  <br>
     {% if pricelist_list %}
-    <ul>
-
-      {% for price in pricelist_list %}
-      <li>
-        {{price}} 
-        <a href="{% url 'price-update' price.pk %}">edit</a>
-        <a href="{% url 'price-delete' price.pk %}">del</a>
-      </li>
-      {% endfor %}
-      
-    </ul>
-
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+            <th>Job</th>						
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for price in pricelist_list %}
+        <tr>
+          <td>{{price}}</td>
+          <td>{{price.price}}</td>
+          <td>
+            <a href="{% url 'price-update' price.pk %}" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+            <a href="{% url 'price-delete' price.pk %}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+        </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     {% else %}
       <p>There are no prices.</p>
     {% endif %}
-    <a href="{% url 'price-add' %}">add</a>
-    <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'public-prices' request.user.profile.pk%}">Share link</a>
+    
+    <a class="btn btn-primary add-new" href="{% url 'price-add' %}">Add</a>
+    <a class="btn btn-outline-secondary" href="{% url 'public-prices' request.user.profile.pk%}">Share link</a>
+  </div>
 {% endblock %}

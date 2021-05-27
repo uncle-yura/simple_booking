@@ -1,20 +1,30 @@
 {% extends "base_generic.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
+  <div class="container py-5">
     {% if pricelist_list %}
     <h1>Price for {{ name }}</h1>
-
-    <ul>
-
-      {% for price in pricelist_list %}
-      <li>
-        {{price}} 
-      </li>
-      {% endfor %}
-      
-    </ul>
-
+    
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+            <th>Job</th>						
+            <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for price in pricelist_list %}
+        <tr>
+          <td>{{price}}</td>
+          <td>{{price.price}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     {% else %}
       <p>There are no prices.</p>
     {% endif %}
+  </div>
 {% endblock %}

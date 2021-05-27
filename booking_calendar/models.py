@@ -59,15 +59,21 @@ class PriceList(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f'{self.job}, {self.profile}' 
+        return f'{self.job}' 
 
 
 class Order(models.Model):
+    class STATE_TABLE(models.TextChoices):
+        NEW = 'N', 'New'
+        CANCELED = 'C', 'Canceled'
+        VERIFIED = 'V', 'Verified'
+
     client = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name="orders")
     work_type = models.ManyToManyField(JobType, help_text='Select a work type for this client')
     booking_date = models.DateField(null=True)
     client_comment = models.CharField(max_length=200, blank=True)
     master = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name="jobs", limit_choices_to={'user__groups__name': 'Master'})
+    state = models.CharField(max_length=1, choices=STATE_TABLE.choices, default=STATE_TABLE.NEW)
 
     def __str__(self):
         return  f'{self.client}, {self.booking_date}' 

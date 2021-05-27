@@ -7,9 +7,9 @@ urlpatterns = [
 
 urlpatterns += [
     path('user/', views.userpage, name="user"), 
-    path('neworder/', views.neworder, name="new-order"), 
     path('register/', views.register, name="register"), 
-    
+
+    path('neworder/', views.OrderCreate.as_view(), name="new-order"), 
     path('orders/', views.OrdersByUserListView.as_view(), name='my-orders'),
 
     path('clients/', views.ClientsByUserListView.as_view(), name='my-clients'),

@@ -40,23 +40,3 @@ class MasterProfileForm(forms.ModelForm):
 
 PriceListFormSet = inlineformset_factory(
     Profile, PriceList, fields = ('job','price',), extra=1)
-
-
-class NewOrderForm(forms.ModelForm):
-    class Meta:
-        model = Order
-        exclude = ('client',)
-
-    def __init__(self, *args, **kwargs):
-        super(NewOrderForm, self).__init__(*args, **kwargs)
-        if 'instance' in kwargs:
-            query_set = Profile.objects.filter(user__groups__name='Master')
-            exclude_id = []
-            for master in query_set:
-                timetable = master.timetable 
-                if timetable is not "A" \
-                   and not (timetable is "M" and master.clients.filter(id__exact=kwargs['instance'].id).count()>0 ) \
-                    and not (timetable is "V" and kwargs['instance'].orders.count()>0):
-                    exclude_id.append(master.id)
-            query_set = query_set.exclude(id__in=exclude_id)
-            self.fields['master'].queryset = query_set

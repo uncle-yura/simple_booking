@@ -11,6 +11,7 @@ from django.urls import reverse_lazy
 from booking_calendar.models import *
 from booking_calendar.forms import *
 
+import datetime
 
 def index(request):
     num_jobs = JobType.objects.all().count()
@@ -51,16 +52,42 @@ def userpage(request):
     
     return render(request=request, template_name="user.html", context={"user":request.user, "user_form":user_form, "profile_form":profile_form , "master_form":master_form })
 
-@login_required
-def neworder(request):
-    form = NewOrderForm(instance=request.user.profile)
-    return render(request=request, template_name="new_order.html", context={"user":request.user, "form":form })
+
+class OrderCreate(LoginRequiredMixin,CreateView):
+    model = Order
+    fields = ('work_type', 'booking_date', 'client_comment', 'master',)
+    template_name = 'new_order.html'
+    success_url = reverse_lazy('my-orders')
+
+    def get_queryset(self):
+        query_set = Profile.objects.filter(user__groups__name='Master')
+        exclude_id = []
+        for master in query_set:
+            timetable = master.timetable 
+            if timetable is not "A" \
+                and not (timetable is "M" and master.clients.filter(id__exact=self.request.user.profile.id).count()>0 ) \
+                and not (timetable is "V" and self.request.user.profile.orders.count()>0):
+                exclude_id.append(master.id)
+        query_set = query_set.exclude(id__in=exclude_id)
+        self.fields['master'].queryset = query_set
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        if self.object.booking_date < datetime.date.today():
+            messages.error(self.request,("We cannot travel to the past.")) 
+            return redirect('new-order')
+        else:
+            self.object.client = self.request.user.profile
+            self.object.save()
+            messages.success(self.request,('New order created!'))
+            return super(OrderCreate, self).form_valid(form)
 
 
 class OrdersByUserListView(LoginRequiredMixin,ListView):
     model = Order
     template_name = 'orders_list_user.html'
     paginate_by = 10
+    ordering = ['-id']
 
     def get_queryset(self):
         return self.request.user.profile.orders.order_by('booking_date')
@@ -70,6 +97,7 @@ class ClientsByUserListView(LoginRequiredMixin,ListView):
     model = Profile
     template_name = 'clients_list_user.html'
     paginate_by = 10
+    ordering = ['-id']
 
     def get_queryset(self):
         return self.request.user.profile.clients.all()
@@ -79,6 +107,7 @@ class PriceListView(LoginRequiredMixin,ListView):
     model = PriceList
     template_name = 'price_list_user.html'
     paginate_by = 10
+    ordering = ['-id']
 
     def get_queryset(self):
         return self.request.user.profile.prices.all()
@@ -88,6 +117,7 @@ class PublicPriceListView(ListView):
     model = PriceList
     template_name = 'price_list_public.html'
     paginate_by = 10
+    ordering = ['-id']
 
     def get_queryset(self):
         pricelist = PriceList.objects.filter(profile__id=self.kwargs['pk'])
@@ -138,7 +168,6 @@ class PriceListUpdate(PermissionRequiredMixin,LoginRequiredMixin,UpdateView):
     success_url = reverse_lazy('my-prices')
     template_name = 'update_price.html'
     permission_required = 'booking_calendar.change_pricelist'
-    paginate_by = 10
 
     def get_queryset(self):
         return self.request.user.profile.prices.all()
