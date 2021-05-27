@@ -1,6 +1,6 @@
 from django.http.response import Http404
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, UpdateView, DeleteView, CreateView
+from django.views.generic import ListView, UpdateView, DeleteView, CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
@@ -51,6 +51,18 @@ def userpage(request):
     master_form = MasterProfileForm(instance=request.user.profile)
     
     return render(request=request, template_name="user.html", context={"user":request.user, "user_form":user_form, "profile_form":profile_form , "master_form":master_form })
+
+
+class UserDelete(LoginRequiredMixin,DeleteView):
+    model = User
+    success_url = reverse_lazy('index')
+    template_name = 'delete_user.html'
+
+
+class UserView(PermissionRequiredMixin,LoginRequiredMixin,DetailView):
+    model = Profile
+    permission_required = 'booking_calendar.view_profile'
+    template_name = 'view_user.html'
 
 
 class OrderCreate(LoginRequiredMixin,CreateView):

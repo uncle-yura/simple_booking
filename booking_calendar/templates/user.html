@@ -25,6 +25,7 @@
                       <p>{{ user.profile.phone_number }} </p>
                       
                     <div class="text-right">
+                        <a class="btn btn-outline-secondary btn-sm" href="{% url 'user-delete' user.pk %}">Delete profile</a>
                         <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileModal">Edit Profile</button>
                     </div>
                 </div>

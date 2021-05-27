@@ -1,0 +1,43 @@
+{% extends "base_generic.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% load auth_extras %}
+
+<br><br>
+<div class="container mx-auto">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-3 pb-4">
+            <div class="card p-4">
+                <h4 class="card-title font-weight-bold text-center">Profile {{ profile.user.username|title }}</h4>
+                <hr>
+                <div class="card-text">
+                    <p class="text-muted mb-0" style="font-size: 12px">Username:</p>
+                    <p>{{ profile.user.username }}</p>
+                    <p class="text-muted mb-0" style="font-size: 12px">Name:</p>
+                      <p>{{ profile.user.first_name }} {{ profile.user.last_name }}</p>
+                      <p class="text-muted mb-0" style="font-size: 12px">Email:</p>
+                      <p>{{ profile.user.email }} </p>
+
+                      <p class="text-muted mb-0"  style="font-size: 12px">Phone:</p>
+                      <p>{{ profile.phone_number }} </p>
+                      
+                </div>
+            </div>
+        </div>
+       
+        <div class="col-sm-12 col-md-12 col-lg-3 pb-4">
+            <div class="card p-4">
+                <h4 class="card-title font-weight-bold text-center">Masters</h4>
+                <hr>
+                    {% for member in profile.masters.all %}
+                        {{ member }}
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

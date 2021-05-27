@@ -38,6 +38,9 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user}'
 
+    def get_latest_order_date(self):
+        return self.orders.latest('booking_date').booking_date
+
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
