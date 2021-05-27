@@ -28,10 +28,30 @@
         {% endfor %}
       </tbody>
     </table>
+
+    {% block pagination %}
+    <hr>
+      {% if is_paginated %}
+          <div class="pagination">
+              <span class="page-links">
+                  {% if page_obj.has_previous %}
+                      <a class="btn btn-primary btn-sm" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous</a>
+                  {% endif %}
+                  <span class="page-current">
+                      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                  </span>
+                  {% if page_obj.has_next %}
+                      <a class="btn btn-primary btn-sm" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a>
+                  {% endif %}
+              </span>
+          </div>
+      {% endif %}
+    {% endblock %} 
+    
     {% else %}
       <p>There are no prices.</p>
     {% endif %}
-    
+    <br><br>
     <a class="btn btn-primary add-new" href="{% url 'price-add' %}">Add</a>
     <a class="btn btn-outline-secondary" href="{% url 'public-prices' request.user.profile.pk%}">Share link</a>
   </div>

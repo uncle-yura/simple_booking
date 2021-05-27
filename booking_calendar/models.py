@@ -68,8 +68,9 @@ class PriceList(models.Model):
 class Order(models.Model):
     class STATE_TABLE(models.TextChoices):
         NEW = 'N', 'New'
-        CANCELED = 'C', 'Canceled'
+        CANCELED = 'D', 'Deleted'
         VERIFIED = 'V', 'Verified'
+        COMPLETED = 'C', 'Completed'
 
     client = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name="orders")
     work_type = models.ManyToManyField(JobType, help_text='Select a work type for this client')
@@ -80,6 +81,3 @@ class Order(models.Model):
 
     def __str__(self):
         return  f'{self.client}, {self.booking_date}' 
-
-
-

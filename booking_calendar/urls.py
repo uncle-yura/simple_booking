@@ -11,7 +11,7 @@ urlpatterns += [
 
     path('neworder/', views.OrderCreate.as_view(), name="new-order"), 
     path('orders/', views.OrdersByUserListView.as_view(), name='my-orders'),
-
+    path('order/<int:pk>', views.OrderView.as_view(), name='order-view'),
 
     path('clients/', views.ClientsByUserListView.as_view(), name='my-clients'),
     path('client/del/<int:pk>', views.UserDelete.as_view(), name='user-delete'),

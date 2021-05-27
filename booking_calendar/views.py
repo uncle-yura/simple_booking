@@ -50,7 +50,12 @@ def userpage(request):
     profile_form = ProfileForm(instance=request.user.profile)
     master_form = MasterProfileForm(instance=request.user.profile)
     
-    return render(request=request, template_name="user.html", context={"user":request.user, "user_form":user_form, "profile_form":profile_form , "master_form":master_form })
+    return render(request=request,
+        template_name="user.html",
+        context={"user":request.user,
+            "user_form":user_form, 
+            "profile_form":profile_form , 
+            "master_form":master_form })
 
 
 class UserDelete(LoginRequiredMixin,DeleteView):
@@ -95,11 +100,23 @@ class OrderCreate(LoginRequiredMixin,CreateView):
             return super(OrderCreate, self).form_valid(form)
 
 
+class OrderView(LoginRequiredMixin,DetailView):
+    model = Order
+    template_name = 'view_order.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderView, self).get_context_data(**kwargs)
+        if self.object.client == self.request.user.profile \
+            or self.request.user.groups.filter(name="Master").exists():
+            return context
+        else:
+            raise Http404
+
+
 class OrdersByUserListView(LoginRequiredMixin,ListView):
     model = Order
     template_name = 'orders_list_user.html'
     paginate_by = 10
-    ordering = ['-id']
 
     def get_queryset(self):
         return self.request.user.profile.orders.order_by('booking_date')
@@ -109,30 +126,27 @@ class ClientsByUserListView(LoginRequiredMixin,ListView):
     model = Profile
     template_name = 'clients_list_user.html'
     paginate_by = 10
-    ordering = ['-id']
 
     def get_queryset(self):
-        return self.request.user.profile.clients.all()
+        return self.request.user.profile.clients.order_by('-id')
 
 
 class PriceListView(LoginRequiredMixin,ListView):
     model = PriceList
     template_name = 'price_list_user.html'
     paginate_by = 10
-    ordering = ['-id']
 
     def get_queryset(self):
-        return self.request.user.profile.prices.all()
+        return self.request.user.profile.prices.order_by('-id')
 
 
 class PublicPriceListView(ListView):
     model = PriceList
     template_name = 'price_list_public.html'
     paginate_by = 10
-    ordering = ['-id']
 
     def get_queryset(self):
-        pricelist = PriceList.objects.filter(profile__id=self.kwargs['pk'])
+        pricelist = PriceList.objects.filter(profile__id=self.kwargs['pk']).order_by('-id')
         if pricelist.count() > 0:
             return pricelist
         else:
