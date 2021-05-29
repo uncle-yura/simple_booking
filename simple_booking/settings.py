@@ -171,3 +171,4 @@ MESSAGE_TAGS = {
         messages.ERROR: 'alert-danger',
  }
 
+GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secret.json'

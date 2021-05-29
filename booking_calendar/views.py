@@ -1,4 +1,4 @@
-from django.http.response import Http404
+from django.http.response import Http404,HttpResponseRedirect,HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -7,11 +7,16 @@ from django.contrib.auth import login
 from django.contrib import messages
 from django.db import IntegrityError
 from django.urls import reverse_lazy
+from django.conf import settings
 
 from booking_calendar.models import *
 from booking_calendar.forms import *
 
+from oauth2client.contrib import xsrfutil
+from oauth2client.client import flow_from_clientsecrets
+
 import datetime
+import os
 
 def index(request):
     num_jobs = JobType.objects.all().count()
@@ -56,6 +61,31 @@ def userpage(request):
             "user_form":user_form, 
             "profile_form":profile_form , 
             "master_form":master_form })
+
+CLIENT_SECRETS = os.path.join(os.path.dirname(__file__), '..', 'client_secret.json')
+
+FLOW = flow_from_clientsecrets(
+CLIENT_SECRETS,
+scope='https://www.googleapis.com/auth/calendar',
+redirect_uri='http://localhost:8000/booking_calendar/google-oauth2/complete')
+
+@login_required
+def gcal_auth(request):
+    FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
+                request.user.profile.id)
+    authorize_url = FLOW.step1_get_authorize_url()
+    return HttpResponseRedirect(authorize_url)
+
+@login_required
+def gcal_auth_return(request):
+    if not xsrfutil.validate_token(settings.SECRET_KEY, bytes(request.GET.get('state'), encoding='utf8'), request.user.profile.id):
+        return HttpResponseBadRequest()
+    credential = FLOW.step2_exchange(request.GET)
+    profile = Profile.objects.filter(id=request.user.profile.id).first()
+    profile.gcal_key=credential
+    profile.save()
+    
+    return redirect('user')
 
 
 class UserDelete(LoginRequiredMixin,DeleteView):

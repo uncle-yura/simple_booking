@@ -13,6 +13,8 @@ urlpatterns += [
     path('orders/', views.OrdersByUserListView.as_view(), name='my-orders'),
     path('jobs/', views.JobsByUserListView.as_view(), name='my-jobs'),
     path('order/<int:pk>', views.OrderView.as_view(), name='order-view'),
+    path('google-oauth2/start', views.gcal_auth, name='gcal-auth'),
+    path('google-oauth2/complete', views.gcal_auth_return),
 
     path('clients/', views.ClientsByUserListView.as_view(), name='my-clients'),
     path('client/del/<int:pk>', views.UserDelete.as_view(), name='user-delete'),

@@ -44,7 +44,7 @@
                     <p class="text-muted mb-0"  style="font-size: 12px">Timetable:</p>
                     <p> {{ user.profile.get_timetable_display  }} </p>
                     <p class="text-muted mb-0"  style="font-size: 12px">Key:</p>
-                    <p> {{ user.profile.gcal_key }} </p>
+                    <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'gcal-auth'%}">Auth</a>
                     <p class="text-muted mb-0"  style="font-size: 12px">Link:</p>
                     <p> {{ user.profile.gcal_link }} </p>
 
