@@ -179,6 +179,7 @@ class PriceListCreate(PermissionRequiredMixin,LoginRequiredMixin,CreateView):
             self.object = form.save(commit=False)
             self.object.profile = self.request.user.profile
             self.object.save()
+            messages.success(self.request,('Price created')) 
         except IntegrityError as e: 
             if 'unique constraint'.lower() in str(e).lower():
                messages.error(self.request,('Price already exist')) 
@@ -192,6 +193,10 @@ class PriceListDelete(PermissionRequiredMixin,LoginRequiredMixin,DeleteView):
     success_url = reverse_lazy('my-prices')
     template_name = 'delete_price.html'
     permission_required = 'booking_calendar.delete_pricelist'
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request,('Price deleted')) 
+        return super(PriceListDelete, self).delete(request, *args, **kwargs)
 
     def get_queryset(self):
         return self.request.user.profile.prices.all()
@@ -224,6 +229,7 @@ class PriceListUpdate(PermissionRequiredMixin,LoginRequiredMixin,UpdateView):
             if pricelist.is_valid():
                 pricelist.instance = self.object
                 pricelist.save()
+                messages.success(self.request,('Price updated')) 
         except IntegrityError as e: 
             if 'unique constraint'.lower() in str(e).lower():
                 messages.error(self.request,('Price already exist')) 
