@@ -55,4 +55,8 @@
     <a class="btn btn-primary add-new" href="{% url 'price-add' %}">Add</a>
     <a class="btn btn-outline-secondary" href="{% url 'public-prices' request.user.profile.pk%}">Share link</a>
   </div>
+
+  <br>
+  <br>
+  <a class="btn btn-outline-primary" href="{% url 'user' %}">Back</a>
 {% endblock %}

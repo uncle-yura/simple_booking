@@ -113,6 +113,15 @@ class OrderView(LoginRequiredMixin,DetailView):
             raise Http404
 
 
+class JobsByUserListView(LoginRequiredMixin,ListView):
+    model = Order
+    template_name = 'orders_list_master.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return self.request.user.profile.jobs.order_by('booking_date')
+
+
 class OrdersByUserListView(LoginRequiredMixin,ListView):
     model = Order
     template_name = 'orders_list_user.html'

@@ -39,6 +39,7 @@
                 <div class="card-text">
                     <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'my-prices'%}">My prices</a>
                     <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'my-clients'%}">My clients</a>
+                    <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'my-jobs'%}">My jobs</a>
                     <hr>
                     <p class="text-muted mb-0"  style="font-size: 12px">Timetable:</p>
                     <p> {{ user.profile.get_timetable_display  }} </p>
