@@ -27,7 +27,7 @@ class Profile(models.Model):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+380123456789'.")
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True) # validators should be a list
     comment = models.CharField(max_length=200, blank=True)
-    discount = models.FloatField(default=0)
+    discount = models.DecimalField(default=0, max_digits=2, decimal_places=2)
 
     masters = models.ManyToManyField('self', through='Order', through_fields=('client', 'master',),)
     clients = models.ManyToManyField('self', through='Order', through_fields=('master', 'client',),)
