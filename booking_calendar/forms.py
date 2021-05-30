@@ -35,7 +35,7 @@ class ProfileForm(forms.ModelForm):
 class MasterProfileForm(forms.ModelForm):
     class Meta: 
         model = Profile
-        fields = ( 'gcal_key', 'gcal_link', 'timetable', )
+        fields = ('timetable', 'gcal_link', )
 
 
 PriceListFormSet = inlineformset_factory(

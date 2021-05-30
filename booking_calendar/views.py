@@ -1,3 +1,4 @@
+from django.db.models.manager import BaseManager
 from django.http.response import Http404,HttpResponseRedirect,HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView, DetailView
@@ -8,15 +9,20 @@ from django.contrib import messages
 from django.db import IntegrityError
 from django.urls import reverse_lazy
 from django.conf import settings
+from django.http import JsonResponse
 
 from booking_calendar.models import *
 from booking_calendar.forms import *
+from booking_calendar.templatetags.time_extras import duration
 
 from oauth2client.contrib import xsrfutil
-from oauth2client.client import flow_from_clientsecrets
+from oauth2client.client import flow_from_clientsecrets,GoogleCredentials
+from googleapiclient.discovery import build
+from dateutil.relativedelta import relativedelta
 
 import datetime
 import os
+import httplib2
 
 def index(request):
     num_jobs = JobType.objects.all().count()
@@ -45,12 +51,18 @@ def userpage(request):
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        master_form = MasterProfileForm(request.POST, instance=request.user.profile)
+
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             messages.success(request,('Your profile was successfully updated!'))
+        elif master_form.is_valid():
+            master_form.save()
+            messages.success(request,('Your master profile was successfully updated!'))
         else:
             messages.error(request,('Unable to complete request'))
         return redirect ('user')
+
     user_form = UserForm(instance=request.user)
     profile_form = ProfileForm(instance=request.user.profile)
     master_form = MasterProfileForm(instance=request.user.profile)
@@ -82,10 +94,77 @@ def gcal_auth_return(request):
         return HttpResponseBadRequest()
     credential = FLOW.step2_exchange(request.GET)
     profile = Profile.objects.filter(id=request.user.profile.id).first()
-    profile.gcal_key=credential
+    profile.gcal_key=credential.to_json()
     profile.save()
     
     return redirect('user')
+
+@login_required
+def gcal_data_return(request):
+    master_id=request.GET.get('master', None)
+    if not master_id:
+        return JsonResponse({})
+
+    master_profile = Profile.objects.filter(id=master_id).first()
+    query_set = Profile.objects.filter(user__groups__name='Master')
+    exclude_id = []
+    for master in query_set:
+        timetable = master.timetable 
+        if timetable is not "A" \
+            and not (timetable is "M" and master.clients.filter(id__exact=request.user.profile.id).count()>0 ) \
+            and not (timetable is "V" and request.user.profile.orders.count()>0):
+            exclude_id.append(master.id)
+    query_set = query_set.exclude(id__in=exclude_id)
+    
+    if master_profile in query_set:
+        http = httplib2.Http()
+        credentials = GoogleCredentials.new_from_json(master_profile.gcal_key)
+
+        http = credentials.authorize(http)
+        service = build("calendar", "v3", http=http)
+
+        now = datetime.datetime.utcnow().isoformat() + 'Z'
+        date_max = datetime.datetime.today() + relativedelta(months=2)
+        date_max = date_max.isoformat() + 'Z'
+        page_token = None
+
+        eventsResult = service.events()
+        events = eventsResult.list(calendarId=master_profile.gcal_link, 
+            pageToken=page_token, 
+            singleEvents=True, 
+            timeMin=now, 
+            timeMax=date_max).execute()
+
+        response = {'events':{},'prices':{}}
+
+        for price in master_profile.prices.all():
+            response['prices'].update({
+                price.job.id:{
+                    'id':price.job.id,
+                    'name':str(price),
+                    'price':price.price,
+                    'str_time':duration(price.job.time_interval),
+                    'time':price.job.time_interval.total_seconds()}})
+
+        for event in events['items']:
+            response['events'].update({
+                event['id']:{
+                    'htmlLink':event['htmlLink'],
+                    'start':event['start'],
+                    'end':event['end'],}})
+            page_token = events.get('nextPageToken')
+
+        while page_token:
+            for event in events['items']:
+                response['events'].update({
+                    event['id']:{
+                        'htmlLink':event['htmlLink'],
+                        'start':event['start'],
+                        'end':event['end'],}})
+                page_token = events.get('nextPageToken')
+    else:
+        response = {}
+    return JsonResponse(response)
 
 
 class UserDelete(LoginRequiredMixin,DeleteView):
@@ -102,7 +181,7 @@ class UserView(PermissionRequiredMixin,LoginRequiredMixin,DetailView):
 
 class OrderCreate(LoginRequiredMixin,CreateView):
     model = Order
-    fields = ('work_type', 'booking_date', 'client_comment', 'master',)
+    fields = ('master', 'work_type', 'booking_date', 'client_comment', )
     template_name = 'new_order.html'
     success_url = reverse_lazy('my-orders')
 
@@ -117,6 +196,7 @@ class OrderCreate(LoginRequiredMixin,CreateView):
                 exclude_id.append(master.id)
         query_set = query_set.exclude(id__in=exclude_id)
         self.fields['master'].queryset = query_set
+        self.fields['work_type'].queryset = BaseManager()
 
     def form_valid(self, form):
         self.object = form.save(commit=False)

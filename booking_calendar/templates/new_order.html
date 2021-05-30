@@ -8,12 +8,60 @@
     <h1 class="font-weight-bold">New order</h1>
     <hr>
     <br>
-    <form method="POST">
+    <form id="newOrderForm" method="POST">
         {% csrf_token %}
         {{ form|crispy }}                    
+        <br>
+        <div>
+            <p id="order_total_time"></p>
+            <p id="order_total_price"></p>
+        </div>
         <br>
         <button class="btn btn-primary" type="submit">Order</button>
     </form>
 </div>
+
+<script>
+    $(document).ready(function () {
+            $('#id_work_type').empty();
+
+            $('#id_work_type').change(function () {
+                let total_time = 0;
+                let total_price = 0;
+
+                for (let option of this.options) {
+                    if (option.selected) {
+                        total_price+=parseFloat(option.getAttribute('price'));
+                        total_time+=parseFloat(option.getAttribute('time'));
+                    }
+                }
+                $('#order_total_price').text("Total price: "+total_price)
+                $('#order_total_time').text("Total time: "+total_time/60);
+            });
+
+            $('#id_master').change(function () {
+                $.ajax({
+                    data: $(this).serialize(), 
+                    url: "{% url 'gcal-data' %}",
+
+                    success: function (response) {
+                        $('#id_work_type').empty();
+                        for(price in response.prices){
+                            $('#id_work_type').append($("<option></option>")
+                                .attr("value",response.prices[price].id)
+                                .attr("price",response.prices[price].price)
+                                .attr("time",response.prices[price].time)
+                                .text(response.prices[price].name + ' - ' + response.prices[price].str_time + ' - ' + response.prices[price].price));
+                        }
+                    },
+
+                    error: function (response) {
+                        console.log(response.responseJSON.errors);
+                    }
+                });
+                return false;
+            });
+        })
+</script>
 
 {% endblock %}

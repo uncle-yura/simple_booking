@@ -43,11 +43,12 @@
                     <hr>
                     <p class="text-muted mb-0"  style="font-size: 12px">Timetable:</p>
                     <p> {{ user.profile.get_timetable_display  }} </p>
-                    <p class="text-muted mb-0"  style="font-size: 12px">Key:</p>
-                    <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'gcal-auth'%}">Auth</a>
                     <p class="text-muted mb-0"  style="font-size: 12px">Link:</p>
-                    <p> {{ user.profile.gcal_link }} </p>
-
+                    <p> {{ user.profile.gcal_link|truncatechars:15 }} </p>
+                    {% if user.profile.get_gcal_status %}
+                    <p class="text-muted mb-0"  style="font-size: 12px">Google Calendar:</p>
+                    <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'gcal-auth'%}">Authorize</a>
+                    {% endif %}
                     <div class="text-right">
                         <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileMasterModal">Edit Profile</button>
                     </div>

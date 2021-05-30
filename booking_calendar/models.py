@@ -4,8 +4,10 @@ from django.core.validators import RegexValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-import datetime
+from oauth2client.client import GoogleCredentials, credentials_from_code
 
+import datetime
+import httplib2
 
 class JobType(models.Model):
     name = models.CharField(max_length=100, help_text='Enter a work type')
@@ -31,8 +33,8 @@ class Profile(models.Model):
 
     masters = models.ManyToManyField('self', through='Order', through_fields=('client', 'master',),)
     clients = models.ManyToManyField('self', through='Order', through_fields=('master', 'client',),)
-    gcal_key = models.CharField(max_length=54, blank=True)
-    gcal_link = models.CharField(max_length=42, blank=True)
+    gcal_key = models.CharField(max_length=200, blank=True)
+    gcal_link = models.CharField(max_length=200, blank=True)
     timetable = models.CharField(max_length=1, choices=TIME_TABLE.choices, default=TIME_TABLE.ALL)
 
     def __str__(self):
@@ -40,6 +42,12 @@ class Profile(models.Model):
 
     def get_latest_order_date(self):
         return self.orders.latest('booking_date').booking_date
+
+    def get_gcal_status(self):
+        http = httplib2.Http()
+        credentials = GoogleCredentials.new_from_json(self.gcal_key)
+        credentials.refresh(http)
+        return credentials.access_token_expired
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
