@@ -10,21 +10,122 @@
     <br>
     <form id="newOrderForm" method="POST">
         {% csrf_token %}
-        {{ form|crispy }}                    
-        <br>
-        <div>
-            <p id="order_total_time"></p>
-            <p id="order_total_price"></p>
+        {{ form|crispy }}   
+
+        <div class="container">
+            <div class="row justify-content-between">
+                <div id='id_calendar' class='card p-4 col-md-7'>
+                    <div id='id_calendar_header'></div>
+                    <div id='id_calendar_body'></div>
+                </div>
+                <div id='id_timetable' class='card p-4 col-md-4'>
+                    <div id='id_timetable_header'></div>
+                    <div id='id_timetable_body'></div>
+                </div>
+            </div>
+            <div class="row">
+                <p id="order_total_time"></p>
+                <p id="order_total_price"></p>
+            </div>
+    
+            <div class="row">
+                <button class="btn btn-primary" type="submit">Order</button>
+            </div>
         </div>
-        <br>
-        <button class="btn btn-primary" type="submit">Order</button>
     </form>
 </div>
 
 <script>
+    let eventsList = [];
+
+    let dayNames = "MON,TUE,WEN,THU,FRI,SAT,SUN"
+    for(i=0; i<7; i++){
+        let div = document.createElement('div');
+        div.className = "calendar_weekday_name";
+        div.innerHTML = dayNames.split(',')[i];
+        $('#id_calendar_header').append(div);  
+    }      
+
+    function drawTimetable(date) {
+        let currentDate = new Date(date)
+
+        $("#id_timetable_header").html("");
+        $("#id_timetable_body").html("");
+
+        let div = document.createElement('div');
+        div.className = "timetable_date";
+        div.innerHTML = currentDate;
+        $('#id_timetable_header').append(div);  
+
+        for(let event of eventsList.filter(function (a) {
+            return (a.start > this.setHours(0,0)) && (a.start < this.setHours(23,59));
+        },currentDate)) {
+            let div = document.createElement('div');
+            div.className = "timetable_event";
+            div.innerHTML = event.start + ' ' +event.end;
+            $('#id_timetable_body').append(div);  
+        }
+    }
+
+    function drawCalendar(booking_range) {
+        $("#id_calendar_body").html("");
+
+        function getLastDayOfMonth(year, month) {    
+            let date = new Date(year, month + 1, 0);
+            return date.getDate();
+        }
+
+        function addMonthName(parent, date) {
+            let monthName = document.createElement('div');
+            monthName.className = "calendar_month_name";
+            let monthStr = "January,February,March,April,May,June,July,August,September,October,November,December";
+            monthName.innerHTML = monthStr.split(',')[date.getMonth()];
+            parent.append(monthName);  
+        }
+
+        function addInactiveDays(parent, date) {
+            for (let i=0; i<((date.getDay()||7)-1); i++) {
+                let divInnactive = document.createElement('div');
+                divInnactive.className = "calendar_day_inactive";
+                parent.append(divInnactive);  
+            }
+        }
+        
+        let monthDays = document.getElementById("id_calendar_body");
+        let firstDay = new Date();
+        let lastDay = getLastDayOfMonth(firstDay.getFullYear(), firstDay.getMonth());      
+            
+        addMonthName(monthDays, firstDay);
+        addInactiveDays(monthDays, firstDay);
+
+        for(i=0; i<booking_range; i++){
+            let div = document.createElement('div');
+            div.className = "calendar_day_active";
+            div.setAttribute("value",firstDay.toISOString())
+
+            div.onclick = function() {
+                drawTimetable(this.getAttribute("value"));
+                };
+
+            div.innerHTML = firstDay.getDate();
+            monthDays.append(div);
+
+            if (lastDay==firstDay.getDate()) {
+                firstDay.setDate(firstDay.getDate()+1);  
+                lastDay = getLastDayOfMonth(firstDay.getFullYear(), firstDay.getMonth());     
+                addMonthName(monthDays, firstDay)
+                addInactiveDays(monthDays, firstDay);
+            }
+            else {
+              firstDay.setDate(firstDay.getDate()+1);  
+            }
+        }
+    }
+
+
     $(document).ready(function () {
             $('#id_work_type').empty();
-
+        
             $('#id_work_type').change(function () {
                 let total_time = 0;
                 let total_price = 0;
@@ -53,6 +154,18 @@
                                 .attr("time",response.prices[price].time)
                                 .text(response.prices[price].name + ' - ' + response.prices[price].str_time + ' - ' + response.prices[price].price));
                         }
+
+                        eventsList = [];
+                        for(event in response.events){
+                            let eventElement = response.events[event];
+                            eventsList.push({
+                                'start': Date.parse(eventElement.start['dateTime' in eventElement.start ? 'dateTime' : 'date']),
+                                'end': Date.parse(eventElement.end['dateTime' in eventElement.end ? 'dateTime' : 'date']),
+                                });
+                        }
+
+                        drawCalendar(+response.range);
+                        drawTimetable(new Date());
                     },
 
                     error: function (response) {

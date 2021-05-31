@@ -135,7 +135,7 @@ def gcal_data_return(request):
             timeMin=now, 
             timeMax=date_max).execute()
 
-        response = {'events':{},'prices':{}}
+        response = {'events':{},'prices':{},'range':master_profile.booking_time_range, }
 
         for price in master_profile.prices.all():
             response['prices'].update({
@@ -149,7 +149,6 @@ def gcal_data_return(request):
         for event in events['items']:
             response['events'].update({
                 event['id']:{
-                    'htmlLink':event['htmlLink'],
                     'start':event['start'],
                     'end':event['end'],}})
             page_token = events.get('nextPageToken')
@@ -158,7 +157,6 @@ def gcal_data_return(request):
             for event in events['items']:
                 response['events'].update({
                     event['id']:{
-                        'htmlLink':event['htmlLink'],
                         'start':event['start'],
                         'end':event['end'],}})
                 page_token = events.get('nextPageToken')
@@ -180,8 +178,7 @@ class UserView(PermissionRequiredMixin,LoginRequiredMixin,DetailView):
 
 
 class OrderCreate(LoginRequiredMixin,CreateView):
-    model = Order
-    fields = ('master', 'work_type', 'booking_date', 'client_comment', )
+    form_class = NewOrderForm
     template_name = 'new_order.html'
     success_url = reverse_lazy('my-orders')
 

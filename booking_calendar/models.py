@@ -36,6 +36,7 @@ class Profile(models.Model):
     gcal_key = models.CharField(max_length=200, blank=True)
     gcal_link = models.CharField(max_length=200, blank=True)
     timetable = models.CharField(max_length=1, choices=TIME_TABLE.choices, default=TIME_TABLE.ALL)
+    booking_time_range = models.IntegerField(default=30)
 
     def __str__(self):
         return f'{self.user}'

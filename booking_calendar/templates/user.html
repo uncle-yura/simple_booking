@@ -43,6 +43,8 @@
                     <hr>
                     <p class="text-muted mb-0"  style="font-size: 12px">Timetable:</p>
                     <p> {{ user.profile.get_timetable_display  }} </p>
+                    <p class="text-muted mb-0"  style="font-size: 12px">Booking time range:</p>
+                    <p> {{ user.profile.booking_time_range  }} </p>
                     <p class="text-muted mb-0"  style="font-size: 12px">Link:</p>
                     <p> {{ user.profile.gcal_link|truncatechars:15 }} </p>
                     {% if user.profile.get_gcal_status %}

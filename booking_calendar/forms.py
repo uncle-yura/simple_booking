@@ -20,6 +20,13 @@ class NewUserForm(UserCreationForm):
 		return user
 
 
+class NewOrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ('master', 'work_type', 'booking_date', 'client_comment', )
+        widgets = {'booking_date': forms.HiddenInput}
+
+
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
@@ -35,7 +42,7 @@ class ProfileForm(forms.ModelForm):
 class MasterProfileForm(forms.ModelForm):
     class Meta: 
         model = Profile
-        fields = ('timetable', 'gcal_link', )
+        fields = ('timetable', 'booking_time_range', 'gcal_link', )
 
 
 PriceListFormSet = inlineformset_factory(
