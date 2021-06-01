@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_underconstruction',
+    'bootstrap',
+    'fontawesome',
     'crispy_forms',
     'booking_calendar.apps.BookingCalendarConfig',
 ]

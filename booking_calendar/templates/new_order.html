@@ -5,34 +5,53 @@
 {% block content %}
 
 <div class="container py-5">
-    <h1 class="font-weight-bold">New order</h1>
-    <hr>
-    <br>
-    <form id="newOrderForm" method="POST">
-        {% csrf_token %}
-        {{ form|crispy }}   
+    <div class="row justify-content-between">
+        <div id='id_calendar' class='card p-4 col-md-4'>
+            <h1 class="font-weight-bold">New order</h1>
+            <hr>
+            <br>
+            <form id="newOrderForm" method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}   
 
-        <div class="container">
-            <div class="row justify-content-between">
-                <div id='id_calendar' class='card p-4 col-md-7'>
-                    <div id='id_calendar_header'></div>
-                    <div id='id_calendar_body'></div>
+                <div class="container">
+                    <div class="row">
+                        <p id="order_total_time"></p>
+                        <p id="order_total_price"></p>
+                    </div>
+
+                    <div class="row">
+                        <button class="btn btn-primary" type="submit">Order</button>
+                    </div>
                 </div>
-                <div id='id_timetable' class='card p-4 col-md-4'>
-                    <div id='id_timetable_header'></div>
-                    <div id='id_timetable_body'></div>
-                </div>
-            </div>
-            <div class="row">
-                <p id="order_total_time"></p>
-                <p id="order_total_price"></p>
-            </div>
-    
-            <div class="row">
-                <button class="btn btn-primary" type="submit">Order</button>
-            </div>
+            </form> 
         </div>
-    </form>
+ 
+        <div id='id_calendar' class='card p-4 col-md-7'>
+            <div id='id_calendar_header'></div>
+            <div id='id_calendar_body'></div>
+        </div>  
+    </div>
+</div>
+
+<div class="modal fade" id="id_day_view_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="id_timetable_header"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body" id='id_timetable_body'>
+
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+    </div>
+    </div>
 </div>
 
 <script>
@@ -58,12 +77,28 @@
         $('#id_timetable_header').append(div);  
 
         for(let event of eventsList.filter(function (a) {
-            return (a.start > this.setHours(0,0)) && (a.start < this.setHours(23,59));
+            return (a.start > this.setHours(0,0)) && (a.start < this.setHours(23,59)) ||
+                (a.end > this.setHours(0,0)) && (a.end < this.setHours(23,59));
         },currentDate)) {
-            let div = document.createElement('div');
-            div.className = "timetable_event";
-            div.innerHTML = event.start + ' ' +event.end;
-            $('#id_timetable_body').append(div);  
+            let card = document.createElement('div');
+            card.className = "shadow-lg p-2 mb-1 bg-white rounded";
+
+            function normalize_date(date, event){
+                if(event > date.setHours(23,59)) {
+                    return date.getTime();
+                }
+                else if(event < date.setHours(0,0)) {
+                    return date.getTime();
+                }
+                else {
+                    return event;
+                }
+            }
+
+            let duration = normalize_date(currentDate, event.end) - normalize_date(currentDate, event.start);
+            card.style = "height: "+duration/864000+"vh;"
+            card.innerHTML = event.start + ' ' +event.end;
+            $('#id_timetable_body').append(card);  
         }
     }
 
@@ -101,10 +136,11 @@
         for(i=0; i<booking_range; i++){
             let div = document.createElement('div');
             div.className = "calendar_day_active";
-            div.setAttribute("value",firstDay.toISOString())
-
+            div.setAttribute("value",firstDay.toISOString());
+    
             div.onclick = function() {
                 drawTimetable(this.getAttribute("value"));
+                $("#id_day_view_modal").modal();
                 };
 
             div.innerHTML = firstDay.getDate();
@@ -113,15 +149,16 @@
             if (lastDay==firstDay.getDate()) {
                 firstDay.setDate(firstDay.getDate()+1);  
                 lastDay = getLastDayOfMonth(firstDay.getFullYear(), firstDay.getMonth());     
-                addMonthName(monthDays, firstDay)
-                addInactiveDays(monthDays, firstDay);
+                if(i<booking_range-1) {                    
+                    addMonthName(monthDays, firstDay);
+                    addInactiveDays(monthDays, firstDay);
+                }
             }
             else {
-              firstDay.setDate(firstDay.getDate()+1);  
+                firstDay.setDate(firstDay.getDate()+1);  
             }
         }
     }
-
 
     $(document).ready(function () {
             $('#id_work_type').empty();

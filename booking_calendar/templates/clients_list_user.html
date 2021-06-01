@@ -21,7 +21,7 @@
           <td>{{client}}</td>
           <td>{{client.get_latest_order_date}}</td>
           <td>
-            <a href="{% url 'user-view' client.pk %}" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xe8f4;</i></a>
+            <a href="{% url 'user-view' client.pk %}" class="settings" title="View" data-toggle="tooltip"><i class="fas fa-eye"></i></a>
         </td>
         </tr>
         {% endfor %}

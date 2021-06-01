@@ -21,8 +21,8 @@
           <td>{{price}}</td>
           <td>{{price.price}}</td>
           <td>
-            <a href="{% url 'price-update' price.pk %}" class="settings" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-            <a href="{% url 'price-delete' price.pk %}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+            <a href="{% url 'price-update' price.pk %}" class="settings" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+            <a href="{% url 'price-delete' price.pk %}" class="delete" title="Delete" data-toggle="tooltip"><i class="fas fa-trash"></i></a>
         </td>
         </tr>
         {% endfor %}
