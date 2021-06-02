@@ -12,8 +12,34 @@ body {
 }
 
 .modal-body {
-    max-height: calc(100vh - 210px);
+    height: 70vh;
     overflow-y: auto;
+}
+
+.timetable_hours{
+    height: 4%;  
+}
+
+.timetable_event{
+    position: absolute;
+    width: 70%;
+    left: 20%;
+    z-index: 1;
+    min-height: 2.5rem;
+    background:rgba(208, 152, 71, 0.4);
+}
+
+#id_timetable_new_date{
+    background:rgba(47, 152, 86, 0.4);
+}
+
+.timetable_events_container{
+    min-height: 75rem;
+    height: 200vh; 
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
 
 .calendar_weekday_name{

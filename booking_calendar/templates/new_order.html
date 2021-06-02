@@ -44,45 +44,70 @@
         </button>
         </div>
         <div class="modal-body" id='id_timetable_body'>
-
+            <div class='timetable_events_container' id='id_timetable_events'></div>
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" id="id_timetable_select">Select</button>
         </div>
     </div>
     </div>
 </div>
 
 <script>
+    'use strict'
     let eventsList = [];
+    let total_time = 0;
+    let total_price = 0;
 
     let dayNames = "MON,TUE,WEN,THU,FRI,SAT,SUN"
-    for(i=0; i<7; i++){
+    for(let i=0; i<7; i++){
         let div = document.createElement('div');
         div.className = "calendar_weekday_name";
         div.innerHTML = dayNames.split(',')[i];
         $('#id_calendar_header').append(div);  
     }      
 
+    let table = document.createElement('table');
+    table.className = 'table timetable_events_container';
+    for(let i=0; i<24; i++){
+        let tr = document.createElement('tr');
+        tr.className = "timetable_hours";
+        tr.innerHTML = "<td style='vertical-align: middle;'>"+i+":00</td>";
+        table.append(tr);
+    }      
+    table.onclick = function(e) {
+        let timePosition = (e.pageY - $(this).offset().top)/$(this).height();
+        drawNewEvent(timePosition);
+    }
+    $('#id_timetable_body').append(table);  
+
+    function drawNewEvent(position) {
+        let new_event = document.getElementById("id_timetable_new_date")
+
+        if(!new_event){
+            new_event = document.createElement('div');
+            new_event.className = "shadow-lg p-2 mb-1 rounded timetable_event";
+            new_event.style = "height: 10%; top: "+position*100+"%";
+            new_event.innerHTML = "New event from ";
+            new_event.id = "id_timetable_new_date";
+            $("#id_timetable_events").append(new_event);
+        }
+
+        new_event.style = "height: "+ total_time/3600*4 +"%; top: "+position*100+"%";
+    }
+
     function drawTimetable(date) {
-        let currentDate = new Date(date)
+        let currentDate = new Date(date);
 
-        $("#id_timetable_header").html("");
-        $("#id_timetable_body").html("");
-
-        let div = document.createElement('div');
-        div.className = "timetable_date";
-        div.innerHTML = currentDate;
-        $('#id_timetable_header').append(div);  
+        $("#id_timetable_header").html("Booking on " + currentDate.toLocaleDateString());
+        $("#id_timetable_events").html("");
 
         for(let event of eventsList.filter(function (a) {
             return (a.start > this.setHours(0,0)) && (a.start < this.setHours(23,59)) ||
                 (a.end > this.setHours(0,0)) && (a.end < this.setHours(23,59));
         },currentDate)) {
-            let card = document.createElement('div');
-            card.className = "shadow-lg p-2 mb-1 bg-white rounded";
-
+           
             function normalize_date(date, event){
                 if(event > date.setHours(23,59)) {
                     return date.getTime();
@@ -95,10 +120,27 @@
                 }
             }
 
-            let duration = normalize_date(currentDate, event.end) - normalize_date(currentDate, event.start);
-            card.style = "height: "+duration/864000+"vh;"
-            card.innerHTML = event.start + ' ' +event.end;
-            $('#id_timetable_body').append(card);  
+            function getLocaleTimeString(date) {
+                let time = new Date(date);
+                return time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+            }
+
+            let event_start = normalize_date(currentDate, event.start);
+            let event_end = normalize_date(currentDate, event.end);
+
+            let event_time_start = new Date(event_start);
+            let event_position_start = (event_time_start.getHours() + event_time_start.getMinutes()/60)*(1/24)*100;
+
+            let card = document.createElement('div');
+            card.className = "shadow-lg p-2 mb-1 rounded timetable_event";
+            card.style = "height: "+(event_end - event_start)/864000+"%; top: "+event_position_start+"%";
+            card.innerHTML = "Busy from " + getLocaleTimeString(event_start) + " to " + getLocaleTimeString(event_end);
+            card.onclick = function(e) {
+                let timePosition = $(this).outerHeight() + $(this).position().top ;
+                timePosition = timePosition/document.getElementById("id_timetable_body").scrollHeight;
+                drawNewEvent(timePosition);
+            }
+            $('#id_timetable_events').append(card);  
         }
     }
 
@@ -133,14 +175,14 @@
         addMonthName(monthDays, firstDay);
         addInactiveDays(monthDays, firstDay);
 
-        for(i=0; i<booking_range; i++){
+        for(let i=0; i<booking_range; i++){
             let div = document.createElement('div');
             div.className = "calendar_day_active";
             div.setAttribute("value",firstDay.toISOString());
     
             div.onclick = function() {
                 drawTimetable(this.getAttribute("value"));
-                $("#id_day_view_modal").modal();
+                $("#id_day_view_modal").modal('show');
                 };
 
             div.innerHTML = firstDay.getDate();
@@ -160,19 +202,23 @@
         }
     }
 
+    $('#id_day_view_modal').on('shown.bs.modal', function () {
+        $("#id_timetable_body").animate({ scrollTop: document.getElementById("id_timetable_body").scrollHeight/3 }, 600);
+        });
+
     $(document).ready(function () {
             $('#id_work_type').empty();
         
             $('#id_work_type').change(function () {
-                let total_time = 0;
-                let total_price = 0;
-
+                total_price = 0;
+                total_time = 0;
                 for (let option of this.options) {
                     if (option.selected) {
                         total_price+=parseFloat(option.getAttribute('price'));
                         total_time+=parseFloat(option.getAttribute('time'));
                     }
                 }
+
                 $('#order_total_price').text("Total price: "+total_price)
                 $('#order_total_time').text("Total time: "+total_time/60);
             });
@@ -184,7 +230,7 @@
 
                     success: function (response) {
                         $('#id_work_type').empty();
-                        for(price in response.prices){
+                        for(let price in response.prices){
                             $('#id_work_type').append($("<option></option>")
                                 .attr("value",response.prices[price].id)
                                 .attr("price",response.prices[price].price)
@@ -193,7 +239,7 @@
                         }
 
                         eventsList = [];
-                        for(event in response.events){
+                        for(let event in response.events){
                             let eventElement = response.events[event];
                             eventsList.push({
                                 'start': Date.parse(eventElement.start['dateTime' in eventElement.start ? 'dateTime' : 'date']),
