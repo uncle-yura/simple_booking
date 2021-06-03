@@ -11,11 +11,11 @@ $(document).ready(function () {
     }      
 
     let table = document.createElement('table');
-    table.className = 'table timetable_events_container';
+    table.className = 'timetable_events_container';
     for(let i=0; i<24; i++){
         let tr = document.createElement('tr');
         tr.className = "timetable_hours";
-        tr.innerHTML = "<td style='vertical-align: middle;'>"+i+":00</td>";
+        tr.innerHTML = "<td class='timetable_td'>"+i+":00</td>";
         table.append(tr);
     }      
     table.onclick = function(e) {

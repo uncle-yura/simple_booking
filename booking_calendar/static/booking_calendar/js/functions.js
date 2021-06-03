@@ -1,25 +1,73 @@
 'use strict';
 
-function drawNewEvent(position) {
+function getPositionFromStamp(timestamp) {
+    let time = new Date(timestamp);
+    return (time.getHours() + time.getMinutes()/60)*(1/24);
+}
+
+function zeroPad(num, places) {
+    var zero = places - num.toString().length + 1;
+    return Array(+(zero > 0 && zero)).join("0") + num;
+  }
+
+function checkPosition(new_start, new_end, event_start, event_end) {
+    if( (new_start < event_start && new_end > event_end) || 
+        (new_end > event_start && new_end < event_end) || 
+        (new_start > event_start && new_start < event_end) ) {
+        return false;
+    }
+    return true;
+}
+
+function drawNewEvent(position_start) {
+    if( !total_time ) return false;
+    if( position_start >= 1 || position_start<0 ) return false;
+
+    for(let i=0; i<selectedDayList.length; i++) {
+        let event = selectedDayList[i];
+        let start = getPositionFromStamp(event.start);
+        let end = getPositionFromStamp(event.end);
+        let position_end = (total_time/3600)/24 + position_start;
+
+        if( checkPosition(position_start, position_end, start, end) ){
+            continue;
+         } else if(((i==selectedDayList.length-1) && (end+(total_time/3600)/24)<1) || 
+                ((i<selectedDayList.length-1) && 
+                (end+(total_time/3600)/24)<1 && 
+                checkPosition(end, end+(total_time/3600)/24, getPositionFromStamp(selectedDayList[i+1].start), getPositionFromStamp(selectedDayList[i+1].end)) )) {
+            position_start = end;
+            position_end = end+(total_time/3600)/24;
+            break;
+        } else if((i==0 && (start - (total_time/3600)/24)>=0) || 
+                (i>0 &&
+                (start - (total_time/3600)/24)>0 && 
+                checkPosition(start - (total_time/3600)/24, start, getPositionFromStamp(selectedDayList[i-1].start), getPositionFromStamp(selectedDayList[i-1].end))) ) {
+            position_start = start - (total_time/3600)/24;
+            position_end = start;
+            break;
+        } 
+    }
+
     let new_event = document.getElementById("id_timetable_new_date")
 
     if(!new_event){
         new_event = document.createElement('div');
-        new_event.className = "shadow-lg p-2 mb-1 rounded timetable_event";
-        new_event.style = "height: 10%; top: "+position*100+"%";
-        new_event.innerHTML = "New event from ";
+        new_event.className = "timetable_event";
+        new_event.style = "height: "+ total_time/3600*4 +"%; top: "+position_start*100+"%";
+        new_event.innerHTML = "New event from " + zeroPad(Math.floor(position_start*24),2) + ":" + zeroPad(Math.floor(((position_start*24) % 1)*60),2);
         new_event.id = "id_timetable_new_date";
         $("#id_timetable_events").append(new_event);
     }
 
-    new_event.style = "height: "+ total_time/3600*4 +"%; top: "+position*100+"%";
+    new_event.style = "height: "+ total_time/3600*4 +"%; top: "+position_start*100+"%";
+    new_event.innerHTML = "New event from " + zeroPad(Math.floor(position_start*24),2) + ":" + zeroPad(Math.floor(((position_start*24) % 1)*60),2);
 }
 
 function normalize_date(date, event){
-    if(event > date.setHours(23,59)) {
+    if(event > date.setHours(23,59,59,999)) {
         return date.getTime();
     }
-    else if(event < date.setHours(0,0)) {
+    else if(event < date.setHours(0,0,0,0)) {
         return date.getTime();
     }
     else {
@@ -37,9 +85,9 @@ function getLastDayOfMonth(year, month) {
     return date.getDate();
 }
 
-function filterSelectedDay(a) {
-    return (a.start > this.setHours(0,0)) && (a.start < this.setHours(23,59)) ||
-        (a.end > this.setHours(0,0)) && (a.end < this.setHours(23,59));
+function filterSelectedDay(event) {
+    return (event.start > this.setHours(0,0,0,0)) && (event.start < this.setHours(23,59,59,999)) ||
+        (event.end > this.setHours(0,0,0,0)) && (event.end < this.setHours(23,59,59,999));
     }
 
 function drawTimetable(date) {
@@ -48,20 +96,22 @@ function drawTimetable(date) {
     $("#id_timetable_header").html("Booking on " + currentDate.toLocaleDateString());
     $("#id_timetable_events").html("");
 
-    for(let event of eventsList.filter(filterSelectedDay,currentDate)) {
-       
-        let event_start = normalize_date(currentDate, event.start);
-        let event_end = normalize_date(currentDate, event.end);
+    selectedDayList = eventsList.filter(filterSelectedDay,currentDate);
+    selectedDayList.forEach((event)=>{
+        event.start = normalize_date(currentDate, event.start);
+        event.end = normalize_date(currentDate, event.end);
+    });
+    selectedDayList.sort(function (a, b) {
+        return a.start - b.start;
+    });
 
-        let event_time_start = new Date(event_start);
-        let event_position_start = (event_time_start.getHours() + event_time_start.getMinutes()/60)*(1/24)*100;
-
+    for(let event of selectedDayList) {
         let card = document.createElement('div');
-        card.className = "shadow-lg p-2 mb-1 rounded timetable_event";
-        card.style = "height: "+(event_end - event_start)/864000+"%; top: "+event_position_start+"%";
-        card.innerHTML = "Busy from " + getLocaleTimeString(event_start) + " to " + getLocaleTimeString(event_end);
-        card.onclick = function(e) {
-            let timePosition = $(this).outerHeight() + $(this).position().top ;
+        card.className = "timetable_event";
+        card.style = "height: "+(event.end - event.start)/864000+"%; top: "+getPositionFromStamp(event.start)*100+"%";
+        card.innerHTML = "Busy from " + getLocaleTimeString(event.start) + " to " + getLocaleTimeString(event.end);
+        card.onclick = function() {
+            let timePosition = $(this).outerHeight()/2 + $(this).position().top ;
             timePosition = timePosition/document.getElementById("id_timetable_body").scrollHeight;
             drawNewEvent(timePosition);
         }
@@ -76,7 +126,7 @@ function drawCalendar(booking_range) {
     function addMonthName(parent, date) {
         let monthName = document.createElement('div');
         monthName.className = "calendar_month_name";
-        monthName.innerHTML = monthStr.split(',')[date.getMonth()];
+        monthName.innerHTML = monthNames.split(',')[date.getMonth()];
         parent.append(monthName);  
     }
 
@@ -101,7 +151,8 @@ function drawCalendar(booking_range) {
         div.setAttribute("value",firstDay.toISOString());
 
         div.onclick = function() {
-            drawTimetable(this.getAttribute("value"));
+            selectedDay = this.getAttribute("value");
+            drawTimetable(selectedDay);
             $("#id_day_view_modal").modal('show');
             };
 

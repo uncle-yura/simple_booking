@@ -59,11 +59,13 @@
 <script>
     'use strict'
     let eventsList = [];
+    let selectedDayList = [];
+    let selectedDay = 1;
     let total_time = 0;
     let total_price = 0;
     let gcal_url = "{% url 'gcal-data' %}";
     let dayNames = "MON,TUE,WEN,THU,FRI,SAT,SUN";
-    let monthStr = "January,February,March,April,May,June,July,August,September,October,November,December";
+    let monthNames = "January,February,March,April,May,June,July,August,September,October,November,December";
 </script>
 <script src="{% static 'booking_calendar/js/ajax.js' %}"></script>
 <script src="{% static 'booking_calendar/js/events.js' %}"></script>
