@@ -1,6 +1,10 @@
 'use strict';
 
-function getPositionFromStamp(timestamp) {
+function moveTimetable(pos) {
+    $("#id_timetable_body").animate({ scrollTop: document.getElementById("id_timetable_body").scrollHeight*pos }, 600);
+}
+
+function getPosFromStamp(timestamp) {
     let time = new Date(timestamp);
     return (time.getHours() + time.getMinutes()/60)*(1/24);
 }
@@ -10,57 +14,15 @@ function zeroPad(num, places) {
     return Array(+(zero > 0 && zero)).join("0") + num;
   }
 
-function checkPosition(new_start, new_end, event_start, event_end) {
-    if( (new_start < event_start && new_end > event_end) || 
+function checkPosition(new_start, new_end, event) {
+    let event_start = getPosFromStamp(event.start);
+    let event_end = getPosFromStamp(event.end);
+    if( (new_start <= event_start && new_end >= event_end) || 
         (new_end > event_start && new_end < event_end) || 
-        (new_start > event_start && new_start < event_end) ) {
+        (new_start >= event_start && new_start <= event_end) ) {
         return false;
     }
     return true;
-}
-
-function drawNewEvent(position_start) {
-    if( !total_time ) return false;
-    if( position_start >= 1 || position_start<0 ) return false;
-
-    for(let i=0; i<selectedDayList.length; i++) {
-        let event = selectedDayList[i];
-        let start = getPositionFromStamp(event.start);
-        let end = getPositionFromStamp(event.end);
-        let position_end = (total_time/3600)/24 + position_start;
-
-        if( checkPosition(position_start, position_end, start, end) ){
-            continue;
-         } else if(((i==selectedDayList.length-1) && (end+(total_time/3600)/24)<1) || 
-                ((i<selectedDayList.length-1) && 
-                (end+(total_time/3600)/24)<1 && 
-                checkPosition(end, end+(total_time/3600)/24, getPositionFromStamp(selectedDayList[i+1].start), getPositionFromStamp(selectedDayList[i+1].end)) )) {
-            position_start = end;
-            position_end = end+(total_time/3600)/24;
-            break;
-        } else if((i==0 && (start - (total_time/3600)/24)>=0) || 
-                (i>0 &&
-                (start - (total_time/3600)/24)>0 && 
-                checkPosition(start - (total_time/3600)/24, start, getPositionFromStamp(selectedDayList[i-1].start), getPositionFromStamp(selectedDayList[i-1].end))) ) {
-            position_start = start - (total_time/3600)/24;
-            position_end = start;
-            break;
-        } 
-    }
-
-    let new_event = document.getElementById("id_timetable_new_date")
-
-    if(!new_event){
-        new_event = document.createElement('div');
-        new_event.className = "timetable_event";
-        new_event.style = "height: "+ total_time/3600*4 +"%; top: "+position_start*100+"%";
-        new_event.innerHTML = "New event from " + zeroPad(Math.floor(position_start*24),2) + ":" + zeroPad(Math.floor(((position_start*24) % 1)*60),2);
-        new_event.id = "id_timetable_new_date";
-        $("#id_timetable_events").append(new_event);
-    }
-
-    new_event.style = "height: "+ total_time/3600*4 +"%; top: "+position_start*100+"%";
-    new_event.innerHTML = "New event from " + zeroPad(Math.floor(position_start*24),2) + ":" + zeroPad(Math.floor(((position_start*24) % 1)*60),2);
 }
 
 function normalize_date(date, event){
@@ -86,9 +48,68 @@ function getLastDayOfMonth(year, month) {
 }
 
 function filterSelectedDay(event) {
-    return (event.start > this.setHours(0,0,0,0)) && (event.start < this.setHours(23,59,59,999)) ||
-        (event.end > this.setHours(0,0,0,0)) && (event.end < this.setHours(23,59,59,999));
+    return (event.start > this.setHours(0,0,0,0) && event.start < this.setHours(23,59,59,999)) ||
+        (event.end > this.setHours(0,0,0,0) && event.end < this.setHours(23,59,59,999));
+}
+
+function drawNewEvent(position_start) {
+    if( !total_time ) return false;
+    if( position_start >= 1 || position_start<0 ) return false;
+
+    let duration = (total_time/3600)/24
+    let position_end = duration + position_start;
+
+    for(let i=0; i<selectedDayList.length; i++) {
+        let event = selectedDayList[i];
+        let start = getPosFromStamp(event.start);
+        let end = getPosFromStamp(event.end);
+
+        if( checkPosition(position_start, position_end, event) ) {
+            continue;
+        } 
+        else if((i==selectedDayList.length-1) && end+duration<1) {
+            position_start = end;
+            position_end = end+duration;
+            break;
+        } 
+        else if((i<selectedDayList.length-1) && (end+duration)<1 && 
+                checkPosition(end, end+duration, selectedDayList[i+1])) {
+            position_start = end;
+            position_end = end+duration;
+            break;
+        }
+        else if(i==0 && (start - duration)>=0) {
+            position_start = start - duration;
+            position_end = start;
+            break;
+        }
+        else if(i>0 && (start - duration)>0 && 
+                checkPosition(start - duration, start, selectedDayList[i-1])) {
+            position_start = start - duration;
+            position_end = start;
+            break;
+        } 
+        else {
+            return false;
+        }
     }
+
+    let new_event = document.getElementById("id_timetable_new_date")
+
+    if(!new_event){
+        new_event = document.createElement('div');
+        new_event.className = "timetable_event";
+        new_event.style = "height: "+ total_time/3600*4 +"%; top: "+position_start*100+"%";
+        new_event.innerHTML = "New event from " + zeroPad(Math.floor(position_start*24),2) + ":" + zeroPad(Math.floor(((position_start*24) % 1)*60),2);
+        new_event.id = "id_timetable_new_date";
+        $("#id_timetable_events").append(new_event);
+    }
+
+    new_event.style = "height: "+ total_time/3600*4 +"%; top: "+position_start*100+"%";
+    new_event.innerHTML = "New event from " + zeroPad(Math.floor(position_start*24),2) + ":" + zeroPad(Math.floor(((position_start*24) % 1)*60),2) +
+        "to " + zeroPad(Math.floor(position_end*24),2) + ":" + zeroPad(Math.floor(((position_end*24) % 1)*60),2);
+    moveTimetable(position_start-1/6);
+}
 
 function drawTimetable(date) {
     let currentDate = new Date(date);
@@ -108,7 +129,7 @@ function drawTimetable(date) {
     for(let event of selectedDayList) {
         let card = document.createElement('div');
         card.className = "timetable_event";
-        card.style = "height: "+(event.end - event.start)/864000+"%; top: "+getPositionFromStamp(event.start)*100+"%";
+        card.style = "height: "+(event.end - event.start)/864000+"%; top: "+getPosFromStamp(event.start)*100+"%";
         card.innerHTML = "Busy from " + getLocaleTimeString(event.start) + " to " + getLocaleTimeString(event.end);
         card.onclick = function() {
             let timePosition = $(this).outerHeight()/2 + $(this).position().top ;

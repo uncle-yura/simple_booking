@@ -27,7 +27,7 @@ $(document).ready(function () {
     });
 
 $('#id_day_view_modal').on('shown.bs.modal', function () {
-    $("#id_timetable_body").animate({ scrollTop: document.getElementById("id_timetable_body").scrollHeight/3 }, 600);
+    moveTimetable(1/3);
     });
 
 $('#id_master').change(function () {
