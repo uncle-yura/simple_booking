@@ -6,7 +6,7 @@ $(document).ready(function () {
     for(let i=0; i<7; i++) {
         let div = document.createElement('div');
         div.className = "calendar_weekday_name";
-        div.innerHTML = dayNames.split(',')[i];
+        div.innerHTML = getLocalText('dayNames').split(',')[i];
         $('#id_calendar_header').append(div);  
     }      
 
@@ -24,6 +24,25 @@ $(document).ready(function () {
     }
     
     $('#id_timetable_body').append(table); 
+    });
+
+$('body').on("mouseup", function() {
+    if(selectedDayEventsObjList.hasOwnProperty("new_event")) {
+        selectedDayEventsObjList.new_event.mouse_up();
+    }
+});
+
+$('body').on("mousemove", function(e) {
+    if(selectedDayEventsObjList.hasOwnProperty("new_event") &&
+        selectedDayEventsObjList.new_event.dragging) {
+            let timetable = document.getElementById("id_timetable_body")
+           
+            selectedDayEventsObjList.new_event.pos_start = (
+                timetable.scrollTop + 
+                e.pageY - 
+                $(timetable).offset().top - 
+                selectedDayEventsObjList.new_event.card.offsetHeight / 2 ) / timetable.scrollHeight;
+        }
     });
 
 $('#id_day_view_modal').on('shown.bs.modal', function () {

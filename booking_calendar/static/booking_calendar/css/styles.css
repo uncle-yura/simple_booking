@@ -38,6 +38,14 @@ body {
     box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
     border-radius: .25rem;
     box-sizing: border-box;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                            supported by Chrome and Opera */
 }
 
 #id_timetable_new_date{

@@ -3,7 +3,7 @@
 function getMasterData(event){
     $.ajax({
         data: event.serialize(), 
-        url: gcal_url,
+        url: getLocalText('gcal_url'),
     
         success: function (response) {
             $('#id_work_type').empty();
@@ -15,15 +15,19 @@ function getMasterData(event){
                     .text(response.prices[price].name + ' - ' + response.prices[price].str_time + ' - ' + response.prices[price].price));
             }
     
-            eventsList = [];
+            let eventsList = [];
+
             for(let event in response.events){
                 let eventElement = response.events[event];
+
                 eventsList.push({
-                    'start': Date.parse(eventElement.start['dateTime' in eventElement.start ? 'dateTime' : 'date']),
-                    'end': Date.parse(eventElement.end['dateTime' in eventElement.end ? 'dateTime' : 'date']),
+                    'start': eventElement.start['dateTime' in eventElement.start ? 'dateTime' : 'date'],
+                    'end': eventElement.end['dateTime' in eventElement.end ? 'dateTime' : 'date'],
                     });
-            }
-    
+                }
+
+            sessionStorage.setItem('events', JSON.stringify(eventsList));
+
             drawCalendar(+response.range);
             drawTimetable(new Date());
         },

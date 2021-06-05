@@ -9,10 +9,12 @@ function getPosFromStamp(timestamp) {
     return (time.getHours() + time.getMinutes()/60)*(1/24);
 }
 
-function zeroPad(num, places) {
-    var zero = places - num.toString().length + 1;
-    return Array(+(zero > 0 && zero)).join("0") + num;
-  }
+function getStampFromPos(pos, timestamp = 0) {
+    let time = new Date(timestamp);
+    let hours = Math.floor(pos*24);
+    let minutes = Math.floor(((pos*24) % 1)*60);
+    return time.setHours(hours,minutes,0,0);
+}
 
 function checkPosition(new_start, new_end, event) {
     let event_start = getPosFromStamp(event.start);
@@ -26,14 +28,15 @@ function checkPosition(new_start, new_end, event) {
 }
 
 function normalize_date(date, event){
-    if(event > date.setHours(23,59,59,999)) {
+    let eventDate = new Date(event);
+    if(eventDate.getTime() > date.setHours(23,59,59,999)) {
         return date.getTime();
     }
-    else if(event < date.setHours(0,0,0,0)) {
+    else if(eventDate.getTime() < date.setHours(0,0,0,0)) {
         return date.getTime();
     }
     else {
-        return event;
+        return eventDate.getTime();
     }
 }
 
@@ -47,97 +50,58 @@ function getLastDayOfMonth(year, month) {
     return date.getDate();
 }
 
-function filterSelectedDay(event) {
-    return (event.start > this.setHours(0,0,0,0) && event.start < this.setHours(23,59,59,999)) ||
-        (event.end > this.setHours(0,0,0,0) && event.end < this.setHours(23,59,59,999));
-}
-
 function drawNewEvent(position_start) {
     if( !total_time ) return false;
     if( position_start >= 1 || position_start<0 ) return false;
 
-    let duration = (total_time/3600)/24
-    let position_end = duration + position_start;
-
-    for(let i=0; i<selectedDayList.length; i++) {
-        let event = selectedDayList[i];
-        let start = getPosFromStamp(event.start);
-        let end = getPosFromStamp(event.end);
-
-        if( checkPosition(position_start, position_end, event) ) {
-            continue;
-        } 
-        else if((i==selectedDayList.length-1) && end+duration<1) {
-            position_start = end;
-            position_end = end+duration;
-            break;
-        } 
-        else if((i<selectedDayList.length-1) && (end+duration)<1 && 
-                checkPosition(end, end+duration, selectedDayList[i+1])) {
-            position_start = end;
-            position_end = end+duration;
-            break;
-        }
-        else if(i==0 && (start - duration)>=0) {
-            position_start = start - duration;
-            position_end = start;
-            break;
-        }
-        else if(i>0 && (start - duration)>0 && 
-                checkPosition(start - duration, start, selectedDayList[i-1])) {
-            position_start = start - duration;
-            position_end = start;
-            break;
-        } 
-        else {
-            return false;
-        }
+    let start_stamp = getStampFromPos(position_start,selectedDay)
+    if(!selectedDayEventsObjList.hasOwnProperty("new_event")) {
+        selectedDayEventsObjList.new_event = new Event({
+            'start':start_stamp, 
+            'end':start_stamp+total_time*1000},"id_timetable_new_date");
+        $("#id_timetable_events").append(selectedDayEventsObjList.new_event.card);
     }
-
-    let new_event = document.getElementById("id_timetable_new_date")
-
-    if(!new_event){
-        new_event = document.createElement('div');
-        new_event.className = "timetable_event";
-        new_event.style = "height: "+ total_time/3600*4 +"%; top: "+position_start*100+"%";
-        new_event.innerHTML = "New event from " + zeroPad(Math.floor(position_start*24),2) + ":" + zeroPad(Math.floor(((position_start*24) % 1)*60),2);
-        new_event.id = "id_timetable_new_date";
-        $("#id_timetable_events").append(new_event);
+    else {
+        selectedDayEventsObjList.new_event.pos_start = position_start;
     }
-
-    new_event.style = "height: "+ total_time/3600*4 +"%; top: "+position_start*100+"%";
-    new_event.innerHTML = "New event from " + zeroPad(Math.floor(position_start*24),2) + ":" + zeroPad(Math.floor(((position_start*24) % 1)*60),2) +
-        "to " + zeroPad(Math.floor(position_end*24),2) + ":" + zeroPad(Math.floor(((position_end*24) % 1)*60),2);
-    moveTimetable(position_start-1/6);
 }
 
 function drawTimetable(date) {
     let currentDate = new Date(date);
 
     $("#id_timetable_header").html("Booking on " + currentDate.toLocaleDateString());
+    
+    selectedDayEventsObjList = []
     $("#id_timetable_events").html("");
 
-    selectedDayList = eventsList.filter(filterSelectedDay,currentDate);
+    let selectedDayList = []
+
+    let eventsList = $.parseJSON(sessionStorage.getItem('events'));
+
+    function filterSelectedDay(date) {
+    return eventsList.filter(function(event) {
+        let start = new Date(event.start);
+        let end = new Date(event.end);
+        return (start >= date.setHours(0,0,0,0) && start < date.setHours(23,59,59,999)) ||
+            (end > date.setHours(0,0,0,0) && end <= date.setHours(23,59,59,999));
+        });
+    }
+
+    selectedDayList = filterSelectedDay(currentDate);
+
     selectedDayList.forEach((event)=>{
         event.start = normalize_date(currentDate, event.start);
         event.end = normalize_date(currentDate, event.end);
     });
+
     selectedDayList.sort(function (a, b) {
         return a.start - b.start;
     });
-
+    
     for(let event of selectedDayList) {
-        let card = document.createElement('div');
-        card.className = "timetable_event";
-        card.style = "height: "+(event.end - event.start)/864000+"%; top: "+getPosFromStamp(event.start)*100+"%";
-        card.innerHTML = "Busy from " + getLocaleTimeString(event.start) + " to " + getLocaleTimeString(event.end);
-        card.onclick = function() {
-            let timePosition = $(this).outerHeight()/2 + $(this).position().top ;
-            timePosition = timePosition/document.getElementById("id_timetable_body").scrollHeight;
-            drawNewEvent(timePosition);
-        }
-
-        $('#id_timetable_events').append(card);  
+        let new_event = new Event(event);
+        selectedDayEventsObjList.push(new_event)
+        $('#id_timetable_events').append(new_event.card);  
     }
 }
 
@@ -147,7 +111,7 @@ function drawCalendar(booking_range) {
     function addMonthName(parent, date) {
         let monthName = document.createElement('div');
         monthName.className = "calendar_month_name";
-        monthName.innerHTML = monthNames.split(',')[date.getMonth()];
+        monthName.innerHTML = getLocalText('monthNames').split(',')[date.getMonth()];
         parent.append(monthName);  
     }
 

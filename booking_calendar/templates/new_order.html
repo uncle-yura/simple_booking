@@ -58,18 +58,26 @@
 
 <script>
     'use strict'
-    let eventsList = [];
-    let selectedDayList = [];
-    let selectedDay = 1;
+    let selectedDayEventsObjList = [];
+    let selectedDay;
     let total_time = 0;
     let total_price = 0;
-    let gcal_url = "{% url 'gcal-data' %}";
-    let dayNames = "MON,TUE,WEN,THU,FRI,SAT,SUN";
-    let monthNames = "January,February,March,April,May,June,July,August,September,October,November,December";
+
+    function getLocalText(key, ...args) {
+        const localText = {
+            'gcal_url' : "{% url 'gcal-data' %}",
+            'dayNames' : "MON,TUE,WEN,THU,FRI,SAT,SUN",
+            'monthNames' : "January,February,March,April,May,June,July,August,September,October,November,December",
+            'fromTo' : `From ${args[0]} to ${args[1]}`,
+            'busyFromTo' : `Busy from ${args[0]} to ${args[1]}`,
+        }
+        return localText[key];
+    }
 </script>
 <script src="{% static 'booking_calendar/js/ajax.js' %}"></script>
 <script src="{% static 'booking_calendar/js/events.js' %}"></script>
 <script src="{% static 'booking_calendar/js/functions.js' %}"></script>
+<script src="{% static 'booking_calendar/js/eventClass.js' %}"></script>
 
 
 {% endblock %}

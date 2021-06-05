@@ -124,14 +124,15 @@ def gcal_data_return(request):
         service = build("calendar", "v3", http=http)
 
         now = datetime.datetime.utcnow().isoformat() + 'Z'
-        date_max = datetime.datetime.today() + relativedelta(months=2)
+        date_max = datetime.datetime.today() + relativedelta(days=master_profile.booking_time_range)
         date_max = date_max.isoformat() + 'Z'
         page_token = None
 
         eventsResult = service.events()
         events = eventsResult.list(calendarId=master_profile.gcal_link, 
             pageToken=page_token, 
-            singleEvents=True, 
+            singleEvents=True,
+            orderBy='startTime',
             timeMin=now, 
             timeMax=date_max).execute()
 
