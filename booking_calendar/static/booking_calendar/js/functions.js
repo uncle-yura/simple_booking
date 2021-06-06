@@ -50,16 +50,24 @@ function getLastDayOfMonth(year, month) {
     return date.getDate();
 }
 
+function updateDateStrings(event) {
+    document.getElementById("id_booking_date").value = (new Date(event)).toISOString();
+    document.getElementById("selected_datetime").innerHTML = getLocalText('selDate',
+        (new Date(event)).toLocaleTimeString([], {month:'long', day: '2-digit', hour: '2-digit', minute:'2-digit'}));
+}
+
 function drawNewEvent(position_start) {
     if( !total_time ) return false;
     if( position_start >= 1 || position_start<0 ) return false;
 
-    let start_stamp = getStampFromPos(position_start,selectedDay)
     if(!selectedDayEventsObjList.hasOwnProperty("new_event")) {
+        let start_stamp = getStampFromPos(position_start,selectedDay)
         selectedDayEventsObjList.new_event = new Event({
             'start':start_stamp, 
             'end':start_stamp+total_time*1000},"id_timetable_new_date");
         $("#id_timetable_events").append(selectedDayEventsObjList.new_event.card);
+
+        selectedDayEventsObjList.new_event.pos_start = position_start;
     }
     else {
         selectedDayEventsObjList.new_event.pos_start = position_start;

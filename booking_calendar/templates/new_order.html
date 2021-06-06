@@ -18,9 +18,14 @@
 
                 <div class="container">
                     <div class="row">
-                        <p id="order_total_time"></p>
-                        <p id="order_total_price"></p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" id="order_total_time">Select the master</li>
+                            <li class="list-group-item" id="order_total_price">Select a service</li>
+                            <li class="list-group-item" id="selected_datetime">Choose time</li>
+                        </ul>
                     </div>
+
+                    <br>
 
                     <div class="row">
                         <button class="btn btn-primary" type="submit">Order</button>
@@ -49,8 +54,7 @@
             <div class='timetable_events_container' id='id_timetable_events'></div>
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="id_timetable_select">Select</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
         </div>
     </div>
     </div>
@@ -70,6 +74,9 @@
             'monthNames' : "January,February,March,April,May,June,July,August,September,October,November,December",
             'fromTo' : `From ${args[0]} to ${args[1]}`,
             'busyFromTo' : `Busy from ${args[0]} to ${args[1]}`,
+            'priceTotal' : `Total price: ${args[0]} usd`,
+            'timeTotal' : `Total time: ${args[0]} min`,
+            'selDate' : `Date: ${args[0]}`,
         }
         return localText[key];
     }
@@ -78,6 +85,5 @@
 <script src="{% static 'booking_calendar/js/events.js' %}"></script>
 <script src="{% static 'booking_calendar/js/functions.js' %}"></script>
 <script src="{% static 'booking_calendar/js/eventClass.js' %}"></script>
-
 
 {% endblock %}

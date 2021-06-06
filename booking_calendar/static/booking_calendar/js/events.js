@@ -2,6 +2,8 @@
 
 $(document).ready(function () {
     $('#id_work_type').empty();
+    $('#id_work_type').select2();
+    $('#id_master').val([]);
 
     for(let i=0; i<7; i++) {
         let div = document.createElement('div');
@@ -63,6 +65,6 @@ $('#id_work_type').change(function () {
             }
         }
 
-        $('#order_total_price').text("Total price: "+total_price)
-        $('#order_total_time').text("Total time: "+total_time/60);
+        $('#order_total_price').text(getLocalText('priceTotal',total_price));
+        $('#order_total_time').text(getLocalText('timeTotal',total_time/60));
     });

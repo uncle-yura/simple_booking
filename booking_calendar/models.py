@@ -4,7 +4,7 @@ from django.core.validators import RegexValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from oauth2client.client import GoogleCredentials, credentials_from_code
+from oauth2client.client import GoogleCredentials
 
 import datetime
 import httplib2
@@ -46,8 +46,11 @@ class Profile(models.Model):
 
     def get_gcal_status(self):
         http = httplib2.Http()
-        credentials = GoogleCredentials.new_from_json(self.gcal_key)
-        credentials.refresh(http)
+        try:
+            credentials = GoogleCredentials.new_from_json(self.gcal_key)
+            credentials.refresh(http)
+        except Exception as e:
+            print(e)
         return credentials.access_token_expired
 
     @receiver(post_save, sender=User)
@@ -83,7 +86,7 @@ class Order(models.Model):
 
     client = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name="orders")
     work_type = models.ManyToManyField(JobType, help_text='Select a work type for this client')
-    booking_date = models.DateField(null=True)
+    booking_date = models.DateTimeField(null=True)
     client_comment = models.CharField(max_length=200, blank=True)
     master = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name="jobs", limit_choices_to={'user__groups__name': 'Master'})
     state = models.CharField(max_length=1, choices=STATE_TABLE.choices, default=STATE_TABLE.NEW)

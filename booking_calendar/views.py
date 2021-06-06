@@ -21,6 +21,7 @@ from googleapiclient.discovery import build
 from dateutil.relativedelta import relativedelta
 
 import datetime
+import pytz
 import os
 import httplib2
 
@@ -198,7 +199,8 @@ class OrderCreate(LoginRequiredMixin,CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        if self.object.booking_date < datetime.date.today():
+        utc=pytz.UTC
+        if self.object.booking_date <  utc.localize(datetime.datetime.now()):
             messages.error(self.request,("We cannot travel to the past.")) 
             return redirect('new-order')
         else:

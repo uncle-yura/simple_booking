@@ -17,8 +17,7 @@ class Event {
 
         if(!id) {
             this.card.onclick =  this.click_callback.bind(this);
-        }
-        else {
+        } else {
             this.card.onmousedown = this.mouse_down.bind(this);
             this.card.onmouseup = this.mouse_up.bind(this);
         }
@@ -32,8 +31,9 @@ class Event {
     }
 
     mouse_up() {
+        if(this.dragging) moveTimetable(this._pos_start - 1/6);
+
         this.dragging = false;
-        moveTimetable(this._pos_start - 1/6);
     }
 
     update_text() {
@@ -43,9 +43,7 @@ class Event {
     update_position() {
         this.card.style = "height: " + (this.pos_end - this._pos_start)*100 + "%; top: " + this._pos_start*100 + "%";
 
-        if(this.card.id && !this.dragging) {
-            moveTimetable(this._pos_start - 1/6);
-        }
+        if(this.card.id && !this.dragging) moveTimetable(this._pos_start - 1/6);
     }
 
     check_new_position(position_start) {
@@ -78,10 +76,12 @@ class Event {
                     } 
                 }
       
-                if((dif_next && dif_prev == undefined) || (dif_next && dif_prev && (dif_next < Math.abs(dif_prev)))) {
+                if((dif_next && dif_prev == undefined) || 
+                    (!(dif_next==undefined) && !(dif_prev==undefined) && (dif_next < Math.abs(dif_prev)))) {
                     position_start += dif_next;
                 }
-                else if((dif_next == undefined && dif_prev) || (dif_next && dif_prev && (dif_next > Math.abs(dif_prev)))) {
+                else if((dif_next == undefined && dif_prev) || 
+                    (!(dif_next==undefined) && !(dif_prev==undefined) && (dif_next > Math.abs(dif_prev)))) {
                     position_start += dif_prev;
                 }
                 else {
@@ -111,20 +111,20 @@ class Event {
     }
 
     set pos_start(value) {
-        if((value=this.check_new_position(value)) === false) {
-            return;
-        }
+        if((value=this.check_new_position(value)) === false) return;
 
         this._pos_start = value;
         this.pos_end = value + this.duration/86400000;
         this.event.start = getStampFromPos(this._pos_start,this.event.start);
         this.event.end = this.event.start+this.duration;
-
+        
         this.update_position();    
         this.update_text();
+
+        updateDateStrings(this.event.start);
     }
 
     click_callback() {
-        drawNewEvent(this.pos_end);
+        drawNewEvent(this._pos_start + (this.pos_end-this._pos_start)/2);
     }
 }
