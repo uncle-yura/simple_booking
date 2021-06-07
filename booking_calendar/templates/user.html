@@ -70,7 +70,7 @@
                 <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'my-orders'%}">My orders</a>
                 <hr>
                 <p class="text-muted mb-0"  style="font-size: 12px">Your masters:</p>
-                    {% for member in user.profile.masters.all %}
+                    {% for member in user.profile.get_uniq_masters %}
                         {{ member }}
                     {% endfor %}
                 </div>

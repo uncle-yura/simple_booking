@@ -43,6 +43,9 @@ class Profile(models.Model):
     def get_latest_order_date(self):
         return self.orders.latest('booking_date').booking_date
 
+    def get_uniq_masters(self):
+        return self.masters.order_by().distinct()
+
     def get_gcal_account(self):
         with open(settings.SERVICE_SECRETS) as json_file:
             data = json.load(json_file)
