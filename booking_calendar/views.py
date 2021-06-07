@@ -175,9 +175,6 @@ class OrderCreate(LoginRequiredMixin,CreateView):
             messages.error(self.request,("We cannot travel to the past.")) 
             return redirect('new-order')
         else:
-            self.object.client = self.request.user.profile
-            self.object.save()
-            
             credentials = service_account.Credentials.from_service_account_file(settings.SERVICE_SECRETS, scopes=SCOPES)
             service = build('calendar', 'v3', credentials=credentials)
 
@@ -191,7 +188,7 @@ class OrderCreate(LoginRequiredMixin,CreateView):
             desc += "\nComment: " + self.object.client_comment
 
             event = {
-                'summary': str(self.object.client),
+                'summary': str(self.request.user.profile),
                 'description': desc,
                 'start': {
                     'dateTime': self.object.booking_date.isoformat(),
@@ -201,7 +198,12 @@ class OrderCreate(LoginRequiredMixin,CreateView):
                 }
             }
 
-            service.events().insert(calendarId=self.object.master.gcal_link,body=event).execute()
+            event_id = service.events().insert(calendarId=self.object.master.gcal_link,body=event).execute()
+
+            self.object.client = self.request.user.profile
+            self.object.gcal_event_id = event_id['id']
+            self.object.save()
+
             messages.success(self.request,('New order created!'))
             return super(OrderCreate, self).form_valid(form)
 

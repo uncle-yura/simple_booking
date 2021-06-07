@@ -85,6 +85,8 @@ class Order(models.Model):
     client_comment = models.CharField(max_length=200, blank=True)
     master = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name="jobs", limit_choices_to={'user__groups__name': 'Master'})
     state = models.CharField(max_length=1, choices=STATE_TABLE.choices, default=STATE_TABLE.NEW)
+    gcal_event_id = models.CharField(max_length=30, blank=True)
+
 
     def __str__(self):
         return  f'{self.client}, {self.booking_date}' 

@@ -10,7 +10,7 @@ class OrdersInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('client', 'booking_date',)
+    list_display = ('client', 'booking_date', 'master', )
     list_filter = ('booking_date', 'master')
 
 
