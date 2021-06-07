@@ -173,4 +173,4 @@ MESSAGE_TAGS = {
         messages.ERROR: 'alert-danger',
  }
 
-GOOGLE_OAUTH2_CLIENT_SECRETS_JSON = 'client_secret.json'
+SERVICE_SECRETS = os.path.join(BASE_DIR, 'service_secret.json')

@@ -47,10 +47,14 @@
                     <p> {{ user.profile.booking_time_range  }} </p>
                     <p class="text-muted mb-0"  style="font-size: 12px">Link:</p>
                     <p> {{ user.profile.gcal_link|truncatechars:15 }} </p>
-                    {% if user.profile.get_gcal_status %}
-                    <p class="text-muted mb-0"  style="font-size: 12px">Google Calendar:</p>
-                    <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'gcal-auth'%}">Authorize</a>
-                    {% endif %}
+                    <p class="text-muted mb-0"  style="font-size: 12px">Service account:</p>
+                    <button type="button" onclick="copyToClipboard('service_account_link')" class="btn btn-sm btn-secondary">Copy link</button>
+                    <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" id="service_account_link" href="mailto:{{ user.profile.get_gcal_account }}">{{ user.profile.get_gcal_account }}</a>
+                    </div>
                     <div class="text-right">
                         <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileMasterModal">Edit Profile</button>
                     </div>
@@ -122,6 +126,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    function copyToClipboard(id) {
+        let copyText = document.getElementById(id);
+        let textArea = document.createElement("textarea");
+        textArea.value = copyText.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("Copy");
+        textArea.remove();
+    }
+</script>
+
 {% endif %}
 
 {% endblock %}

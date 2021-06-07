@@ -3,11 +3,10 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
-from oauth2client.client import GoogleCredentials
+from django.conf import settings
 
 import datetime
-import httplib2
+import json
 
 class JobType(models.Model):
     name = models.CharField(max_length=100, help_text='Enter a work type')
@@ -44,14 +43,10 @@ class Profile(models.Model):
     def get_latest_order_date(self):
         return self.orders.latest('booking_date').booking_date
 
-    def get_gcal_status(self):
-        http = httplib2.Http()
-        try:
-            credentials = GoogleCredentials.new_from_json(self.gcal_key)
-            credentials.refresh(http)
-        except Exception as e:
-            print(e)
-        return credentials.access_token_expired
+    def get_gcal_account(self):
+        with open(settings.SERVICE_SECRETS) as json_file:
+            data = json.load(json_file)
+            return data['client_email']
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):

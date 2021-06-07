@@ -15,15 +15,13 @@ from booking_calendar.models import *
 from booking_calendar.forms import *
 from booking_calendar.templatetags.time_extras import duration
 
-from oauth2client.contrib import xsrfutil
-from oauth2client.client import flow_from_clientsecrets,GoogleCredentials
+from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from dateutil.relativedelta import relativedelta
 
 import datetime
 import pytz
 import os
-import httplib2
 
 def index(request):
     num_jobs = JobType.objects.all().count()
@@ -75,30 +73,7 @@ def userpage(request):
             "profile_form":profile_form , 
             "master_form":master_form })
 
-CLIENT_SECRETS = os.path.join(os.path.dirname(__file__), '..', 'client_secret.json')
-
-FLOW = flow_from_clientsecrets(
-CLIENT_SECRETS,
-scope='https://www.googleapis.com/auth/calendar',
-redirect_uri='http://localhost:8000/booking_calendar/google-oauth2/complete')
-
-@login_required
-def gcal_auth(request):
-    FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
-                request.user.profile.id)
-    authorize_url = FLOW.step1_get_authorize_url()
-    return HttpResponseRedirect(authorize_url)
-
-@login_required
-def gcal_auth_return(request):
-    if not xsrfutil.validate_token(settings.SECRET_KEY, bytes(request.GET.get('state'), encoding='utf8'), request.user.profile.id):
-        return HttpResponseBadRequest()
-    credential = FLOW.step2_exchange(request.GET)
-    profile = Profile.objects.filter(id=request.user.profile.id).first()
-    profile.gcal_key=credential.to_json()
-    profile.save()
-    
-    return redirect('user')
+SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
 @login_required
 def gcal_data_return(request):
@@ -118,11 +93,8 @@ def gcal_data_return(request):
     query_set = query_set.exclude(id__in=exclude_id)
     
     if master_profile in query_set:
-        http = httplib2.Http()
-        credentials = GoogleCredentials.new_from_json(master_profile.gcal_key)
-
-        http = credentials.authorize(http)
-        service = build("calendar", "v3", http=http)
+        credentials = service_account.Credentials.from_service_account_file(settings.SERVICE_SECRETS, scopes=SCOPES)
+        service = build('calendar', 'v3', credentials=credentials)
 
         now = datetime.datetime.utcnow().isoformat() + 'Z'
         date_max = datetime.datetime.today() + relativedelta(days=master_profile.booking_time_range)
@@ -195,7 +167,6 @@ class OrderCreate(LoginRequiredMixin,CreateView):
                 exclude_id.append(master.id)
         query_set = query_set.exclude(id__in=exclude_id)
         self.fields['master'].queryset = query_set
-        self.fields['work_type'].queryset = BaseManager()
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -206,6 +177,31 @@ class OrderCreate(LoginRequiredMixin,CreateView):
         else:
             self.object.client = self.request.user.profile
             self.object.save()
+            
+            credentials = service_account.Credentials.from_service_account_file(settings.SERVICE_SECRETS, scopes=SCOPES)
+            service = build('calendar', 'v3', credentials=credentials)
+
+            desc = "Jobs: "
+            time_interval = datetime.timedelta(minutes=0)
+
+            for wt in form.cleaned_data['work_type']:
+                time_interval += wt.time_interval
+                desc += '\n' + wt.name
+
+            desc += "\nComment: " + self.object.client_comment
+
+            event = {
+                'summary': str(self.object.client),
+                'description': desc,
+                'start': {
+                    'dateTime': self.object.booking_date.isoformat(),
+                },
+                'end': {
+                    'dateTime': (self.object.booking_date + time_interval).isoformat(),
+                }
+            }
+
+            service.events().insert(calendarId=self.object.master.gcal_link,body=event).execute()
             messages.success(self.request,('New order created!'))
             return super(OrderCreate, self).form_valid(form)
 
