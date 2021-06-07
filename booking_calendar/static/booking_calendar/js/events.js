@@ -2,15 +2,10 @@
 
 $(document).ready(function () {
     $('#id_work_type').empty();
-    $('#id_work_type').select2();
+    $('#id_work_type').select2({
+        width: '100%' 
+    });
     $('#id_master').val([]);
-
-    for(let i=0; i<7; i++) {
-        let div = document.createElement('div');
-        div.className = "calendar_weekday_name";
-        div.innerHTML = getLocalText('dayNames').split(',')[i];
-        $('#id_calendar_header').append(div);  
-    }      
 
     let table = document.createElement('table');
     table.className = 'timetable_events_container';

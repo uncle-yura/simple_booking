@@ -8,36 +8,42 @@
 
 <div class="container py-5">
     <div class="row justify-content-between">
-        <div id='id_calendar' class='card p-4 col-md-4'>
-            <h1 class="font-weight-bold">New order</h1>
-            <hr>
-            <br>
-            <form id="newOrderForm" method="POST">
-                {% csrf_token %}
-                {{ form|crispy }}   
+        <div class='col-sm-12 col-md-12 col-lg-4 col-xl-4'>
+            <div class='card p-4'>
+                <h1 class="font-weight-bold">New order</h1>
+                <hr>
+                <br>
+                <form id="newOrderForm" method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}   
 
-                <div class="container">
-                    <div class="row">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item" id="order_total_time">Select the master</li>
-                            <li class="list-group-item" id="order_total_price">Select a service</li>
-                            <li class="list-group-item" id="selected_datetime">Choose time</li>
-                        </ul>
+                    <div class="container">
+                        <div class="row">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item" id="order_total_time">Select the master</li>
+                                <li class="list-group-item" id="order_total_price">Select a service</li>
+                                <li class="list-group-item" id="selected_datetime">Choose time</li>
+                            </ul>
+                        </div>
+
+                        <br>
+
+                        <div class="row">
+                            <button class="btn btn-primary" type="submit">Order</button>
+                        </div>
                     </div>
-
-                    <br>
-
-                    <div class="row">
-                        <button class="btn btn-primary" type="submit">Order</button>
-                    </div>
-                </div>
-            </form> 
+                </form> 
+            </div>   
         </div>
- 
-        <div id='id_calendar' class='card p-4 col-md-7'>
-            <div id='id_calendar_header'></div>
-            <div id='id_calendar_body'></div>
-        </div>  
+
+        <div class='col-sm-12 col-md-12 col-lg-7 col-xl-7'>
+            <div class='card p-4'>
+                <div id='id_calendar_header'></div>
+                <div id='id_calendar_body'>
+                    Select a master to see his free days
+                </div>
+            </div>  
+        </div>
     </div>
 </div>
 

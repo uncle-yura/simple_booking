@@ -116,6 +116,16 @@ function drawTimetable(date) {
 function drawCalendar(booking_range) {
     $("#id_calendar_body").html("");
 
+    function addWeekdays(parent) {
+        let weekdays = getLocalText('dayNames').split(',');
+        for(let i=0; i<7; i++) {
+            let div = document.createElement('div');
+            div.className = "calendar_weekday_name";
+            div.innerHTML = weekdays[i];
+            parent.append(div);  
+        }      
+    }
+
     function addMonthName(parent, date) {
         let monthName = document.createElement('div');
         monthName.className = "calendar_month_name";
@@ -136,6 +146,7 @@ function drawCalendar(booking_range) {
     let lastDay = getLastDayOfMonth(firstDay.getFullYear(), firstDay.getMonth());      
         
     addMonthName(monthDays, firstDay);
+    addWeekdays(monthDays);
     addInactiveDays(monthDays, firstDay);
 
     for(let i=0; i<booking_range; i++){
@@ -149,7 +160,7 @@ function drawCalendar(booking_range) {
             $("#id_day_view_modal").modal('show');
             };
 
-        div.innerHTML = firstDay.getDate();
+        div.innerHTML = "<p>"+firstDay.getDate()+"</p>";
         monthDays.append(div);
 
         if (lastDay==firstDay.getDate()) {
@@ -157,6 +168,7 @@ function drawCalendar(booking_range) {
             lastDay = getLastDayOfMonth(firstDay.getFullYear(), firstDay.getMonth());     
             if(i<booking_range-1) {                    
                 addMonthName(monthDays, firstDay);
+                addWeekdays(monthDays);
                 addInactiveDays(monthDays, firstDay);
             }
         }

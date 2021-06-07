@@ -52,6 +52,7 @@ body {
     background:rgba(47, 152, 86, 0.4);
 }
 
+
 .timetable_events_container{
     min-height: 75rem;
     height: 200vh; 
@@ -66,7 +67,7 @@ body {
 }
 
 .calendar_weekday_name{
-    background-color: lightseagreen;
+    background-color: white;
     width: 14.25%;
     float: left;
     text-align: center;
@@ -76,31 +77,29 @@ body {
 }
 
 .calendar_day_inactive{
-    border: 1px dotted red;
-    width: 14.25%;
-    height: 30px;
+    width: 14%;
+    margin: .125% .125% .125%;
+    height: 4em;
     float: left;
     box-sizing: border-box;
 }
 
 .calendar_day_active{
-    border: 1px dotted green;
-    width: 14.25%;
-    height: 30px;
+    background-color: #7c7c7c7d;
+    width: 13.6%;
+    margin: 0.3%;
+    height: 4em;
     float: left;
+    padding-top: 0.25em;
+    padding-left: 0.5em;
     box-sizing: border-box;
 }
 
 .calendar_month_name{
-    border: 1px solid green;
     text-align: center;
-    width: 50%;
-    height: 30px;
+    font-size: x-large;
+    width: 100%;
+    height: 2em;
     float: left;
     box-sizing: border-box;
-    background-color: ivory;
-    margin-left: 25%;
-    margin-right: 20%;
-    margin-top: 3px;
-    margin-bottom: 3px;
 }
