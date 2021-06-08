@@ -45,6 +45,8 @@
                     <p> {{ user.profile.get_timetable_display  }} </p>
                     <p class="text-muted mb-0"  style="font-size: 12px">Booking time range:</p>
                     <p> {{ user.profile.booking_time_range  }} </p>
+                    <p class="text-muted mb-0"  style="font-size: 12px">Booking time delay:</p>
+                    <p> {{ user.profile.booking_time_delay  }} </p>
                     <p class="text-muted mb-0"  style="font-size: 12px">Link:</p>
                     <p> {{ user.profile.gcal_link|truncatechars:15 }} </p>
                     <p class="text-muted mb-0"  style="font-size: 12px">Service account:</p>

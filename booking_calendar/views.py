@@ -1,5 +1,4 @@
-from django.db.models.manager import BaseManager
-from django.http.response import Http404,HttpResponseRedirect,HttpResponseBadRequest
+from django.http.response import Http404
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -19,9 +18,11 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from dateutil.relativedelta import relativedelta
 
-import datetime
+from datetime import datetime,date,timedelta
+
 import pytz
-import os
+import math
+
 
 def index(request):
     num_jobs = JobType.objects.all().count()
@@ -96,8 +97,10 @@ def gcal_data_return(request):
         credentials = service_account.Credentials.from_service_account_file(settings.SERVICE_SECRETS, scopes=SCOPES)
         service = build('calendar', 'v3', credentials=credentials)
 
-        now = datetime.datetime.utcnow().isoformat() + 'Z'
-        date_max = datetime.datetime.today() + relativedelta(days=master_profile.booking_time_range)
+        now = datetime.combine(date.today(), 
+            datetime.min.time())
+
+        date_max = datetime.today() + relativedelta(days=master_profile.booking_time_range)
         date_max = date_max.isoformat() + 'Z'
         page_token = None
 
@@ -106,10 +109,13 @@ def gcal_data_return(request):
             pageToken=page_token, 
             singleEvents=True,
             orderBy='startTime',
-            timeMin=now, 
+            timeMin=now.isoformat() + 'Z', 
             timeMax=date_max).execute()
 
-        response = {'events':{},'prices':{},'range':master_profile.booking_time_range, }
+        response = {'events':{},
+            'prices':{},
+            'range':master_profile.booking_time_range,
+            'delay':str(math.floor((datetime.now() + master_profile.booking_time_delay).timestamp()*1000)), }
 
         for price in master_profile.prices.all():
             response['prices'].update({
@@ -119,7 +125,7 @@ def gcal_data_return(request):
                     'price':price.price,
                     'str_time':duration(price.job.time_interval),
                     'time':price.job.time_interval.total_seconds()}})
-
+        
         for event in events['items']:
             response['events'].update({
                 event['id']:{
@@ -170,16 +176,19 @@ class OrderCreate(LoginRequiredMixin,CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        utc=pytz.UTC
-        if self.object.booking_date <  utc.localize(datetime.datetime.now()):
-            messages.error(self.request,("We cannot travel to the past.")) 
+        
+        if self.object.booking_date <  pytz.UTC.localize(datetime.now() + self.object.master.booking_time_delay):
+            messages.error(self.request,("This date is too early.")) 
+            return redirect('new-order')
+        elif self.object.booking_date > pytz.UTC.localize(datetime.today() + relativedelta(days=self.object.master.booking_time_range)):
+            messages.error(self.request,("This date is too far away.")) 
             return redirect('new-order')
         else:
             credentials = service_account.Credentials.from_service_account_file(settings.SERVICE_SECRETS, scopes=SCOPES)
             service = build('calendar', 'v3', credentials=credentials)
 
             desc = "Jobs: "
-            time_interval = datetime.timedelta(minutes=0)
+            time_interval = timedelta(minutes=0)
 
             for wt in form.cleaned_data['work_type']:
                 time_interval += wt.time_interval

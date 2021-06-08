@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.forms.models import modelformset_factory, inlineformset_factory
+from django.forms.models import inlineformset_factory
 from booking_calendar.models import Order, PriceList, Profile
 
 
@@ -42,7 +42,7 @@ class ProfileForm(forms.ModelForm):
 class MasterProfileForm(forms.ModelForm):
     class Meta: 
         model = Profile
-        fields = ('timetable', 'booking_time_range', 'gcal_link', )
+        fields = ('timetable', 'booking_time_range', 'booking_time_delay', 'gcal_link', )
 
 
 PriceListFormSet = inlineformset_factory(

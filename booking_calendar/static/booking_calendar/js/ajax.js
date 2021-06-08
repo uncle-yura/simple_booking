@@ -17,6 +17,15 @@ function getMasterData(event){
     
             let eventsList = [];
 
+            let startDate = new Date();
+            startDate.setHours(0,0,0,0);
+            let delayDate = new Date(parseInt(response.delay));
+
+            eventsList.push({
+                'start': startDate.toISOString(),
+                'end': delayDate.toISOString(),
+                });
+
             for(let event in response.events){
                 let eventElement = response.events[event];
 
@@ -37,4 +46,3 @@ function getMasterData(event){
         }
     });
 }
-

@@ -5,7 +5,7 @@ $(document).ready(function () {
     $('#id_work_type').select2({
         width: '100%' 
     });
-    $('#id_master').val([]);
+    $('#id_master').val($("#id_master option:contains('---------')").val());
 
     let table = document.createElement('table');
     table.className = 'timetable_events_container';

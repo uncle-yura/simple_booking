@@ -107,6 +107,7 @@ function drawTimetable(date) {
     });
     
     for(let event of selectedDayList) {
+        if( event.end < (new Date).getTime()) continue;
         let new_event = new Event(event);
         selectedDayEventsObjList.push(new_event)
         $('#id_timetable_events').append(new_event.card);  

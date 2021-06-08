@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'bootstrap',
     'fontawesome',
     'crispy_forms',
+    'extra_settings',
     'booking_calendar.apps.BookingCalendarConfig',
 ]
 
