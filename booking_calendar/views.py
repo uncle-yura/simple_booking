@@ -9,9 +9,11 @@ from django.db import IntegrityError
 from django.urls import reverse_lazy
 from django.conf import settings
 from django.http import JsonResponse
+from django.utils.decorators import method_decorator
 
 from booking_calendar.models import *
 from booking_calendar.forms import *
+from booking_calendar.decorators import *
 from booking_calendar.templatetags.time_extras import duration
 
 from google.oauth2 import service_account
@@ -77,6 +79,7 @@ def userpage(request):
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
 @login_required
+@require_ajax
 def gcal_data_return(request):
     master_id=request.GET.get('master', None)
     if not master_id:
@@ -161,6 +164,10 @@ class OrderCreate(LoginRequiredMixin,CreateView):
     form_class = NewOrderForm
     template_name = 'new_order.html'
     success_url = reverse_lazy('my-orders')
+
+    @method_decorator(check_orders_count)
+    def dispatch(self,request,*args,**kwargs):
+        return super(OrderCreate,self).dispatch(request,*args,**kwargs)
 
     def get_queryset(self):
         query_set = Profile.objects.filter(user__groups__name='Master')

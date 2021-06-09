@@ -6,6 +6,7 @@ from django.dispatch import receiver
 from django.conf import settings
 
 import datetime
+import pytz
 import json
 
 class JobType(models.Model):
@@ -40,6 +41,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user}'
+
+    def get_future_orders_count(self):
+        return self.orders.filter(booking_date__gte=datetime.datetime.now(pytz.utc)).count()
 
     def get_latest_order_date(self):
         return self.orders.latest('booking_date').booking_date
