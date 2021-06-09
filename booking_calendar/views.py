@@ -7,7 +7,6 @@ from django.contrib.auth import login
 from django.contrib import messages
 from django.db import IntegrityError
 from django.urls import reverse_lazy
-from django.conf import settings
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 
@@ -16,10 +15,7 @@ from booking_calendar.forms import *
 from booking_calendar.decorators import *
 from booking_calendar.templatetags.time_extras import duration
 
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
-from dateutil.relativedelta import relativedelta
-
+from dateutil import parser
 from datetime import datetime,date,timedelta
 
 import pytz
@@ -76,7 +72,6 @@ def userpage(request):
             "profile_form":profile_form , 
             "master_form":master_form })
 
-SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
 @login_required
 @require_ajax
@@ -97,17 +92,14 @@ def gcal_data_return(request):
     query_set = query_set.exclude(id__in=exclude_id)
     
     if master_profile in query_set:
-        credentials = service_account.Credentials.from_service_account_file(settings.SERVICE_SECRETS, scopes=SCOPES)
-        service = build('calendar', 'v3', credentials=credentials)
-
         now = datetime.combine(date.today(), 
             datetime.min.time())
 
-        date_max = datetime.today() + relativedelta(days=master_profile.booking_time_range)
+        date_max = datetime.today() + timedelta(days=master_profile.booking_time_range)
         date_max = date_max.isoformat() + 'Z'
         page_token = None
 
-        eventsResult = service.events()
+        eventsResult = master_profile.get_master_calendar()
         events = eventsResult.list(calendarId=master_profile.gcal_link, 
             pageToken=page_token, 
             singleEvents=True,
@@ -142,7 +134,7 @@ def gcal_data_return(request):
                     event['id']:{
                         'start':event['start'],
                         'end':event['end'],}})
-                page_token = events.get('nextPageToken')
+            page_token = events.get('nextPageToken')
     else:
         response = {}
     return JsonResponse(response)
@@ -183,17 +175,54 @@ class OrderCreate(LoginRequiredMixin,CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        
+        master_calendar = self.object.master.get_master_calendar()
+
+        def has_overlap(A_start, A_end, B_start, B_end):
+            latest_start = max(A_start, B_start)
+            earliest_end = min(A_end, B_end)
+            return latest_start <= earliest_end
+
+        def parse_time(event):
+            return parser.isoparse(event['date'] if 'date' in event else event['dateTime'])
+
+        def is_date_booked():
+            page_token = None
+            booking_time_interval = timedelta(minutes=0)
+
+            for wt in form.cleaned_data['work_type']:
+                booking_time_interval += wt.time_interval
+
+            events = master_calendar.list(calendarId=self.object.master.gcal_link, 
+                pageToken=page_token, 
+                singleEvents=True,
+                orderBy='startTime',
+                timeMin=datetime.combine(self.object.booking_date, datetime.min.time()).isoformat() + 'Z', 
+                timeMax=(self.object.booking_date+booking_time_interval).replace(tzinfo=None).isoformat() + 'Z').execute()
+
+            for event in events['items']:
+                if has_overlap(self.object.booking_date, self.object.booking_date + booking_time_interval, parse_time(event['start']), parse_time(event['end'])):
+                    return True
+
+            page_token = events.get('nextPageToken')
+
+            while page_token:
+                for event in events['items']:
+                    if has_overlap(self.object.booking_date, self.object.booking_date + booking_time_interval, parse_time(event['start']), parse_time(event['end'])):
+                        return True
+                page_token = events.get('nextPageToken')
+
+            return False
+
         if self.object.booking_date <  pytz.UTC.localize(datetime.now() + self.object.master.booking_time_delay):
             messages.error(self.request,("This date is too early.")) 
             return redirect('new-order')
-        elif self.object.booking_date > pytz.UTC.localize(datetime.today() + relativedelta(days=self.object.master.booking_time_range)):
+        elif self.object.booking_date > pytz.UTC.localize(datetime.today() + timedelta(days=self.object.master.booking_time_range)):
             messages.error(self.request,("This date is too far away.")) 
             return redirect('new-order')
+        elif is_date_booked():
+            messages.error(self.request,("This date already booked.")) 
+            return redirect('new-order')
         else:
-            credentials = service_account.Credentials.from_service_account_file(settings.SERVICE_SECRETS, scopes=SCOPES)
-            service = build('calendar', 'v3', credentials=credentials)
-
             desc = "Jobs: "
             time_interval = timedelta(minutes=0)
 
@@ -214,7 +243,7 @@ class OrderCreate(LoginRequiredMixin,CreateView):
                 }
             }
 
-            event_id = service.events().insert(calendarId=self.object.master.gcal_link,body=event).execute()
+            event_id = master_calendar.insert(calendarId=self.object.master.gcal_link,body=event).execute()
 
             self.object.client = self.request.user.profile
             self.object.gcal_event_id = event_id['id']
@@ -243,7 +272,7 @@ class JobsByUserListView(LoginRequiredMixin,ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return self.request.user.profile.jobs.order_by('booking_date')
+        return self.request.user.profile.jobs.order_by('-booking_date')
 
 
 class OrdersByUserListView(LoginRequiredMixin,ListView):
@@ -252,7 +281,7 @@ class OrdersByUserListView(LoginRequiredMixin,ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return self.request.user.profile.orders.order_by('booking_date')
+        return self.request.user.profile.orders.order_by('-booking_date')
 
 
 class ClientsByUserListView(LoginRequiredMixin,ListView):
@@ -261,7 +290,7 @@ class ClientsByUserListView(LoginRequiredMixin,ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return self.request.user.profile.clients.order_by('-id')
+        return self.request.user.profile.get_uniq_clients().order_by('-id')
 
 
 class PriceListView(LoginRequiredMixin,ListView):

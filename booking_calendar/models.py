@@ -5,6 +5,9 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
 
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+
 import datetime
 import pytz
 import json
@@ -17,6 +20,7 @@ class JobType(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
 class Profile(models.Model):
     class TIME_TABLE(models.TextChoices):
@@ -42,6 +46,11 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user}'
 
+    def get_master_calendar(self):
+        credentials = service_account.Credentials.from_service_account_file(settings.SERVICE_SECRETS, scopes=SCOPES)
+        service = build('calendar', 'v3', credentials=credentials)
+        return service.events()
+
     def get_future_orders_count(self):
         return self.orders.filter(booking_date__gte=datetime.datetime.now(pytz.utc)).count()
 
@@ -50,6 +59,9 @@ class Profile(models.Model):
 
     def get_uniq_masters(self):
         return self.masters.order_by().distinct()
+
+    def get_uniq_clients(self):
+        return self.clients.order_by().distinct()
 
     def get_gcal_account(self):
         with open(settings.SERVICE_SECRETS) as json_file:

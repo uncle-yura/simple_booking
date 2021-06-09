@@ -32,7 +32,7 @@
             <div class="card p-4">
                 <h4 class="card-title font-weight-bold text-center">Masters</h4>
                 <hr>
-                    {% for member in profile.masters.all %}
+                    {% for member in profile.get_uniq_masters %}
                         {{ member }}
                     {% endfor %}
             </div>
