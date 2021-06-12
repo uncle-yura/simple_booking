@@ -1,12 +1,20 @@
-{% for message in messages %}
+<script>
+'use strict';
+	function update_messages(msg) {
+		let message = document.createElement('div');
+		message.className = "container-fluid mx-0 p-0 sticky-top";
+		let message_body = document.createElement('div');
+		message_body.className = "alert alert-dismissible m-0 p-3 "+msg.tag;
+		message_body.innerHTML = '<button type="button" class="close" data-dismiss="alert" aria-label="Close"> \
+									<span aria-hidden="true">&times;</span> \
+									</button>' + msg.text;
+		message.append(message_body);
+		$('#message_container').append(message);
+		}
+</script>
 
-	<div class="container-fluid mx-0 p-0 sticky-top">
-	  	<div class="alert {{ message.tags }} alert-dismissible m-0 p-3" role="alert">
-		    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		    	<span aria-hidden="true">&times;</span>
-		    </button>
-	    	{{ message }}
-	  	</div>
-	</div>
-
-{% endfor %}
+<div id="message_container">
+	{% for message in messages %}
+	<script>update_messages({'text':"{{ message }}", tag:"{{ message.tags }}"});</script>
+	{% endfor %}
+</div>

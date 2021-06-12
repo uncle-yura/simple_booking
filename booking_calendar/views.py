@@ -15,6 +15,8 @@ from booking_calendar.forms import *
 from booking_calendar.decorators import *
 from booking_calendar.templatetags.time_extras import duration
 
+from googleapiclient.errors import HttpError
+
 from dateutil import parser
 from datetime import datetime,date,timedelta
 
@@ -78,7 +80,7 @@ def userpage(request):
 def gcal_data_return(request):
     master_id=request.GET.get('master', None)
     if not master_id:
-        return JsonResponse({})
+        return JsonResponse({'success': False, 'msg':["Master not selected.",]})
 
     master_profile = Profile.objects.filter(id=master_id).first()
     query_set = Profile.objects.filter(user__groups__name='Master')
@@ -100,14 +102,21 @@ def gcal_data_return(request):
         page_token = None
 
         eventsResult = master_profile.get_master_calendar()
-        events = eventsResult.list(calendarId=master_profile.gcal_link, 
-            pageToken=page_token, 
-            singleEvents=True,
-            orderBy='startTime',
-            timeMin=now.isoformat() + 'Z', 
-            timeMax=date_max).execute()
+        events = {}
 
-        response = {'events':{},
+        try:
+            events = eventsResult.list(calendarId=master_profile.gcal_link, 
+                pageToken=page_token, 
+                singleEvents=True,
+                orderBy='startTime',
+                timeMin=now.isoformat() + 'Z', 
+                timeMax=date_max).execute()
+        except HttpError:
+            return JsonResponse({'success': False, 'msg':["This master has closed booking access.",]})
+
+        response = {
+            'success': True,
+            'events':{},
             'prices':{},
             'range':master_profile.booking_time_range,
             'delay':str(math.floor((datetime.now() + master_profile.booking_time_delay).timestamp()*1000)), }
@@ -136,7 +145,7 @@ def gcal_data_return(request):
                         'end':event['end'],}})
             page_token = events.get('nextPageToken')
     else:
-        response = {}
+        return JsonResponse({'success': False, 'msg':["It is impossible to get a reservation from this master.",]})
     return JsonResponse(response)
 
 

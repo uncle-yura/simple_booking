@@ -7,6 +7,11 @@ function getMasterData(event){
     
         success: function (response) {
             $('#id_work_type').empty();
+
+            if( response.msg ) update_messages({'tag':'alert-danger','text':response.msg});
+            
+            if( !response.success ) return;
+
             for(let price in response.prices){
                 $('#id_work_type').append($("<option></option>")
                     .attr("value",response.prices[price].id)
@@ -42,7 +47,7 @@ function getMasterData(event){
         },
     
         error: function (response) {
-            console.log(response.responseJSON.errors);
+            update_messages({'tag':'alert-danger','text':"Responce error."})
         }
     });
 }
