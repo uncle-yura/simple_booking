@@ -50,6 +50,18 @@ function getLastDayOfMonth(year, month) {
     return date.getDate();
 }
 
+function updateDefaultStrings() {
+    document.getElementById("order_total_time").innerHTML = getLocalText('defaultTotalTime');
+    document.getElementById("order_total_price").innerHTML = getLocalText('defaultTotalPrice');
+    document.getElementById("selected_datetime").innerHTML = getLocalText('defaultSelectedDate');
+    document.getElementById("id_calendar_body").innerHTML = getLocalText('defaultCalendar');
+
+    selectedDayEventsObjList = [];
+    selectedDay;
+    total_time = 0;
+    total_price = 0;
+}
+
 function updateDateStrings(event) {
     document.getElementById("id_booking_date").value = (new Date(event)).toISOString();
     document.getElementById("selected_datetime").innerHTML = getLocalText('selDate',
@@ -57,7 +69,13 @@ function updateDateStrings(event) {
 }
 
 function drawNewEvent(position_start) {
-    if( !total_time ) return false;
+    if( !total_time ) {
+        $('#id_work_type').popover('show')
+        setTimeout(function () {
+            $('#id_work_type').popover('dispose');
+        }, 2000);
+        return false;
+    }
     if( position_start >= 1 || position_start<0 ) return false;
 
     if(!selectedDayEventsObjList.hasOwnProperty("new_event")) {

@@ -189,7 +189,7 @@ class OrderCreate(LoginRequiredMixin,CreateView):
         def has_overlap(A_start, A_end, B_start, B_end):
             latest_start = max(A_start, B_start)
             earliest_end = min(A_end, B_end)
-            return latest_start <= earliest_end
+            return latest_start < earliest_end
 
         def parse_time(event):
             return parser.isoparse(event['date'] if 'date' in event else event['dateTime'])
@@ -201,12 +201,16 @@ class OrderCreate(LoginRequiredMixin,CreateView):
             for wt in form.cleaned_data['work_type']:
                 booking_time_interval += wt.time_interval
 
-            events = master_calendar.list(calendarId=self.object.master.gcal_link, 
-                pageToken=page_token, 
-                singleEvents=True,
-                orderBy='startTime',
-                timeMin=datetime.combine(self.object.booking_date, datetime.min.time()).isoformat() + 'Z', 
-                timeMax=(self.object.booking_date+booking_time_interval).replace(tzinfo=None).isoformat() + 'Z').execute()
+            events = {}
+            try:
+                events = master_calendar.list(calendarId=self.object.master.gcal_link, 
+                    pageToken=page_token, 
+                    singleEvents=True,
+                    orderBy='startTime',
+                    timeMin=datetime.combine(self.object.booking_date, datetime.min.time()).isoformat() + 'Z', 
+                    timeMax=(self.object.booking_date+booking_time_interval).replace(tzinfo=None).isoformat() + 'Z').execute()
+            except HttpError:
+                return True
 
             for event in events['items']:
                 if has_overlap(self.object.booking_date, self.object.booking_date + booking_time_interval, parse_time(event['start']), parse_time(event['end'])):

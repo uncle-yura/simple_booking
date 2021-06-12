@@ -1,10 +1,27 @@
 'use strict';
 
 $(document).ready(function () {
-    $('#id_work_type').empty();
-    $('#id_work_type').select2({
-        width: '100%' 
+    updateDefaultStrings();
+
+    $('#newOrderForm').submit( function(event) {
+        if(!selectedDayEventsObjList.hasOwnProperty("new_event")) {
+            $('#id_calendar_card').popover('show');
+            setTimeout(function () {
+                $('#id_calendar_card').popover('dispose');
+            }, 2000);
+            event.preventDefault();
+
+        }
     });
+
+    let select_input = $('#id_work_type');
+    select_input.empty();
+    select_input.select2({width: '100%'});
+    select_input.attr("data-container", "body");
+    select_input.attr("data-toggle", "popover");
+    select_input.attr("data-placement", "right");
+    select_input.attr("data-content", getLocalText('typeError'));
+
     $('#id_master').val($("#id_master option:contains('---------')").val());
 
     let table = document.createElement('table');
@@ -47,6 +64,7 @@ $('#id_day_view_modal').on('shown.bs.modal', function () {
     });
 
 $('#id_master').change(function () {
+    updateDefaultStrings();
     getMasterData($(this));
     });
 
