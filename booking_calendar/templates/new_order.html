@@ -41,6 +41,7 @@
                 id='id_calendar_card' data-container="body"
                 data-toggle="popover" data-placement="left"
                 data-content="You have not chosen a day and time.">
+                <div id='id_calendar_loading' class="spinner-border spinner-border-sm" role="status"><span class="sr-only">Loading...</span></div>
                 <div id='id_calendar_header'></div>
                 <div id='id_calendar_body'></div>
             </div>  
@@ -89,6 +90,7 @@
             'defaultSelectedDate': "Choose time",
             'defaultCalendar':"Select a master to see his free days",
             'typeError':"You have not chosen a service.",
+            'responseError':"Responce error."
         }
         return localText[key];
     }

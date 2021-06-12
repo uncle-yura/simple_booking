@@ -51,10 +51,12 @@ function getLastDayOfMonth(year, month) {
 }
 
 function updateDefaultStrings() {
-    document.getElementById("order_total_time").innerHTML = getLocalText('defaultTotalTime');
-    document.getElementById("order_total_price").innerHTML = getLocalText('defaultTotalPrice');
-    document.getElementById("selected_datetime").innerHTML = getLocalText('defaultSelectedDate');
-    document.getElementById("id_calendar_body").innerHTML = getLocalText('defaultCalendar');
+    $("#order_total_time").html(getLocalText('defaultTotalTime'));
+    $("#order_total_price").html(getLocalText('defaultTotalPrice'));
+    $("#selected_datetime").html(getLocalText('defaultSelectedDate'));
+    $("#id_calendar_body").html(getLocalText('defaultCalendar'));
+    $("#id_work_type").empty();
+    $('#id_calendar_loading').hide();
 
     selectedDayEventsObjList = [];
     selectedDay;

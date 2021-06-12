@@ -1,12 +1,13 @@
 'use strict';
 
 function getMasterData(event){
+    $('#id_calendar_loading').show();
     $.ajax({
         data: event.serialize(), 
         url: getLocalText('gcal_url'),
     
         success: function (response) {
-            $('#id_work_type').empty();
+            $('#id_calendar_loading').hide();
 
             if( response.msg ) update_messages({'tag':'alert-danger','text':response.msg});
             
@@ -47,7 +48,7 @@ function getMasterData(event){
         },
     
         error: function (response) {
-            update_messages({'tag':'alert-danger','text':"Responce error."})
+            update_messages({'tag':'alert-danger','text':getLocalText('responseError')})
         }
     });
 }
