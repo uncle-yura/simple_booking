@@ -157,7 +157,7 @@ function drawCalendar(booking_range) {
     function addInactiveDays(parent, date) {
         for (let i=0; i<((date.getDay()||7)-1); i++) {
             let divInnactive = document.createElement('div');
-            divInnactive.className = "calendar_day_inactive";
+            divInnactive.className = "calendar_day";
             parent.append(divInnactive);  
         }
     }
@@ -172,7 +172,7 @@ function drawCalendar(booking_range) {
 
     for(let i=0; i<booking_range; i++){
         let div = document.createElement('div');
-        div.className = "calendar_day_active";
+        div.className = "calendar_day calendar_day_active";
         div.setAttribute("value",firstDay.toISOString());
 
         div.onclick = function() {

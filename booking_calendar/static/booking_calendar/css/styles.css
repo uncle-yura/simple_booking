@@ -68,7 +68,7 @@ body {
 
 .calendar_weekday_name{
     background-color: white;
-    width: 14.25%;
+    width: 14.28%;
     float: left;
     text-align: center;
     padding: 5px;
@@ -76,9 +76,9 @@ body {
     
 }
 
-.calendar_day_inactive{
-    width: 14%;
-    margin: .125% .125% .125%;
+.calendar_day{
+    width: 13.6%;
+    margin: 0.3%;
     height: 4em;
     float: left;
     box-sizing: border-box;
@@ -86,13 +86,8 @@ body {
 
 .calendar_day_active{
     background-color: #7c7c7c7d;
-    width: 13.6%;
-    margin: 0.3%;
-    height: 4em;
-    float: left;
     padding-top: 0.25em;
     padding-left: 0.5em;
-    box-sizing: border-box;
 }
 
 .calendar_month_name{
