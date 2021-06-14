@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms.models import inlineformset_factory
+from django.forms.widgets import SelectMultiple
 from booking_calendar.models import Order, PriceList, Profile
 
 
@@ -25,6 +26,25 @@ class NewOrderForm(forms.ModelForm):
         model = Order
         fields = ('master', 'work_type', 'booking_date', 'client_comment', )
         widgets = {'booking_date': forms.HiddenInput}
+
+
+class OrderPriceMultiSelect(SelectMultiple):
+    def __init__(self, attrs=None, choices=(), custom_attrs={}):
+        super(SelectMultiple, self).__init__(attrs, choices=choices)
+        self.item_time = dict(custom_attrs['time'])
+        self.item_price = dict(custom_attrs['price'])
+
+    def create_option(self, name, value, *args, **kwargs):
+        option = super().create_option(name, value, *args, **kwargs)
+        if value:
+            option['attrs']['time'] = int(self.item_time[args[0]].total_seconds())
+            option['attrs']['price'] = self.item_price[args[0]]
+        return option
+
+
+class EditOrderForm(NewOrderForm):
+    class Meta(NewOrderForm.Meta):
+        widgets = {'booking_date': forms.HiddenInput, 'master': forms.HiddenInput}
 
 
 class UserForm(forms.ModelForm):

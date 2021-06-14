@@ -15,7 +15,7 @@ $(document).ready(function () {
     });
 
     let select_input = $('#id_work_type');
-    select_input.empty();
+
     select_input.select2({width: '100%'});
     select_input.attr("data-container", "body");
     select_input.attr("data-toggle", "popover");
@@ -69,15 +69,5 @@ $('#id_master').change(function () {
     });
 
 $('#id_work_type').change(function () {
-        total_price = 0;
-        total_time = 0;
-        for (let option of this.options) {
-            if (option.selected) {
-                total_price+=parseFloat(option.getAttribute('price'));
-                total_time+=parseFloat(option.getAttribute('time'));
-            }
-        }
-
-        $('#order_total_price').text(getLocalText('priceTotal',total_price));
-        $('#order_total_time').text(getLocalText('timeTotal',total_time/60));
-    });
+    updatePriceAndTimeStrigs();
+});

@@ -266,6 +266,31 @@ class OrderCreate(LoginRequiredMixin,CreateView):
             return super(OrderCreate, self).form_valid(form)
 
 
+class OrderUpdate(LoginRequiredMixin,UpdateView):
+    model = Order
+    form_class = EditOrderForm
+    success_url = reverse_lazy('my-orders')
+    template_name = 'update_order.html'
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=self.form_class)
+        
+        master = form.fields['master'].queryset.first()
+        
+        query_set = form.fields['work_type'].queryset
+        include_id = []
+        for price in master.prices.all():
+            include_id.append(price.job.id)
+        query_set = query_set.filter(id__in=include_id)
+        form.fields['work_type'].queryset = query_set
+
+        choices = form.fields['work_type'].choices
+        form.fields['work_type'].widget = OrderPriceMultiSelect(choices=choices, custom_attrs={
+            'time':query_set.values_list('name','time_interval'),
+            'price':master.prices.all().values_list('job__name','price')})
+        return form
+
+
 class OrderView(LoginRequiredMixin,DetailView):
     model = Order
     template_name = 'view_order.html'

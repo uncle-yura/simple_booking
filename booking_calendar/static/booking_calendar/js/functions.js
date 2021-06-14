@@ -50,18 +50,41 @@ function getLastDayOfMonth(year, month) {
     return date.getDate();
 }
 
-function updateDefaultStrings() {
-    $("#order_total_time").html(getLocalText('defaultTotalTime'));
-    $("#order_total_price").html(getLocalText('defaultTotalPrice'));
-    $("#selected_datetime").html(getLocalText('defaultSelectedDate'));
-    $("#id_calendar_body").html(getLocalText('defaultCalendar'));
-    $("#id_work_type").empty();
-    $('#id_calendar_loading').hide();
-
-    selectedDayEventsObjList = [];
-    selectedDay;
-    total_time = 0;
+function updatePriceAndTimeStrigs() {
     total_price = 0;
+    total_time = 0;
+    for (let option of document.getElementById("id_work_type").options) {
+        if (option.selected) {
+            total_price+=parseFloat(option.getAttribute('price'));
+            total_time+=parseFloat(option.getAttribute('time'));
+        }
+    }
+
+    $('#order_total_price').text(getLocalText('priceTotal',total_price));
+    $('#order_total_time').text(getLocalText('timeTotal',total_time/60));
+}
+
+function updateDefaultStrings() {
+    $("#id_calendar_body").html(getLocalText('defaultCalendar'));
+
+    if ( !$('#id_master').val() ){
+        selectedDayEventsObjList = [];
+        selectedDay;
+        total_time = 0;
+        total_price = 0;
+
+        $("#id_work_type").empty();
+
+        $("#order_total_time").html(getLocalText('defaultTotalTime'));
+        $("#order_total_price").html(getLocalText('defaultTotalPrice'));
+        $("#selected_datetime").html(getLocalText('defaultSelectedDate'));
+    }
+    else {
+        updatePriceAndTimeStrigs();
+    }
+
+
+    $('#id_calendar_loading').hide();
 }
 
 function updateDateStrings(event) {

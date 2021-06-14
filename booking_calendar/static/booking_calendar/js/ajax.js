@@ -13,6 +13,7 @@ function getMasterData(event){
             
             if( !response.success ) return;
 
+            $('#id_work_type').empty();
             for(let price in response.prices){
                 $('#id_work_type').append($("<option></option>")
                     .attr("value",response.prices[price].id)
