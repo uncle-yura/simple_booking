@@ -285,11 +285,45 @@ class OrderUpdate(LoginRequiredMixin,UpdateView):
         form.fields['work_type'].queryset = query_set
 
         choices = form.fields['work_type'].choices
-        form.fields['work_type'].widget = OrderPriceMultiSelect(choices=choices, custom_attrs={
+        form.fields['work_type'].widget = OrderPriceMultiSelect(choices=choices, attrs={'preloaded':True}, custom_attrs={
             'time':query_set.values_list('name','time_interval'),
             'price':master.prices.all().values_list('job__name','price')})
+
+        form.fields['master'].widget.attrs.update({'range': int(master.booking_time_range),
+            'delay': str(math.floor((datetime.now() + master.booking_time_delay).timestamp()*1000))})
         return form
 
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+
+        if self.object.gcal_event_id:
+            master_calendar = self.object.master.get_master_calendar()
+
+            desc = "Jobs: "
+            time_interval = timedelta(minutes=0)
+
+            for wt in form.cleaned_data['work_type']:
+                time_interval += wt.time_interval
+                desc += '\n' + wt.name
+
+            desc += "\nComment: " + self.object.client_comment
+
+            event = {
+                'summary': str(self.request.user.profile),
+                'description': desc,
+                'start': {
+                    'dateTime': self.object.booking_date.isoformat(),
+                },
+                'end': {
+                    'dateTime': (self.object.booking_date + time_interval).isoformat(),
+                }
+            }
+
+            updated_event = master_calendar.update(calendarId=self.object.master.gcal_link, eventId=self.object.gcal_event_id, body=event).execute()
+
+        self.object.save()
+        messages.success(self.request,('Order data updated!'))
+        return super(OrderUpdate, self).form_valid(form)
 
 class OrderView(LoginRequiredMixin,DetailView):
     model = Order

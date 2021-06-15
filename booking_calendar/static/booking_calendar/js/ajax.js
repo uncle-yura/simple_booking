@@ -1,9 +1,9 @@
 'use strict';
 
-function getMasterData(event){
+function getMasterData(id){
     $('#id_calendar_loading').show();
     $.ajax({
-        data: event.serialize(), 
+        data: "master="+id, 
         url: getLocalText('gcal_url'),
     
         success: function (response) {
@@ -13,20 +13,25 @@ function getMasterData(event){
             
             if( !response.success ) return;
 
-            $('#id_work_type').empty();
-            for(let price in response.prices){
-                $('#id_work_type').append($("<option></option>")
-                    .attr("value",response.prices[price].id)
-                    .attr("price",response.prices[price].price)
-                    .attr("time",response.prices[price].time)
-                    .text(response.prices[price].name + ' - ' + response.prices[price].str_time + ' - ' + response.prices[price].price));
+            if( $('#id_work_type').attr('preloaded')===undefined ) {
+                $('#id_work_type').empty();
+                for(let price in response.prices){
+                    $('#id_work_type').append($("<option></option>")
+                        .attr("value",response.prices[price].id)
+                        .attr("price",response.prices[price].price)
+                        .attr("time",response.prices[price].time)
+                        .text(response.prices[price].name + ' - ' + response.prices[price].str_time + ' - ' + response.prices[price].price));
+                }
             }
-    
+   
             let eventsList = [];
 
             let startDate = new Date();
             startDate.setHours(0,0,0,0);
-            let delayDate = new Date(parseInt(response.delay));
+            
+            let master_select = $('#id_master').prev().is("input") ? $('#id_master') : $('#id_master option:selected');
+
+            let delayDate = new Date(parseInt(master_select.attr('delay')));
 
             eventsList.push({
                 'start': startDate.toISOString(),
@@ -44,7 +49,8 @@ function getMasterData(event){
 
             sessionStorage.setItem('events', JSON.stringify(eventsList));
 
-            drawCalendar(+response.range);
+            
+            drawCalendar(+master_select.attr('range'));
             drawTimetable(new Date());
         },
     

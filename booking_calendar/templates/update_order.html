@@ -32,7 +32,7 @@
                         <br>
 
                         <div class="row">
-                            <button class="btn btn-primary" type="submit">Order</button>
+                            <button class="btn btn-primary" type="submit">Save</button>
                         </div>
                     </div>
                 </form> 
@@ -77,27 +77,10 @@
     let selectedDay;
     let total_time = 0;
     let total_price = 0;
-
-    function getLocalText(key, ...args) {
-        const localText = {
-            'gcal_url' : "{% url 'gcal-data' %}",
-            'dayNames' : "MON,TUE,WEN,THU,FRI,SAT,SUN",
-            'monthNames' : "January,February,March,April,May,June,July,August,September,October,November,December",
-            'fromTo' : `From ${args[0]} to ${args[1]}`,
-            'busyFromTo' : `Busy from ${args[0]} to ${args[1]}`,
-            'priceTotal' : `Total price: ${args[0]} usd`,
-            'timeTotal' : `Total time: ${args[0]} min`,
-            'selDate' : `Date: ${args[0]}`,
-            'defaultTotalTime': "Select the master",
-            'defaultTotalPrice': "Select a service",
-            'defaultSelectedDate': "Choose time",
-            'defaultCalendar':"Select a master to see his free days",
-            'typeError':"You have not chosen a service.",
-            'responseError':"Responce error."
-        }
-        return localText[key];
-    }
 </script>
+
+{% include 'includes/locale.html' %}
+
 <script src="{% static 'booking_calendar/js/ajax.js' %}"></script>
 <script src="{% static 'booking_calendar/js/events.js' %}"></script>
 <script src="{% static 'booking_calendar/js/functions.js' %}"></script>

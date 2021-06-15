@@ -10,7 +10,6 @@ $(document).ready(function () {
                 $('#id_calendar_card').popover('dispose');
             }, 2000);
             event.preventDefault();
-
         }
     });
 
@@ -22,7 +21,7 @@ $(document).ready(function () {
     select_input.attr("data-placement", "right");
     select_input.attr("data-content", getLocalText('typeError'));
 
-    $('#id_master').val($("#id_master option:contains('---------')").val());
+    //$('#id_master').val($("#id_master option:contains('---------')").val());
 
     let table = document.createElement('table');
     table.className = 'timetable_events_container';
@@ -65,7 +64,6 @@ $('#id_day_view_modal').on('shown.bs.modal', function () {
 
 $('#id_master').change(function () {
     updateDefaultStrings();
-    getMasterData($(this));
     });
 
 $('#id_work_type').change(function () {

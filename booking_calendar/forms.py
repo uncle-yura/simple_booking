@@ -2,9 +2,12 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms.models import inlineformset_factory
-from django.forms.widgets import SelectMultiple
+from django.forms.widgets import SelectMultiple, Select
 from booking_calendar.models import Order, PriceList, Profile
 
+from datetime import datetime
+
+import math
 
 class NewUserForm(UserCreationForm):
 	email = forms.EmailField(required=True)
@@ -21,11 +24,24 @@ class NewUserForm(UserCreationForm):
 		return user
 
 
+class OrderMasterSelect(Select):
+    def __init__(self, attrs=None, choices=()):
+        super(Select, self).__init__(attrs, choices=choices)
+
+    def create_option(self, name, value, *args, **kwargs):
+        option = super().create_option(name, value, *args, **kwargs)
+        if value:
+            master = Profile.objects.filter(id=int(value.value)).first()
+            option['attrs']['range'] = int(master.booking_time_range)
+            option['attrs']['delay'] = str(math.floor((datetime.now() + master.booking_time_delay).timestamp()*1000))
+        return option
+
+
 class NewOrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ('master', 'work_type', 'booking_date', 'client_comment', )
-        widgets = {'booking_date': forms.HiddenInput}
+        widgets = {'booking_date': forms.HiddenInput, 'master':OrderMasterSelect}
 
 
 class OrderPriceMultiSelect(SelectMultiple):
@@ -44,7 +60,7 @@ class OrderPriceMultiSelect(SelectMultiple):
 
 class EditOrderForm(NewOrderForm):
     class Meta(NewOrderForm.Meta):
-        widgets = {'booking_date': forms.HiddenInput, 'master': forms.HiddenInput}
+        widgets = {'booking_date': forms.HiddenInput, 'master': forms.HiddenInput,}
 
 
 class UserForm(forms.ModelForm):

@@ -12,19 +12,17 @@ function getPosFromStamp(timestamp) {
 function getStampFromPos(pos, timestamp = 0) {
     let time = new Date(timestamp);
     let hours = Math.floor(pos*24);
-    let minutes = Math.floor(((pos*24) % 1)*60);
+    let minutes = Math.round(((pos*24) % 1)*60);
     return time.setHours(hours,minutes,0,0);
 }
 
 function checkPosition(new_start, new_end, event) {
     let event_start = getPosFromStamp(event.start);
     let event_end = getPosFromStamp(event.end);
-    if( (new_start <= event_start && new_end >= event_end) || 
-        (new_end > event_start && new_end < event_end) || 
-        (new_start >= event_start && new_start <= event_end) ) {
-        return false;
-    }
-    return true;
+    let latest_start = Math.max(new_start, event_start);
+    let earliest_end = Math.min(new_end, event_end);
+
+    return latest_start >= earliest_end;
 }
 
 function normalize_date(date, event){
@@ -65,8 +63,6 @@ function updatePriceAndTimeStrigs() {
 }
 
 function updateDefaultStrings() {
-    $("#id_calendar_body").html(getLocalText('defaultCalendar'));
-
     if ( !$('#id_master').val() ){
         selectedDayEventsObjList = [];
         selectedDay;
@@ -78,11 +74,22 @@ function updateDefaultStrings() {
         $("#order_total_time").html(getLocalText('defaultTotalTime'));
         $("#order_total_price").html(getLocalText('defaultTotalPrice'));
         $("#selected_datetime").html(getLocalText('defaultSelectedDate'));
+        $("#id_calendar_body").html(getLocalText('defaultCalendar'));
     }
     else {
-        updatePriceAndTimeStrigs();
-    }
+        if( !!$("#id_work_type").val() ) updatePriceAndTimeStrigs();
 
+        let master_select = $('#id_master').prev().is("input") ? $('#id_master') : $('#id_master option:selected');
+        drawCalendar(+master_select.attr('range'));
+
+        let selected_date = document.getElementById("id_booking_date").value
+        if( selected_date ) {
+            document.getElementById("selected_datetime").innerHTML = getLocalText('selDate',
+                (new Date(selected_date)).toLocaleTimeString([], {month:'long', day: '2-digit', hour: '2-digit', minute:'2-digit'}));    
+        }
+
+        getMasterData($('#id_master').val());
+    }
 
     $('#id_calendar_loading').hide();
 }
