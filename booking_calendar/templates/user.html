@@ -9,7 +9,7 @@
 <br><br>
 <div class="container mx-auto">
     <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-3 pb-4">
+        <div class="col-sm-12 col-md-12 col-lg-4 pb-4">
             <div class="card p-4">
                 <h4 class="card-title font-weight-bold text-center">Hello, {{ user.username|title }}</h4>
                 <hr>
@@ -32,7 +32,7 @@
             </div>
         </div>
         {% if request.user|has_group:"Master" %}
-        <div class="col-sm-12 col-md-12 col-lg-3 pb-4">
+        <div class="col-sm-12 col-md-12 col-lg-4 pb-4">
             <div class="card p-4">
                 <h4 class="card-title font-weight-bold text-center">Master profile</h4>
                 <hr>
@@ -64,7 +64,7 @@
             </div>
         </div> 
         {% endif %}
-        <div class="col-sm-12 col-md-12 col-lg-3 pb-4">
+        <div class="col-sm-12 col-md-12 col-lg-4 pb-4">
             <div class="card p-4">
                 <h4 class="card-title font-weight-bold text-center">Your orders</h4>
                 <hr>
@@ -72,9 +72,13 @@
                 <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'my-orders'%}">My orders</a>
                 <hr>
                 <p class="text-muted mb-0"  style="font-size: 12px">Your masters:</p>
-                    {% for member in user.profile.get_uniq_masters %}
-                        {{ member }}
-                    {% endfor %}
+                    {% if user.profile.get_uniq_masters %}
+                        {% for member in user.profile.get_uniq_masters %}
+                            {{ member }}
+                        {% endfor %}
+                    {% else %}
+                        You haven't had a single master yet. 
+                    {% endif %}
                 </div>
             </div>
         </div>

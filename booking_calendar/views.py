@@ -347,7 +347,7 @@ class PriceListView(LoginRequiredMixin, ListView):
 
     @method_decorator(is_master)
     def dispatch(self,request,*args,**kwargs):
-        return super(PublicPriceListView,self).dispatch(request,*args,**kwargs)
+        return super(PriceListView,self).dispatch(request,*args,**kwargs)
 
     def get_queryset(self):
         return self.request.user.profile.prices.order_by('-id')
