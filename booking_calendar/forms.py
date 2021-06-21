@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.forms.models import inlineformset_factory
 from django.forms.widgets import SelectMultiple, Select
 from booking_calendar.models import Order, PriceList, Profile
@@ -8,6 +9,17 @@ from booking_calendar.models import Order, PriceList, Profile
 from datetime import datetime
 
 import math
+
+
+class PriceOwnerOnlyMixin(LoginRequiredMixin, UserPassesTestMixin):
+    def test_func(self):
+        return self.get_object().profile == self.request.user.profile
+
+
+class OrderOwnerOnlyMixin(LoginRequiredMixin, UserPassesTestMixin):
+    def test_func(self):
+        return self.get_object().client == self.request.user.profile
+
 
 class NewUserForm(UserCreationForm):
 	email = forms.EmailField(required=True)
@@ -61,6 +73,13 @@ class OrderPriceMultiSelect(SelectMultiple):
 class EditOrderForm(NewOrderForm):
     class Meta(NewOrderForm.Meta):
         widgets = {'booking_date': forms.HiddenInput, 'master': forms.HiddenInput,}
+
+
+class CancelOrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ('state',)
+        widgets = {'state': forms.HiddenInput,}
 
 
 class UserForm(forms.ModelForm):

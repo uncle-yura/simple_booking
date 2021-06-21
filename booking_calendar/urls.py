@@ -12,6 +12,7 @@ urlpatterns += [
     path('neworder/', views.OrderCreate.as_view(), name="new-order"), 
     path('orders/', views.OrdersByUserListView.as_view(), name='my-orders'),
     path('order/edit/<int:pk>', views.OrderUpdate.as_view(), name='order-update'),
+    path('order/cancel/<int:pk>', views.OrderCancel.as_view(), name='order-cancel'),
 
     path('jobs/', views.JobsByUserListView.as_view(), name='my-jobs'),
     path('order/<int:pk>', views.OrderView.as_view(), name='order-view'),

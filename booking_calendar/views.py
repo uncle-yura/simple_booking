@@ -1,7 +1,7 @@
 from django.http.response import Http404
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView, DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib import messages
@@ -19,7 +19,6 @@ from googleapiclient.errors import HttpError
 
 from datetime import datetime,date,timedelta
 
-import pytz
 import math
 
 
@@ -154,10 +153,17 @@ class UserDelete(LoginRequiredMixin,DeleteView):
     template_name = 'delete_user.html'
 
 
-class UserView(PermissionRequiredMixin,LoginRequiredMixin,DetailView):
+class UserView(LoginRequiredMixin,DetailView):
     model = Profile
-    permission_required = 'booking_calendar.view_profile'
     template_name = 'view_user.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(UserView, self).get_context_data(**kwargs)
+        if self.object == self.request.user.profile \
+            or self.request.user.groups.filter(name="Master").exists():
+            return context
+        else:
+            raise Http404
 
 
 class OrderCreate(LoginRequiredMixin,CreateView):
@@ -210,7 +216,7 @@ class OrderCreate(LoginRequiredMixin,CreateView):
             return redirect('new-order')
 
 
-class OrderUpdate(LoginRequiredMixin,UpdateView):
+class OrderUpdate(OrderOwnerOnlyMixin, UpdateView):
     model = Order
     form_class = EditOrderForm
     success_url = reverse_lazy('my-orders')
@@ -268,7 +274,33 @@ class OrderUpdate(LoginRequiredMixin,UpdateView):
             return redirect('my-orders')
 
 
-class OrderView(LoginRequiredMixin,DetailView):
+class OrderCancel(OrderOwnerOnlyMixin, UpdateView):
+    model = Order
+    form_class = CancelOrderForm
+    success_url = reverse_lazy('my-orders')
+    template_name = 'cancel_order.html'
+
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+
+        if self.object.gcal_event_id:
+            master_calendar = self.object.master.get_master_calendar()
+
+            try:
+                master_calendar.delete(calendarId=self.object.master.gcal_link, eventId=self.object.gcal_event_id).execute()
+            except HttpError:
+                messages.error(self.request,("Server connection error, unable to delete event.")) 
+                return redirect('my-orders')  
+  
+        self.object.state = Order.STATE_TABLE.CANCELED
+        self.object.save()
+        messages.success(self.request,('Order canceled.')) 
+
+        return super(OrderCancel, self).form_valid(form)
+
+
+class OrderView(LoginRequiredMixin, DetailView):
     model = Order
     template_name = 'view_order.html'
 
@@ -281,7 +313,7 @@ class OrderView(LoginRequiredMixin,DetailView):
             raise Http404
 
 
-class JobsByUserListView(LoginRequiredMixin,ListView):
+class JobsByUserListView(LoginRequiredMixin, ListView):
     model = Order
     template_name = 'orders_list_master.html'
     paginate_by = 10
@@ -290,7 +322,7 @@ class JobsByUserListView(LoginRequiredMixin,ListView):
         return self.request.user.profile.jobs.order_by('-booking_date')
 
 
-class OrdersByUserListView(LoginRequiredMixin,ListView):
+class OrdersByUserListView(LoginRequiredMixin, ListView):
     model = Order
     template_name = 'orders_list_user.html'
     paginate_by = 10
@@ -299,7 +331,7 @@ class OrdersByUserListView(LoginRequiredMixin,ListView):
         return self.request.user.profile.orders.order_by('-booking_date')
 
 
-class ClientsByUserListView(LoginRequiredMixin,ListView):
+class ClientsByUserListView(LoginRequiredMixin, ListView):
     model = Profile
     template_name = 'clients_list_user.html'
     paginate_by = 10
@@ -308,10 +340,14 @@ class ClientsByUserListView(LoginRequiredMixin,ListView):
         return self.request.user.profile.get_uniq_clients().order_by('-id')
 
 
-class PriceListView(LoginRequiredMixin,ListView):
+class PriceListView(LoginRequiredMixin, ListView):
     model = PriceList
     template_name = 'price_list_user.html'
     paginate_by = 10
+
+    @method_decorator(is_master)
+    def dispatch(self,request,*args,**kwargs):
+        return super(PublicPriceListView,self).dispatch(request,*args,**kwargs)
 
     def get_queryset(self):
         return self.request.user.profile.prices.order_by('-id')
@@ -335,12 +371,15 @@ class PublicPriceListView(ListView):
         return context
 
 
-class PriceListCreate(PermissionRequiredMixin,LoginRequiredMixin,CreateView):
-    permission_required = 'booking_calendar.add_pricelist'
+class PriceListCreate(LoginRequiredMixin, CreateView):
     model = PriceList
     fields = ['job','price',]
     template_name = 'add_price.html'
     success_url = reverse_lazy('my-prices')
+
+    @method_decorator(is_master)
+    def dispatch(self,request,*args,**kwargs):
+        return super(PriceListCreate,self).dispatch(request,*args,**kwargs)
 
     def form_valid(self, form):
         try:
@@ -356,11 +395,10 @@ class PriceListCreate(PermissionRequiredMixin,LoginRequiredMixin,CreateView):
             return super(PriceListCreate, self).form_valid(form)
 
 
-class PriceListDelete(PermissionRequiredMixin,LoginRequiredMixin,DeleteView):
+class PriceListDelete(PriceOwnerOnlyMixin, DeleteView):
     model = PriceList
     success_url = reverse_lazy('my-prices')
     template_name = 'delete_price.html'
-    permission_required = 'booking_calendar.delete_pricelist'
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request,('Price deleted')) 
@@ -370,15 +408,11 @@ class PriceListDelete(PermissionRequiredMixin,LoginRequiredMixin,DeleteView):
         return self.request.user.profile.prices.all()
 
 
-class PriceListUpdate(PermissionRequiredMixin,LoginRequiredMixin,UpdateView):
+class PriceListUpdate(PriceOwnerOnlyMixin, UpdateView):
     model = PriceList
     fields = ['job','price',]
     success_url = reverse_lazy('my-prices')
     template_name = 'update_price.html'
-    permission_required = 'booking_calendar.change_pricelist'
-
-    def get_queryset(self):
-        return self.request.user.profile.prices.all()
 
     def get_context_data(self, **kwargs):
         data = super(PriceListUpdate, self).get_context_data(**kwargs)

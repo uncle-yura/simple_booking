@@ -4,7 +4,6 @@
 
 {% block content %}
 <div class="container py-5">
-    {% if user.is_authenticated %}
     <h1 class="font-weight-bold">Delete account</h1>
     <hr>
     <br>
@@ -15,9 +14,5 @@
         <a class="btn btn-outline-primary" href="{% url 'user' %}">Cancel</a>
     </form>
     <br><br>
-    {% else %}
-    <a class="text-dark" href="{% url 'login'%}?next={{request.path}}">Login</a>
-    <a class="btn btn-sm btn-primary m-2"  href="{% url 'register'%}?next={{request.path}}">Register</a>
-     {% endif %}
 </div>
 {% endblock %}

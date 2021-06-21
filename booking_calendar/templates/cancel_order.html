@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container py-5">
+    <h1 class="font-weight-bold">Cancel order {{object}}</h1>
+    <hr>
+    <br>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <p>Are you sure to cancel order?</p>
+        <button class="btn btn-primary" type="submit">Cancel order</button>
+        <a class="btn btn-outline-primary" href="{% url 'my-orders' %}">Back</a> 
+    </form>
+    <br><br>
+</div>
+
+{% endblock %}

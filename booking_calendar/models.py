@@ -55,7 +55,7 @@ class Profile(models.Model):
         return service.events()
 
     def get_future_orders_count(self):
-        return self.orders.filter(booking_date__gte=datetime.now(pytz.utc)).count()
+        return self.orders.filter(booking_date__gte=datetime.now(pytz.utc),state=Order.STATE_TABLE.ACTIVE).count()
 
     def get_latest_order_date(self):
         return self.orders.latest('booking_date').booking_date
@@ -97,17 +97,15 @@ class PriceList(models.Model):
 
 class Order(models.Model):
     class STATE_TABLE(models.TextChoices):
-        NEW = 'N', 'New'
-        CANCELED = 'D', 'Deleted'
-        VERIFIED = 'V', 'Verified'
-        COMPLETED = 'C', 'Completed'
+        ACTIVE = 'A', 'Active'
+        CANCELED = 'C', 'Canceled'
 
     client = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name="orders")
     work_type = models.ManyToManyField(JobType, help_text='Select a work type for this client')
     booking_date = models.DateTimeField(null=True)
     client_comment = models.CharField(max_length=200, blank=True)
     master = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name="jobs", limit_choices_to={'user__groups__name': 'Master'})
-    state = models.CharField(max_length=1, choices=STATE_TABLE.choices, default=STATE_TABLE.NEW)
+    state = models.CharField(max_length=1, choices=STATE_TABLE.choices, default=STATE_TABLE.ACTIVE)
     gcal_event_id = models.CharField(max_length=30, blank=True)
 
 

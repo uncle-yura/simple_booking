@@ -12,6 +12,7 @@
         <tr>
             <th>Master</th>						
             <th>Date</th>
+            <th>State</th>
             <th>Action</th>
         </tr>
       </thead>
@@ -20,8 +21,12 @@
         <tr>
           <td>{{order.master}}</td>
           <td>{{order.booking_date}}</td>
+          <td>{{order.get_state_display}}</td>
           <td>
-            <a href="{% url 'order-update' order.pk %}" class="settings" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+            {% if order.state != 'C' %}
+              <a href="{% url 'order-update' order.pk %}" class="settings" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+              <a href="{% url 'order-cancel' order.pk %}" class="cancel" title="Cancel" data-toggle="tooltip"><i class="fas fa-trash"></i></a>
+            {% endif %}
             <a href="{% url 'order-view' order.pk %}" class="settings" title="View" data-toggle="tooltip"><i class="fas fa-eye"></i></a>
         </td>
         </tr>

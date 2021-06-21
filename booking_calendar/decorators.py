@@ -22,3 +22,11 @@ def check_orders_count(func):
         return func(request, *args, **kwargs)
 
     return decorator
+
+def is_master(func):
+    def decorator(request, *args, **kwargs):
+        if not request.user.groups.filter(name='Master').exists():
+            return redirect('index')
+        return func(request, *args, **kwargs)
+
+    return decorator
