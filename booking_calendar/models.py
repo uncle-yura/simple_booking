@@ -7,15 +7,18 @@ from django.conf import settings
 
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
-import datetime
+from dateutil import parser
+from datetime import datetime,timedelta
+
 import pytz
 import json
 
 class JobType(models.Model):
     name = models.CharField(max_length=100, help_text='Enter a work type')
     description = models.CharField(max_length=200, blank=True)
-    time_interval = models.DurationField(default=datetime.timedelta(minutes=15))
+    time_interval = models.DurationField(default=timedelta(minutes=15))
 
     def __str__(self):
         return f'{self.name}'
@@ -40,7 +43,7 @@ class Profile(models.Model):
     gcal_key = models.CharField(max_length=200, blank=True)
     gcal_link = models.CharField(max_length=200, blank=True)
     timetable = models.CharField(max_length=1, choices=TIME_TABLE.choices, default=TIME_TABLE.ALL)
-    booking_time_delay = models.DurationField(default=datetime.timedelta(minutes=60))
+    booking_time_delay = models.DurationField(default=timedelta(minutes=60))
     booking_time_range = models.IntegerField(default=30)
 
     def __str__(self):
@@ -52,7 +55,7 @@ class Profile(models.Model):
         return service.events()
 
     def get_future_orders_count(self):
-        return self.orders.filter(booking_date__gte=datetime.datetime.now(pytz.utc)).count()
+        return self.orders.filter(booking_date__gte=datetime.now(pytz.utc)).count()
 
     def get_latest_order_date(self):
         return self.orders.latest('booking_date').booking_date
@@ -110,3 +113,67 @@ class Order(models.Model):
 
     def __str__(self):
         return  f'{self.client}, {self.booking_date}' 
+
+    @classmethod
+    def make_new_event(cls, work_type, client_comment, booking_date, profile):
+        description = Order.get_event_description(work_type)
+        description['text'] += "\nComment: " + client_comment
+
+        event = {
+            'summary': str(profile),
+            'description': description['text'],
+            'start': {
+                'dateTime': booking_date.isoformat(),
+            },
+            'end': {
+                'dateTime': (booking_date + description['time']).isoformat(),
+            }
+        }
+        return event
+
+    @classmethod
+    def get_event_description(cls, work_type):
+        description = "Jobs: "
+        time_interval = timedelta(minutes=0)
+
+        for wt in work_type:
+            time_interval += wt.time_interval
+            description += '\n' + wt.name
+
+        return {'time':time_interval, 'text':description}
+
+    @classmethod
+    def check_date(cls, order, master_calendar, work_type):
+        if order.booking_date <  pytz.UTC.localize(datetime.now() + order.master.booking_time_delay):
+            return "This date is too early."
+        elif order.booking_date > pytz.UTC.localize(datetime.today() + timedelta(days=order.master.booking_time_range)):
+            return "This date is too far away."
+         
+        def has_overlap(A_start, A_end, B_start, B_end):
+            latest_start = max(A_start, B_start)
+            earliest_end = min(A_end, B_end)
+            return latest_start < earliest_end
+
+        def parse_time(event):
+            return parser.isoparse(event['date'] if 'date' in event else event['dateTime'])
+
+        booking_time_interval = Order.get_event_description(work_type)['time']
+
+        events = {}
+        try:
+            events = master_calendar.list(calendarId=order.master.gcal_link,  
+                singleEvents=True,
+                orderBy='startTime',
+                timeMin=datetime.combine(order.booking_date, datetime.min.time()).isoformat() + 'Z', 
+                timeMax=(order.booking_date+booking_time_interval).replace(tzinfo=None).isoformat() + 'Z').execute()
+        except HttpError:
+            return "Server connection error, unable to get event."
+
+        page_token = True
+        while page_token:
+            for event in events['items']:
+                if has_overlap(order.booking_date, order.booking_date + booking_time_interval, parse_time(event['start']), parse_time(event['end'])):
+                    return "This date already booked."
+            page_token = events.get('nextPageToken')
+
+        return ""

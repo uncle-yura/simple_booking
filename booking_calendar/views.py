@@ -17,7 +17,6 @@ from booking_calendar.templatetags.time_extras import duration
 
 from googleapiclient.errors import HttpError
 
-from dateutil import parser
 from datetime import datetime,date,timedelta
 
 import pytz
@@ -185,78 +184,20 @@ class OrderCreate(LoginRequiredMixin,CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         master_calendar = self.object.master.get_master_calendar()
+        work_type = form.cleaned_data['work_type']
 
-        def has_overlap(A_start, A_end, B_start, B_end):
-            latest_start = max(A_start, B_start)
-            earliest_end = min(A_end, B_end)
-            return latest_start < earliest_end
+        error_message = Order.check_date(self.object, master_calendar, work_type)
+        if not error_message:
+            event = Order.make_new_event(work_type,
+                 self.object.client_comment, 
+                 self.object.booking_date, 
+                 self.request.user.profile)
 
-        def parse_time(event):
-            return parser.isoparse(event['date'] if 'date' in event else event['dateTime'])
-
-        def is_date_booked():
-            page_token = None
-            booking_time_interval = timedelta(minutes=0)
-
-            for wt in form.cleaned_data['work_type']:
-                booking_time_interval += wt.time_interval
-
-            events = {}
             try:
-                events = master_calendar.list(calendarId=self.object.master.gcal_link, 
-                    pageToken=page_token, 
-                    singleEvents=True,
-                    orderBy='startTime',
-                    timeMin=datetime.combine(self.object.booking_date, datetime.min.time()).isoformat() + 'Z', 
-                    timeMax=(self.object.booking_date+booking_time_interval).replace(tzinfo=None).isoformat() + 'Z').execute()
+                event_id = master_calendar.insert(calendarId=self.object.master.gcal_link,body=event).execute()
             except HttpError:
-                return True
-
-            for event in events['items']:
-                if has_overlap(self.object.booking_date, self.object.booking_date + booking_time_interval, parse_time(event['start']), parse_time(event['end'])):
-                    return True
-
-            page_token = events.get('nextPageToken')
-
-            while page_token:
-                for event in events['items']:
-                    if has_overlap(self.object.booking_date, self.object.booking_date + booking_time_interval, parse_time(event['start']), parse_time(event['end'])):
-                        return True
-                page_token = events.get('nextPageToken')
-
-            return False
-
-        if self.object.booking_date <  pytz.UTC.localize(datetime.now() + self.object.master.booking_time_delay):
-            messages.error(self.request,("This date is too early.")) 
-            return redirect('new-order')
-        elif self.object.booking_date > pytz.UTC.localize(datetime.today() + timedelta(days=self.object.master.booking_time_range)):
-            messages.error(self.request,("This date is too far away.")) 
-            return redirect('new-order')
-        elif is_date_booked():
-            messages.error(self.request,("This date already booked.")) 
-            return redirect('new-order')
-        else:
-            desc = "Jobs: "
-            time_interval = timedelta(minutes=0)
-
-            for wt in form.cleaned_data['work_type']:
-                time_interval += wt.time_interval
-                desc += '\n' + wt.name
-
-            desc += "\nComment: " + self.object.client_comment
-
-            event = {
-                'summary': str(self.request.user.profile),
-                'description': desc,
-                'start': {
-                    'dateTime': self.object.booking_date.isoformat(),
-                },
-                'end': {
-                    'dateTime': (self.object.booking_date + time_interval).isoformat(),
-                }
-            }
-
-            event_id = master_calendar.insert(calendarId=self.object.master.gcal_link,body=event).execute()
+                messages.error(self.request,("Server connection error, unable to add new event.")) 
+                return redirect('new-order')
 
             self.object.client = self.request.user.profile
             self.object.gcal_event_id = event_id['id']
@@ -264,6 +205,9 @@ class OrderCreate(LoginRequiredMixin,CreateView):
 
             messages.success(self.request,('New order created!'))
             return super(OrderCreate, self).form_valid(form)
+        else:
+            messages.error(self.request,error_message) 
+            return redirect('new-order')
 
 
 class OrderUpdate(LoginRequiredMixin,UpdateView):
@@ -272,7 +216,7 @@ class OrderUpdate(LoginRequiredMixin,UpdateView):
     success_url = reverse_lazy('my-orders')
     template_name = 'update_order.html'
 
-    def get_form(self, form_class=None):
+    def get_form(self):
         form = super().get_form(form_class=self.form_class)
         
         master = form.fields['master'].queryset.first()
@@ -298,32 +242,31 @@ class OrderUpdate(LoginRequiredMixin,UpdateView):
 
         if self.object.gcal_event_id:
             master_calendar = self.object.master.get_master_calendar()
+            work_type = form.cleaned_data['work_type']
 
-            desc = "Jobs: "
-            time_interval = timedelta(minutes=0)
+            error_message = Order.check_date(self.object, master_calendar, work_type)
+            if not error_message:
+                event = Order.make_new_event(work_type,
+                    self.object.client_comment, 
+                    self.object.booking_date, 
+                    self.request.user.profile)
 
-            for wt in form.cleaned_data['work_type']:
-                time_interval += wt.time_interval
-                desc += '\n' + wt.name
+                try:
+                    master_calendar.update(calendarId=self.object.master.gcal_link, eventId=self.object.gcal_event_id, body=event).execute()
+                except HttpError:
+                    messages.error(self.request,("Server connection error, unable to update event.")) 
+                    return redirect('my-orders')  
 
-            desc += "\nComment: " + self.object.client_comment
+                self.object.save()
+                messages.success(self.request,('Order data updated!'))
+                return super(OrderUpdate, self).form_valid(form)    
+            else:
+                messages.error(self.request,error_message) 
+                return redirect('my-orders')      
+        else:              
+            messages.error(self.request,("This event canceled by master.")) 
+            return redirect('my-orders')
 
-            event = {
-                'summary': str(self.request.user.profile),
-                'description': desc,
-                'start': {
-                    'dateTime': self.object.booking_date.isoformat(),
-                },
-                'end': {
-                    'dateTime': (self.object.booking_date + time_interval).isoformat(),
-                }
-            }
-
-            updated_event = master_calendar.update(calendarId=self.object.master.gcal_link, eventId=self.object.gcal_event_id, body=event).execute()
-
-        self.object.save()
-        messages.success(self.request,('Order data updated!'))
-        return super(OrderUpdate, self).form_valid(form)
 
 class OrderView(LoginRequiredMixin,DetailView):
     model = Order
