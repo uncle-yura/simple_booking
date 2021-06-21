@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'fontawesome',
     'crispy_forms',
     'extra_settings',
+    'verify_email.apps.VerifyEmailConfig',
     'booking_calendar.apps.BookingCalendarConfig',
 ]
 
@@ -159,6 +160,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
+
+VERIFICATION_SUCCESS_TEMPLATE = None
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

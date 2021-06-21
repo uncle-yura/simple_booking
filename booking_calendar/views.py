@@ -10,6 +10,8 @@ from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 
+from verify_email.email_handler import send_verification_email
+
 from booking_calendar.models import *
 from booking_calendar.forms import *
 from booking_calendar.decorators import *
@@ -37,9 +39,9 @@ def register(request):
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('user')
+            user = send_verification_email(request, form)
+            messages.warning(request, "Click the link in the email message to confirm your email address.")
+            return redirect('index')
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = NewUserForm
     return render (request=request, template_name="register.html", context={"form":form})
