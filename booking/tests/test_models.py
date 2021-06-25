@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from booking_calendar.models import JobType,PriceList,Profile,Order,User
+from booking.models import JobType,PriceList,Profile,Order,User
 
 from decimal import Decimal
 

@@ -2,12 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
-]
-
-urlpatterns += [
     path('user/', views.userpage, name="user"), 
-    path('register/', views.register, name="register"), 
 
     path('neworder/', views.OrderCreate.as_view(), name="new-order"), 
     path('orders/', views.OrdersByUserListView.as_view(), name='my-orders'),
@@ -19,7 +14,6 @@ urlpatterns += [
     path('google/calendar', views.gcal_data_return, name='gcal-data'),
 
     path('clients/', views.ClientsByUserListView.as_view(), name='my-clients'),
-    path('client/del/<int:pk>', views.UserDelete.as_view(), name='user-delete'),
     path('client/<int:pk>', views.UserView.as_view(), name='user-view'),
 
     path('pricelist/', views.PriceListView.as_view(), name='my-prices'),

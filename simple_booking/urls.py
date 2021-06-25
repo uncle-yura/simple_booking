@@ -15,30 +15,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('verification/', include('verify_email.urls')),
-]
-
-urlpatterns += [
-    path('booking_calendar/', include('booking_calendar.urls')),
-]
-
 from django.views.generic import RedirectView
-
-urlpatterns += [
-    path('', RedirectView.as_view(url='booking_calendar/', permanent=True)),
-]
-
 from django.conf import settings
 from django.conf.urls.static import static
 
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('verification/', include('verify_email.urls')),
+    path('tinymce/', include('tinymce.urls')),
+]
 
 urlpatterns += [
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('', include('base.urls')),
 ]
+
+urlpatterns += [
+    path('booking/', include('booking.urls')),
+]
+
+urlpatterns += [
+    path('blog/', include('blog.urls')),
+]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

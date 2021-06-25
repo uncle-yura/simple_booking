@@ -3,19 +3,16 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
 from django.contrib import messages
 from django.db import IntegrityError
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 
-from verify_email.email_handler import send_verification_email
-
-from booking_calendar.models import *
-from booking_calendar.forms import *
-from booking_calendar.decorators import *
-from booking_calendar.templatetags.time_extras import duration
+from .models import *
+from .forms import *
+from .decorators import *
+from .templatetags.time_extras import duration
 
 from googleapiclient.errors import HttpError
 
@@ -23,28 +20,6 @@ from datetime import datetime,date,timedelta
 
 import math
 
-
-def index(request):
-    num_jobs = JobType.objects.all().count()
-    num_clients = Profile.objects.all().count()
-
-    context = {
-        'num_jobs': num_jobs,
-        'num_clients': num_clients,
-    }
-
-    return render(request, 'index.html', context=context)
-
-def register(request):
-    if request.method == "POST":
-        form = NewUserForm(request.POST)
-        if form.is_valid():
-            user = send_verification_email(request, form)
-            messages.warning(request, "Click the link in the email message to confirm your email address.")
-            return redirect('index')
-        messages.error(request, "Unsuccessful registration. Invalid information.")
-    form = NewUserForm
-    return render (request=request, template_name="register.html", context={"form":form})
 
 @login_required
 def userpage(request):
@@ -68,7 +43,7 @@ def userpage(request):
     master_form = MasterProfileForm(instance=request.user.profile)
     
     return render(request=request,
-        template_name="user.html",
+        template_name="booking/user.html",
         context={"user":request.user,
             "user_form":user_form, 
             "profile_form":profile_form , 
@@ -149,15 +124,9 @@ def gcal_data_return(request):
     return JsonResponse(response)
 
 
-class UserDelete(LoginRequiredMixin,DeleteView):
-    model = User
-    success_url = reverse_lazy('index')
-    template_name = 'delete_user.html'
-
-
 class UserView(LoginRequiredMixin,DetailView):
     model = Profile
-    template_name = 'view_user.html'
+    template_name = 'booking/view_user.html'
 
     def get_context_data(self, **kwargs):
         context = super(UserView, self).get_context_data(**kwargs)
@@ -172,7 +141,7 @@ class UserView(LoginRequiredMixin,DetailView):
 @method_decorator(check_orders_count, name='dispatch')
 class OrderCreate(CreateView):
     form_class = NewOrderForm
-    template_name = 'new_order.html'
+    template_name = 'booking/new_order.html'
     success_url = reverse_lazy('my-orders')
 
     def get_queryset(self):
@@ -220,7 +189,7 @@ class OrderUpdate(OrderOwnerOnlyMixin, UpdateView):
     model = Order
     form_class = EditOrderForm
     success_url = reverse_lazy('my-orders')
-    template_name = 'update_order.html'
+    template_name = 'booking/update_order.html'
 
     def get_form(self):
         form = super().get_form(form_class=self.form_class)
@@ -278,7 +247,7 @@ class OrderCancel(OrderOwnerOnlyMixin, UpdateView):
     model = Order
     form_class = CancelOrderForm
     success_url = reverse_lazy('my-orders')
-    template_name = 'cancel_order.html'
+    template_name = 'booking/cancel_order.html'
 
 
     def form_valid(self, form):
@@ -302,7 +271,7 @@ class OrderCancel(OrderOwnerOnlyMixin, UpdateView):
 
 class OrderView(LoginRequiredMixin, DetailView):
     model = Order
-    template_name = 'view_order.html'
+    template_name = 'booking/view_order.html'
 
     def get_context_data(self, **kwargs):
         context = super(OrderView, self).get_context_data(**kwargs)
@@ -315,7 +284,7 @@ class OrderView(LoginRequiredMixin, DetailView):
 
 class JobsByUserListView(LoginRequiredMixin, ListView):
     model = Order
-    template_name = 'orders_list_master.html'
+    template_name = 'booking/orders_list_master.html'
     paginate_by = 10
 
     def get_queryset(self):
@@ -324,7 +293,7 @@ class JobsByUserListView(LoginRequiredMixin, ListView):
 
 class OrdersByUserListView(LoginRequiredMixin, ListView):
     model = Order
-    template_name = 'orders_list_user.html'
+    template_name = 'booking/orders_list_user.html'
     paginate_by = 10
 
     def get_queryset(self):
@@ -333,7 +302,7 @@ class OrdersByUserListView(LoginRequiredMixin, ListView):
 
 class ClientsByUserListView(LoginRequiredMixin, ListView):
     model = Profile
-    template_name = 'clients_list_user.html'
+    template_name = 'booking/clients_list_user.html'
     paginate_by = 10
 
     def get_queryset(self):
@@ -344,7 +313,7 @@ class ClientsByUserListView(LoginRequiredMixin, ListView):
 @method_decorator(is_master, name='dispatch')
 class PriceListView(LoginRequiredMixin, ListView):
     model = PriceList
-    template_name = 'price_list_user.html'
+    template_name = 'booking/price_list_user.html'
     paginate_by = 10
 
     def get_queryset(self):
@@ -353,7 +322,7 @@ class PriceListView(LoginRequiredMixin, ListView):
 
 class PublicPriceListView(ListView):
     model = PriceList
-    template_name = 'price_list_public.html'
+    template_name = 'booking/price_list_public.html'
     paginate_by = 10
 
     def get_queryset(self):
@@ -374,7 +343,7 @@ class PublicPriceListView(ListView):
 class PriceListCreate(LoginRequiredMixin, CreateView):
     model = PriceList
     fields = ['job','price',]
-    template_name = 'add_price.html'
+    template_name = 'booking/add_price.html'
     success_url = reverse_lazy('my-prices')
 
     def form_valid(self, form):
@@ -394,7 +363,7 @@ class PriceListCreate(LoginRequiredMixin, CreateView):
 class PriceListDelete(PriceOwnerOnlyMixin, DeleteView):
     model = PriceList
     success_url = reverse_lazy('my-prices')
-    template_name = 'delete_price.html'
+    template_name = 'booking/delete_price.html'
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request,('Price deleted')) 
@@ -408,7 +377,7 @@ class PriceListUpdate(PriceOwnerOnlyMixin, UpdateView):
     model = PriceList
     fields = ['job','price',]
     success_url = reverse_lazy('my-prices')
-    template_name = 'update_price.html'
+    template_name = 'booking/update_price.html'
 
     def get_context_data(self, **kwargs):
         data = super(PriceListUpdate, self).get_context_data(**kwargs)

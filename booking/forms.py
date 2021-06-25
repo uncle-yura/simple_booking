@@ -1,10 +1,10 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.forms.models import inlineformset_factory
 from django.forms.widgets import SelectMultiple, Select
-from booking_calendar.models import Order, PriceList, Profile
+
+from .models import Order, PriceList, Profile
 
 from datetime import datetime
 
@@ -19,21 +19,6 @@ class PriceOwnerOnlyMixin(LoginRequiredMixin, UserPassesTestMixin):
 class OrderOwnerOnlyMixin(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
         return self.get_object().client == self.request.user.profile
-
-
-class NewUserForm(UserCreationForm):
-	email = forms.EmailField(required=True)
-
-	class Meta:
-		model = User
-		fields = ("username", "email", "password1", "password2",)
-
-	def save(self, commit=True):
-		user = super(NewUserForm, self).save(commit=False)
-		user.email = self.cleaned_data['email']
-		if commit:
-			user.save()
-		return user
 
 
 class OrderMasterSelect(Select):
