@@ -168,14 +168,12 @@ class UserView(LoginRequiredMixin,DetailView):
             raise Http404
 
 
-class OrderCreate(LoginRequiredMixin,CreateView):
+@method_decorator(login_required, name='dispatch')
+@method_decorator(check_orders_count, name='dispatch')
+class OrderCreate(CreateView):
     form_class = NewOrderForm
     template_name = 'new_order.html'
     success_url = reverse_lazy('my-orders')
-
-    @method_decorator(check_orders_count)
-    def dispatch(self,request,*args,**kwargs):
-        return super(OrderCreate,self).dispatch(request,*args,**kwargs)
 
     def get_queryset(self):
         query_set = Profile.objects.filter(user__groups__name='Master')
@@ -342,14 +340,12 @@ class ClientsByUserListView(LoginRequiredMixin, ListView):
         return self.request.user.profile.get_uniq_clients().order_by('-id')
 
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(is_master, name='dispatch')
 class PriceListView(LoginRequiredMixin, ListView):
     model = PriceList
     template_name = 'price_list_user.html'
     paginate_by = 10
-
-    @method_decorator(is_master)
-    def dispatch(self,request,*args,**kwargs):
-        return super(PriceListView,self).dispatch(request,*args,**kwargs)
 
     def get_queryset(self):
         return self.request.user.profile.prices.order_by('-id')
@@ -373,15 +369,13 @@ class PublicPriceListView(ListView):
         return context
 
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(is_master, name='dispatch')
 class PriceListCreate(LoginRequiredMixin, CreateView):
     model = PriceList
     fields = ['job','price',]
     template_name = 'add_price.html'
     success_url = reverse_lazy('my-prices')
-
-    @method_decorator(is_master)
-    def dispatch(self,request,*args,**kwargs):
-        return super(PriceListCreate,self).dispatch(request,*args,**kwargs)
 
     def form_valid(self, form):
         try:
