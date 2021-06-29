@@ -1,15 +1,48 @@
-from django.shortcuts import render
-from django.core.paginator import Paginator
+from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.urls import reverse_lazy
+from django.contrib.auth.decorators import permission_required
 
 from blog.models import Article
 
-def blog(request):
-	blog = Article.objects.all().order_by('-article_published')
-	paginator = Paginator(blog, 25)
-	page_number = request.GET.get('page')
-	blog_obj = paginator.get_page(page_number)
-	return render(request=request, template_name="blog/blog.html", context={"blog":blog_obj})
 
-def article(request, article_page):
-    article = Article.objects.get(article_slug=article_page)
-    return render(request=request, template_name='blog/article.html', context={"article": article})
+class BlogListView(ListView):
+    model = Article
+    template_name = 'blog/article_list.html'
+    paginate_by = 10
+    ordering = ['-article_published']
+
+
+class ArticleCreateView(PermissionRequiredMixin, CreateView):
+    model = Article
+    permission_required = 'article.create_article'
+    template_name = 'blog/new_article.html'
+    fields = '__all__'
+    success_url = reverse_lazy('blog-home')
+
+
+class ArticleDetailView(DetailView):
+    model = Article
+    template_name = 'blog/article.html'
+    slug_field = 'article_slug'
+    slug_url_kwarg = 'article_slug'
+
+
+class ArticleUpdateView(PermissionRequiredMixin, UpdateView):
+    model = Article
+    permission_required = 'article.change_article'
+    template_name = 'blog/update_article.html'
+    slug_field = 'article_slug'
+    slug_url_kwarg = 'article_slug'
+    fields = '__all__'
+    success_url = reverse_lazy('blog-home')
+
+
+class ArticleDeleteView(PermissionRequiredMixin, DeleteView):
+    model = Article
+    permission_required = 'article.delete_article'
+    template_name = 'blog/delete_article.html'
+    slug_field = 'article_slug'
+    slug_url_kwarg = 'article_slug'
+    fields = '__all__'
+    success_url = reverse_lazy('blog-home')

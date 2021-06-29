@@ -1,0 +1,75 @@
+{% extends "base_generic.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container py-5">
+        <h1 class="font-weight-bold">Articles</h1>
+        <hr>
+        {% if perms.blog.create_article %}
+            <a href="{% url 'new-article' %}"  class="btn btn-outline-dark btn-sm">Create post</a>
+            <br>
+        {% endif %}
+
+        <br>
+        {% if article_list %}
+        <div class="row">
+            <div class="col-12 pb-4">
+                {% for article in article_list %}
+                    <a href="{{ article.article_slug }}" style="text-decoration: none">
+                        <div class="row pb-4">
+                            <div class="col-lg-4 col-md-5 col-sm-12">
+                                <img src="{{ article.article_image.url }}" style="max-height: 12em;" class="img-fluid rounded" alt="{{ article.article_name }}">
+
+                                <div class="container mx-auto">
+                                    <div class="row">
+                                    {% if perms.blog.change_article %}
+                                    <form><button formaction="{% url 'edit-article' article.article_slug %}" class="btn btn-outline-dark btn-sm m-1">Edit post</button></form>
+                                    {% endif %}
+            
+                                    {% if perms.blog.delete_article %}
+                                    <form><button formaction="{% url 'delete-article' article.article_slug %}" class="btn btn-outline-dark btn-sm m-1">Delete post</button></form>
+                                    {% endif %} 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-7 col-sm-12 text-dark container">
+                                <h5>{{ article.article_title }}</h5>
+                                <p class="card-text text-muted" style="font-size:12px">{{ article.article_published }}</p>
+                                <div id="wrap" style="overflow: hidden; text-overflow: ellipsis; height: 4em;">
+                                   <p style="display: inline; white-space: nowrap;">{{ article.article_content|safe|truncatewords:20}}</p> 
+                                </div>
+                                <br>
+                                <button class="btn btn-outline-dark btn-sm">View post</button>
+                            </div>   
+                        </div>
+                    </a>
+                    <br>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% block pagination %}
+        <hr>
+          {% if is_paginated %}
+              <div class="pagination">
+                  <span class="page-links">
+                      {% if page_obj.has_previous %}
+                          <a class="btn btn-primary btn-sm" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous</a>
+                      {% endif %}
+                      <span class="page-current">
+                          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                      </span>
+                      {% if page_obj.has_next %}
+                          <a class="btn btn-primary btn-sm" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a>
+                      {% endif %}
+                  </span>
+              </div>
+          {% endif %}
+        {% endblock %} 
+
+        {% else %}
+        <p>There are no articles.</p>
+        {% endif %}
+    </div>
+{% endblock %}

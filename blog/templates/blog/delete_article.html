@@ -1,0 +1,24 @@
+{% extends "base_generic.html" %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% block content %}
+    <div class="container py-5">
+        <br><br>
+        <div class="container">
+            <h1 class="font-weight-bold">{{ article.article_title }}</h1>
+            <p class="font-weight-bold" style="font-size:15px">{{ article.article_published }}</p>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <p>Are you sure you want to delete "{{ object }}"?</p>               
+                <br>
+                <button class="btn btn-primary" type="submit">Delete</button>
+                <a class="btn btn-outline-primary" href="{% url 'blog-home' %}">Cancel</a>
+            </form>
+            <br><br>
+        </div>
+    </div>
+{% endblock %}
