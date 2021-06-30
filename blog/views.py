@@ -1,9 +1,8 @@
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
-from django.contrib.auth.decorators import permission_required
 
-from blog.models import Article
+from .models import Article,Tag
 
 
 class BlogListView(ListView):
@@ -11,6 +10,16 @@ class BlogListView(ListView):
     template_name = 'blog/article_list.html'
     paginate_by = 10
     ordering = ['-article_published']
+
+
+class ArticleTagListView(ListView):
+    model = Article
+    template_name = 'blog/article_list.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        tag = Tag.objects.get(tag_slug=self.kwargs['article_tags'])
+        return super().get_queryset().filter(article_tags=tag).order_by('-article_published')
 
 
 class ArticleCreateView(PermissionRequiredMixin, CreateView):

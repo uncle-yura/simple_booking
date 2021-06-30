@@ -36,7 +36,12 @@
                             <div class="col-lg-8 col-md-7 col-sm-12 text-dark container">
                                 <h5>{{ article.article_title }}</h5>
                                 <p class="card-text text-muted" style="font-size:12px">{{ article.article_published }}</p>
-                                <div id="wrap" style="overflow: hidden; text-overflow: ellipsis; height: 4em;">
+                                <p>
+                                    {% for tag in article.article_tags.all %}
+                                        <span class="badge badge-info" style ="font-size:14px; color: white">{{ tag }}</span>
+                                    {% endfor %}
+                                </p>
+                                <div style="overflow: hidden; max-height: 1.5em;">
                                    <p style="display: inline; white-space: nowrap;">{{ article.article_content|safe|truncatewords:20}}</p> 
                                 </div>
                                 <br>

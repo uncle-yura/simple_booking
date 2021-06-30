@@ -90,6 +90,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'blog.context_processors.menu', 
             ],
         },
     },
@@ -183,31 +184,35 @@ MESSAGE_TAGS = {
 SERVICE_SECRETS = os.path.join(BASE_DIR, 'service_secret.json')
 
 TINYMCE_DEFAULT_CONFIG = {
-    'height': 400,
-    'width': 1120,
+    'height': '40em',
+    'width': '100%',
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
     'selector': 'textarea',
-    'browser_spellcheck': 'true',
-    'theme': 'modern',
+    'browser_spellcheck': False,
+    'theme': 'silver',
+    'branding': False,
     'plugins': '''
-            textcolor save link image media preview codesample contextmenu
+            textcolor save link media preview codesample contextmenu
             table code lists fullscreen  insertdatetime  nonbreaking
             contextmenu directionality searchreplace wordcount visualblocks
             visualchars code fullscreen autolink lists  charmap print  hr
-            anchor pagebreak
+            anchor pagebreak paste
             ''',
     'toolbar1': '''
-            fullscreen preview bold italic underline | fontselect,
+            fullscreen preview | bold italic underline | fontselect,
             fontsizeselect  | forecolor backcolor | alignleft alignright |
-            aligncenter alignjustify | indent outdent | bullist numlist table |
-            | link image media | codesample
+            aligncenter alignjustify | indent outdent 
             ''',
     'toolbar2': '''
             visualblocks visualchars |
             charmap hr pagebreak nonbreaking anchor |  code |
+            bullist numlist table |
+            link media paste| codesample
             ''',
-    'contextmenu': 'formats | link image',
+    'contextmenu': 'formats | link',
     'menubar': True,
     'statusbar': True,
+    'paste_data_images': True,
+    'block_unsupported_drop ': True,
     }
