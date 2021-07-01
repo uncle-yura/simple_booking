@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_underconstruction',
+    'captcha',
     'bootstrap',
     'fontawesome',
     'crispy_forms',
@@ -63,6 +64,7 @@ INSTALLED_APPS = [
     'booking.apps.BookingConfig',
     'blog.apps.BlogConfig',
     'base.apps.BaseConfig',
+    'contact.apps.ContactConfig',
 ]
 
 MIDDLEWARE = [
@@ -91,6 +93,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'blog.context_processors.menu', 
+                'contact.context_processors.contact_short', 
             ],
         },
     },
@@ -167,7 +170,16 @@ LOGIN_REDIRECT_URL = '/'
 
 VERIFICATION_SUCCESS_TEMPLATE = None
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.environ.get('DJANGO_EMAIL_HOST', 'localhost')
+    EMAIL_USE_TLS = os.environ.get('DJANGO_EMAIL_USE_TLS', True)
+    EMAIL_PORT = os.environ.get('DJANGO_EMAIL_PORT', 587)
+    EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_HOST_USER','email')
+    EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_HOST_PASSWORD','password')
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -216,3 +228,6 @@ TINYMCE_DEFAULT_CONFIG = {
     'paste_data_images': True,
     'block_unsupported_drop ': True,
     }
+
+RECAPTCHA_PUBLIC_KEY = os.environ.get('DJANGO_RECAPTCHA_PUBLIC_KEY', 'recaptchapublickeymustbehere')
+RECAPTCHA_PRIVATE_KEY = os.environ.get('DJANGO_RECAPTCHA_PRIVATE_KEY', 'recaptchaprivatekeymustbehere')
