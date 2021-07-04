@@ -1,7 +1,6 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <!--Article-->
     <div class="article-banner text-center">
         <br><br>
         <div class="container">
@@ -15,8 +14,20 @@
     <div class="container">
         <br>
         <p>{{ article.article_content|safe }}</p>
-    </div>
 
+        <div class="dropdown float-right">
+            <button class="btn btn-info btn-sm dropdown-toggle"
+                    type="button" id="dropdownMenu1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+              Share
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                {% for share in share_tags %}
+                    <a class="dropdown-item" href="{{ share.share_url }}{{ request.build_absolute_uri }}{{ share.share_text }}">{{ share.share_icon.icon_html }} Share with {{ share.share_name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
     <style>
         .article-banner { 

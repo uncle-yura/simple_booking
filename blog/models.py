@@ -2,7 +2,19 @@ from django.db import models
 
 from tinymce.models import HTMLField
 
+from faicon.fields import FAIconField
+
 from datetime import datetime
+
+
+class SocialShare(models.Model):
+	share_name = models.CharField(max_length=20)
+	share_icon = FAIconField()
+	share_text = models.CharField(max_length=200)
+	share_url = models.URLField(default="")
+    
+	def __str__(self):
+		return self.share_name
 
 
 class Tag(models.Model):
