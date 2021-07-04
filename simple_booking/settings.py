@@ -182,11 +182,16 @@ VERIFICATION_SUCCESS_TEMPLATE = None
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = os.environ.get('DJANGO_EMAIL_HOST', 'localhost')
+    EMAIL_PORT = int( os.environ.get('DJANGO_EMAIL_PORT', 587) )
     EMAIL_USE_TLS = bool( os.environ.get('DJANGO_EMAIL_USE_TLS', False) )
     EMAIL_USE_SSL = bool( os.environ.get('DJANGO_EMAIL_USE_SSL', False) )
-    EMAIL_PORT = int( os.environ.get('DJANGO_EMAIL_PORT', 587) )
+    
+    if EMAIL_USE_SSL:
+        EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+    else:
+        EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
     EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_HOST_USER','email')
     EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_HOST_PASSWORD','password')
 
