@@ -4,8 +4,12 @@
     {% block title %}<title>Booking</title>{% endblock %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Add additional CSS in static file -->
+
     {% load static %}
+
+    {% load extra_settings %}
+
+    <link rel="shortcut icon" type="image/png" href="/media/{% get_setting 'FAVICON_LOGO' %}"/>
 
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
@@ -16,6 +20,10 @@
     <script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'admin/js/vendor/select2/select2.full.js' %}"></script>
+
+    {% autoescape off %}
+      {% get_setting  'HEADER_BLOCK' %}
+    {% endautoescape %}
   </head>
   <body>
     {% include 'includes/navbar.html' %}
