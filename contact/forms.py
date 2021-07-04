@@ -20,7 +20,7 @@ class ContactForm(ModelForm):
     def send_email(self):
         mail = send_mail(self.cleaned_data['subject'], 
             f'Message from {self.cleaned_data["email"]}: {self.cleaned_data["message"]}', 
-            Setting.get('CONTACT_EMAIL'), 
-            [Setting.get('ADMIN_EMAIL'),], 
+            settings.EMAIL_HOST_USER, 
+            [Setting.get('CONTACT_EMAIL'),], 
             fail_silently=False)
         return mail

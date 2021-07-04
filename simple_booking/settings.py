@@ -182,19 +182,13 @@ VERIFICATION_SUCCESS_TEMPLATE = None
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = os.environ.get('DJANGO_EMAIL_HOST', 'localhost')
-    EMAIL_PORT = int( os.environ.get('DJANGO_EMAIL_PORT', 587) )
     EMAIL_USE_TLS = bool( os.environ.get('DJANGO_EMAIL_USE_TLS', False) )
     EMAIL_USE_SSL = bool( os.environ.get('DJANGO_EMAIL_USE_SSL', False) )
-    
-    if EMAIL_USE_SSL:
-        EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
-    else:
-        EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
+    EMAIL_PORT = int( os.environ.get('DJANGO_EMAIL_PORT', 587) )
     EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_HOST_USER','email')
     EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_HOST_PASSWORD','password')
-
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -244,6 +238,6 @@ TINYMCE_DEFAULT_CONFIG = {
     'block_unsupported_drop ': True,
     }
 
-RECAPTCHA_ACTIVE = bool( os.environ.get('DJANGO_RECAPTCHA_ACTIVE', True) )
+RECAPTCHA_ACTIVE = bool( os.environ.get('DJANGO_RECAPTCHA_ACTIVE', False) )
 RECAPTCHA_PUBLIC_KEY = os.environ.get('DJANGO_RECAPTCHA_PUBLIC_KEY', 'recaptchapublickeymustbehere')
 RECAPTCHA_PRIVATE_KEY = os.environ.get('DJANGO_RECAPTCHA_PRIVATE_KEY', 'recaptchaprivatekeymustbehere')
