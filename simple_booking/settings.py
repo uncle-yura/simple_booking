@@ -106,9 +106,18 @@ WSGI_APPLICATION = 'simple_booking.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('POSTGRESQL_NAME','django_db'),
+        'USER' : os.environ.get('POSTGRESQL_USER','user_name'),
+        'PASSWORD' : os.environ.get('POSTGRESQL_PW','password'),
+        'HOST' : os.environ.get('POSTGRESQL_HOST','127.0.0.1'),
+        'PORT' : os.environ.get('POSTGRESQL_PORT', '5432'),
     }
 }
 
