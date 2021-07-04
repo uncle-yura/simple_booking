@@ -30,7 +30,7 @@ DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
 ALLOWED_HOSTS = os.environ.get('SERVERNAMES', '').split()
 
 if not DEBUG:
-    SECURE_HSTS_SECONDS = os.environ.get('SERVER_HSTS_SECONDS', 3600)
+    SECURE_HSTS_SECONDS = int( os.environ.get('SERVER_HSTS_SECONDS', 3600) )
 
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
@@ -184,8 +184,8 @@ if DEBUG:
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = os.environ.get('DJANGO_EMAIL_HOST', 'localhost')
-    EMAIL_USE_TLS = os.environ.get('DJANGO_EMAIL_USE_TLS', True)
-    EMAIL_PORT = os.environ.get('DJANGO_EMAIL_PORT', 587)
+    EMAIL_USE_TLS = bool( os.environ.get('DJANGO_EMAIL_USE_TLS', True) )
+    EMAIL_PORT = int( os.environ.get('DJANGO_EMAIL_PORT', 587) )
     EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_HOST_USER','email')
     EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_HOST_PASSWORD','password')
 
@@ -238,5 +238,6 @@ TINYMCE_DEFAULT_CONFIG = {
     'block_unsupported_drop ': True,
     }
 
+RECAPTCHA_ACTIVE = bool( os.environ.get('DJANGO_RECAPTCHA_ACTIVE', True) )
 RECAPTCHA_PUBLIC_KEY = os.environ.get('DJANGO_RECAPTCHA_PUBLIC_KEY', 'recaptchapublickeymustbehere')
 RECAPTCHA_PRIVATE_KEY = os.environ.get('DJANGO_RECAPTCHA_PRIVATE_KEY', 'recaptchaprivatekeymustbehere')

@@ -2,13 +2,15 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.conf import settings
 
 from captcha.fields import ReCaptchaField
 
 
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    captcha = ReCaptchaField()
+    if settings.RECAPTCHA_ACTIVE:
+        captcha = ReCaptchaField()
 
     class Meta:
         model = User
