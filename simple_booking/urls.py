@@ -24,7 +24,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('verification/', include('verify_email.urls')),
     path('tinymce/', include('tinymce.urls')),
-    path('faicon/', include('faicon.urls')),
 ]
 
 urlpatterns += [

@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_underconstruction',
     'captcha',
-    'faicon',
     'bootstrap',
     'fontawesome',
     'crispy_forms',
