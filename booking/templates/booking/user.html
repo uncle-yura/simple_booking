@@ -37,9 +37,9 @@
                 <h4 class="card-title font-weight-bold text-center">Master profile</h4>
                 <hr>
                 <div class="card-text">
-                    <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'my-prices'%}">My prices</a>
-                    <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'my-clients'%}">My clients</a>
-                    <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'my-jobs'%}">My jobs</a>
+                    <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-prices'%}">My prices</a>
+                    <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-clients'%}">My clients</a>
+                    <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-jobs'%}">My jobs</a>
                     <hr>
                     <p class="text-muted mb-0"  style="font-size: 12px">Timetable:</p>
                     <p> {{ user.profile.get_timetable_display  }} </p>
@@ -69,7 +69,7 @@
                 <h4 class="card-title font-weight-bold text-center">Your orders</h4>
                 <hr>
                 <div class="card-text">
-                <a class="btn btn-sm btn-outline-primary m-2"  href="{% url 'my-orders'%}">My orders</a>
+                <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-orders'%}">My orders</a>
                 <hr>
                 <p class="text-muted mb-0"  style="font-size: 12px">Your masters:</p>
                     {% if user.profile.get_uniq_masters %}

@@ -9,7 +9,7 @@
 <div class="container py-5">
     <div class="row">
         <div class='col-sm-12 col-md-12 col-lg-5 col-xl-5 pb-5'>
-            <div class='card p-4 sticky-top' style='top: 10vh;'>
+            <div class='card p-4 position-sticky' style='top: 10vh;'>
                 <h1 class="font-weight-bold">New order</h1>
                 <hr>
                 <br>
@@ -77,10 +77,5 @@
 </script>
 
 {% include 'includes/locale.html' %}
-
-<script src="{% static 'booking/js/ajax.js' %}"></script>
-<script src="{% static 'booking/js/events.js' %}"></script>
-<script src="{% static 'booking/js/functions.js' %}"></script>
-<script src="{% static 'booking/js/eventClass.js' %}"></script>
-
+{{ form.media }}
 {% endblock %}

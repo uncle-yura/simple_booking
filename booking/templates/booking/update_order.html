@@ -15,7 +15,7 @@
         </div>
 
         <div class='col-sm-12 col-md-12 col-lg-5 col-xl-5 pb-4'>
-            <div class='card p-4 sticky-top' style='top: 10vh;'>
+            <div class='card p-4 position-sticky' style='top: 10vh;'>
                 <form id="newOrderForm" method="POST">
                     {% csrf_token %}
                     {{ form|crispy }}   
@@ -32,7 +32,7 @@
                         <br>
 
                         <button class="btn btn-primary" type="submit">Save</button>
-                        <a class="btn btn-outline-primary" href="{% url 'my-orders' %}">Cancel</a> 
+                        <a class="btn btn-outline-secondary" href="{% url 'my-orders' %}">Cancel</a> 
                     </div>
                 </form> 
             </div>   
@@ -79,10 +79,5 @@
 </script>
 
 {% include 'includes/locale.html' %}
-
-<script src="{% static 'booking/js/ajax.js' %}"></script>
-<script src="{% static 'booking/js/events.js' %}"></script>
-<script src="{% static 'booking/js/functions.js' %}"></script>
-<script src="{% static 'booking/js/eventClass.js' %}"></script>
-
+{{ form.media }}
 {% endblock %}

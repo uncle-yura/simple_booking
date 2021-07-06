@@ -24,7 +24,7 @@
         </div>
 
         <div class='col-sm-12 col-md-12 col-lg-7 col-xl-7 pb-4'>
-            <div class='card p-4 sticky-top' style='top: 10vh;'>
+            <div class='card p-4 position-sticky' style='top: 10vh;'>
                 <h4 class='card-title font-weight-bold text-center'>Contact</h1>
                 <hr>
                 <div class='card-text'>                
@@ -33,7 +33,6 @@
                         {{ form|crispy }}                    
                         <br>
                         <button class='btn btn-primary' type='submit'>Send</button>
-                        <a class='btn btn-outline-primary' href="{% url 'my-prices' %}">Cancel</a>
                     </form>
                 </div>
 

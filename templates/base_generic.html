@@ -1,17 +1,14 @@
-<!DOCTYPE html>
+{% load bootstrap_customizer %}<!DOCTYPE html>
 <html lang="en">
   <head>
     {% block title %}<title>Booking</title>{% endblock %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     {% load static %}
-
     {% load extra_settings %}
-
     <link rel="shortcut icon" type="image/png" href="/media/{% get_setting 'FAVICON_LOGO' %}"/>
-
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <style lang="css">{% bootstrap_theme_css_above_the_fold %}</style>
+    <!-- <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"> -->
     <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'booking/css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'admin/css/vendor/select2/select2.css' %}">
@@ -26,16 +23,13 @@
     {% endautoescape %}
   </head>
   <body>
+    <link rel="stylesheet" type="text/css" href="{% bootstrap_theme_css_below_the_fold_url %}">
     {% include 'includes/navbar.html' %}
-
     {% include 'includes/messages.html' %}
-
     <main class="container-fluid py-3 flex-fill">
       {% block content %}
-      
       {% endblock %}
     </main>
-    
     {% include 'includes/footer.html' %}
   </body>
 </html>

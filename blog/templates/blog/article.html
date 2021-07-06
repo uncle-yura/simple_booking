@@ -15,8 +15,9 @@
         <br>
         <p>{{ article.article_content|safe }}</p>
 
+        {% if share_tags %}
         <div class="dropdown float-right">
-            <button class="btn btn-info btn-sm dropdown-toggle"
+            <button class="btn btn-outline-info btn-sm dropdown-toggle"
                     type="button" id="dropdownMenu1" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
               Share
@@ -27,6 +28,7 @@
                 {% endfor %}
             </div>
         </div>
+        {% endif %}
     </div>
 
     <style>

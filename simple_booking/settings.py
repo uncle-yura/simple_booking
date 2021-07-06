@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_underconstruction',
+    'django.contrib.sites',
+    'bootstrap_customizer',
     'captcha',
     'bootstrap',
     'fontawesome',
@@ -76,8 +78,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_underconstruction.middleware.UnderConstructionMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
+    'bootstrap_customizer.middleware.BootstrapThemeMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+SITE_ID = 1
 
 ROOT_URLCONF = 'simple_booking.urls'
 

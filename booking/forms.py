@@ -40,6 +40,12 @@ class NewOrderForm(forms.ModelForm):
         fields = ('master', 'work_type', 'booking_date', 'client_comment', )
         widgets = {'booking_date': forms.HiddenInput, 'master':OrderMasterSelect}
 
+    class Media:
+        js = ('booking/js/ajax.js',
+                'booking/js/events.js',
+                'booking/js/functions.js',
+                'booking/js/eventClass.js')
+
 
 class OrderPriceMultiSelect(SelectMultiple):
     def __init__(self, attrs=None, choices=(), custom_attrs={}):
@@ -58,6 +64,12 @@ class OrderPriceMultiSelect(SelectMultiple):
 class EditOrderForm(NewOrderForm):
     class Meta(NewOrderForm.Meta):
         widgets = {'booking_date': forms.HiddenInput, 'master': forms.HiddenInput,}
+
+    class Media:
+        js = ('booking/js/ajax.js',
+                'booking/js/events.js',
+                'booking/js/functions.js',
+                'booking/js/eventClass.js')
 
 
 class CancelOrderForm(forms.ModelForm):

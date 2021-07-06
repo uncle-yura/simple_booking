@@ -7,7 +7,7 @@
         <h1 class="font-weight-bold">Articles</h1>
         <hr>
         {% if perms.blog.create_article %}
-            <a href="{% url 'new-article' %}"  class="btn btn-outline-dark btn-sm">Create post</a>
+            <a href="{% url 'new-article' %}"  class="btn btn-outline-secondary btn-sm">Create post</a>
             <br>
         {% endif %}
 
@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-12 pb-4">
                 {% for article in article_list %}
-                    <a href="{{ article.article_slug }}" style="text-decoration: none">
+                    <a href="{% url 'article' article.article_slug %}" style="text-decoration: none">
                         <div class="row pb-4">
                             <div class="col-lg-4 col-md-5 col-sm-12">
                                 <img src="{{ article.article_image.url }}" style="max-height: 12em;" class="img-fluid rounded" alt="{{ article.article_name }}">
@@ -24,11 +24,11 @@
                                 <div class="container mx-auto">
                                     <div class="row">
                                     {% if perms.blog.change_article %}
-                                    <form><button formaction="{% url 'edit-article' article.article_slug %}" class="btn btn-outline-dark btn-sm m-1">Edit post</button></form>
+                                    <form><button formaction="{% url 'edit-article' article.article_slug %}" class="btn btn-outline-warning btn-sm m-1">Edit post</button></form>
                                     {% endif %}
             
                                     {% if perms.blog.delete_article %}
-                                    <form><button formaction="{% url 'delete-article' article.article_slug %}" class="btn btn-outline-dark btn-sm m-1">Delete post</button></form>
+                                    <form><button formaction="{% url 'delete-article' article.article_slug %}" class="btn btn-outline-danger btn-sm m-1">Delete post</button></form>
                                     {% endif %} 
                                     </div>
                                 </div>
@@ -45,7 +45,7 @@
                                    <p style="display: inline; white-space: nowrap;">{{ article.article_content|safe|truncatewords:20}}</p> 
                                 </div>
                                 <br>
-                                <button class="btn btn-outline-dark btn-sm">View post</button>
+                                <button class="btn btn-outline-primary btn-sm">View post</button>
                             </div>   
                         </div>
                     </a>
