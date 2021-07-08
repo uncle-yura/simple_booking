@@ -49,7 +49,7 @@ function getMasterData(id){
 
             sessionStorage.setItem('events', JSON.stringify(eventsList));
 
-            
+            $("#id_work_type").removeAttr('disabled');
             drawCalendar(+master_select.attr('range'));
             drawTimetable(new Date());
         },

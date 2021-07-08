@@ -37,7 +37,7 @@ class Event {
     }
 
     update_text() {
-        this.card.innerHTML = getLocalText('busyFromTo', getLocaleTimeString(this.event.start), getLocaleTimeString(this.event.end));
+        this.card.innerHTML = "<div class='timetable_event_text'>"+getLocalText(this.card.id ? 'fromTo' : 'busyFromTo', getLocaleTimeString(this.event.start), getLocaleTimeString(this.event.end))+"</div>";
     }
 
     update_position() {

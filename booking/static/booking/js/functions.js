@@ -65,9 +65,10 @@ function updatePriceAndTimeStrigs() {
 function updateDefaultStrings() {
     if ( !$('#id_master').val() ){
         selectedDayEventsObjList = [];
-        selectedDay;
         total_time = 0;
         total_price = 0;
+
+        $("#id_work_type").prop('disabled', true);
 
         $("#id_work_type").empty();
 
@@ -77,10 +78,7 @@ function updateDefaultStrings() {
         $("#id_calendar_body").html(getLocalText('defaultCalendar'));
     }
     else {
-        if( !!$("#id_work_type").val() ) updatePriceAndTimeStrigs();
-
-        let master_select = $('#id_master').prev().is("input") ? $('#id_master') : $('#id_master option:selected');
-        drawCalendar(+master_select.attr('range'));
+        if( !!$("#id_work_type").val().length ) updatePriceAndTimeStrigs();
 
         let selected_date = document.getElementById("id_booking_date").value
         if( selected_date ) {
@@ -90,8 +88,6 @@ function updateDefaultStrings() {
 
         getMasterData($('#id_master').val());
     }
-
-    $('#id_calendar_loading').hide();
 }
 
 function updateDateStrings(event) {
@@ -111,6 +107,7 @@ function drawNewEvent(position_start) {
     if( position_start >= 1 || position_start<0 ) return false;
 
     if(!selectedDayEventsObjList.hasOwnProperty("new_event")) {
+        let selectedDay = $("#id_timetable_header").attr("currentDate");
         let start_stamp = getStampFromPos(position_start,selectedDay)
         selectedDayEventsObjList.new_event = new Event({
             'start':start_stamp, 
@@ -128,7 +125,7 @@ function drawTimetable(date) {
     let currentDate = new Date(date);
 
     $("#id_timetable_header").html("Booking on " + currentDate.toLocaleDateString());
-    
+    $("#id_timetable_header").attr("currentDate",date);
     selectedDayEventsObjList = []
     $("#id_timetable_events").html("");
 
@@ -206,7 +203,7 @@ function drawCalendar(booking_range) {
         div.setAttribute("value",firstDay.toISOString());
 
         div.onclick = function() {
-            selectedDay = this.getAttribute("value");
+            let selectedDay = this.getAttribute("value");
             drawTimetable(selectedDay);
             $("#id_day_view_modal").modal('show');
             };

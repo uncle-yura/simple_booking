@@ -1,4 +1,5 @@
 'use strict';
+$('#id_calendar_loading').hide();
 
 $(document).ready(function () {
     updateDefaultStrings();
@@ -63,9 +64,21 @@ $('#id_day_view_modal').on('shown.bs.modal', function () {
     });
 
 $('#id_master').change(function () {
+    if(selectedDayEventsObjList.hasOwnProperty("new_event")) {
+        delete selectedDayEventsObjList.new_event;
+        $("#selected_datetime").html(getLocalText('defaultSelectedDate'));
+        document.getElementById("id_booking_date").value = null;
+    }
+
     updateDefaultStrings();
     });
 
 $('#id_work_type').change(function () {
     updatePriceAndTimeStrigs();
+
+    if(selectedDayEventsObjList.hasOwnProperty("new_event")) {
+        delete selectedDayEventsObjList.new_event;
+        $("#selected_datetime").html(getLocalText('defaultSelectedDate'));
+        document.getElementById("id_booking_date").value = null;
+    }
 });

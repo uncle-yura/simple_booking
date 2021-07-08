@@ -1,3 +1,5 @@
+{% load extra_settings %}
+
 <script>
     'use strict'
 
@@ -8,7 +10,7 @@
             'monthNames' : "January,February,March,April,May,June,July,August,September,October,November,December",
             'fromTo' : `From ${args[0]} to ${args[1]}`,
             'busyFromTo' : `Busy from ${args[0]} to ${args[1]}`,
-            'priceTotal' : `Total price: ${args[0]} usd`,
+            'priceTotal' : `Total price: ${args[0]} {% get_setting 'PRICE_CURRENCY' default='USD' %}`,
             'timeTotal' : `Total time: ${args[0]} min`,
             'selDate' : `Date: ${args[0]}`,
             'defaultTotalTime': "Select the master",

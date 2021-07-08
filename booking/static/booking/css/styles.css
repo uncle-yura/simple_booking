@@ -5,6 +5,38 @@
     list-style: none;
 }
 
+.spinner-border {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    vertical-align: text-bottom;
+    border: 0.25em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    -webkit-animation: spinner-border .75s linear infinite;
+    animation: spinner-border .75s linear infinite;
+  }
+  
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.2em;
+}
+
+@-webkit-keyframes spinner-border {
+    to {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+}
+  
+@keyframes spinner-border {
+    to {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+}
+  
 body {
     min-height: 100vh;
     display: flex;
@@ -31,10 +63,7 @@ body {
     width: 70%;
     left: 20%;
     z-index: 1;
-    min-height: 2.5rem;
     background: rgba(208, 152, 71, 0.4);
-    padding: .5rem;
-    margin-bottom: .25rem;
     box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
     border-radius: .25rem;
     box-sizing: border-box;
@@ -48,10 +77,21 @@ body {
                             supported by Chrome and Opera */
 }
 
+.timetable_event_text {
+    position: absolute;
+    padding-left: .5rem;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
 #id_timetable_new_date{
     background:rgba(47, 152, 86, 0.4);
 }
-
 
 .timetable_events_container{
     min-height: 75rem;
