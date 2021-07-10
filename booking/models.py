@@ -45,6 +45,8 @@ class Profile(models.Model):
     timetable = models.CharField(max_length=1, choices=TIME_TABLE.choices, default=TIME_TABLE.ALL)
     booking_time_delay = models.DurationField(default=timedelta(minutes=60))
     booking_time_range = models.IntegerField(default=30)
+    black_list = models.ManyToManyField('self',blank=True)
+    white_list = models.ManyToManyField('self',blank=True)
 
     def __str__(self):
         return f'{self.user}'
@@ -61,10 +63,11 @@ class Profile(models.Model):
         return self.orders.latest('booking_date').booking_date
 
     def get_uniq_masters(self):
-        return self.masters.order_by().distinct()
+        white_list = Profile.objects.filter(user__groups__name='Master').filter(white_list__in = [self])
+        return (self.masters.all()|white_list).exclude(black_list__in = [self]).order_by().distinct()
 
     def get_uniq_clients(self):
-        return self.clients.order_by().distinct()
+        return (self.clients.all()|self.white_list.all()).exclude(pk__in=self.black_list.all()).order_by().distinct()
 
     def get_gcal_account(self):
         with open(settings.SERVICE_SECRETS) as json_file:

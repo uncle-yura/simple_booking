@@ -15,7 +15,9 @@ urlpatterns = [
 
     path('clients/', views.ClientsByUserListView.as_view(), name='my-clients'),
     path('client/<int:pk>', views.UserView.as_view(), name='user-view'),
-
+    path('clients/whitelist', views.WhiteListUpdate.as_view(), name='whitelist'),
+    path('clients/blacklist', views.BlackListUpdate.as_view(), name='blacklist'),
+    
     path('pricelist/', views.PriceListView.as_view(), name='my-prices'),
     path('pricelist/<int:pk>', views.PublicPriceListView.as_view(), name='public-prices'),
     path('price/edit/<int:pk>', views.PriceListUpdate.as_view(), name='price-update'),

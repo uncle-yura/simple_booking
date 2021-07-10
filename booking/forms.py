@@ -34,6 +34,21 @@ class OrderMasterSelect(Select):
         return option
 
 
+class CustomSelectMultiple(SelectMultiple):
+    def __init__(self, attrs=None, choices=()):
+        super(SelectMultiple, self).__init__(attrs, choices=choices)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        widgets_html = super(SelectMultiple, self).render(name, value, attrs, renderer)
+        widgets_html +=  "<script>let select_input = $('#id_"+name+"');" + '''
+            select_input.select2({width: '100%'});
+            select_input.attr("data-container", "body");
+            select_input.attr("data-toggle", "popover");
+            select_input.attr("data-placement", "right");
+            </script>
+            '''
+        return widgets_html
+
 class NewOrderForm(forms.ModelForm):
     class Meta:
         model = Order
@@ -45,6 +60,21 @@ class NewOrderForm(forms.ModelForm):
                 'booking/js/events.js',
                 'booking/js/functions.js',
                 'booking/js/eventClass.js')
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop("request")
+        super(NewOrderForm, self).__init__(*args, **kwargs)
+        query_set = Profile.objects.filter(user__groups__name='Master')
+        exclude_id = []
+        for master in query_set:
+            timetable = master.timetable
+            if timetable is not "A" \
+                and not (timetable is "M" and master.get_uniq_clients().filter(id__exact=request.user.profile.id).count()>0 ) \
+                and not (timetable is "V" and request.user.profile.orders.count()>0) \
+                or master.black_list.filter(id__exact=request.user.profile.id).count()>0 :
+                exclude_id.append(master.id)
+        query_set = query_set.exclude(id__in=exclude_id)
+        self.fields['master'].queryset = query_set
 
 
 class OrderPriceMultiSelect(SelectMultiple):

@@ -8,6 +8,7 @@ from django.db import IntegrityError
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
+from django.forms.models import modelform_factory
 
 from .models import *
 from .forms import *
@@ -144,17 +145,10 @@ class OrderCreate(CreateView):
     template_name = 'booking/new_order.html'
     success_url = reverse_lazy('my-orders')
 
-    def get_queryset(self):
-        query_set = Profile.objects.filter(user__groups__name='Master')
-        exclude_id = []
-        for master in query_set:
-            timetable = master.timetable 
-            if timetable is not "A" \
-                and not (timetable is "M" and master.clients.filter(id__exact=self.request.user.profile.id).count()>0 ) \
-                and not (timetable is "V" and self.request.user.profile.orders.count()>0):
-                exclude_id.append(master.id)
-        query_set = query_set.exclude(id__in=exclude_id)
-        self.fields['master'].queryset = query_set
+    def get_form_kwargs(self):
+        kwargs = super(OrderCreate, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs 
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -190,6 +184,11 @@ class OrderUpdate(OrderOwnerOnlyMixin, UpdateView):
     form_class = EditOrderForm
     success_url = reverse_lazy('my-orders')
     template_name = 'booking/update_order.html'
+
+    def get_form_kwargs(self):
+        kwargs = super(OrderUpdate, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs 
 
     def get_form(self):
         form = super().get_form(form_class=self.form_class)
@@ -307,6 +306,56 @@ class ClientsByUserListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return self.request.user.profile.get_uniq_clients().order_by('-id')
+
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(is_master, name='dispatch')
+class WhiteListUpdate(LoginRequiredMixin, UpdateView):
+    model = Profile
+    success_url = reverse_lazy('my-clients')
+    template_name = 'update_form.html'
+    form_class =  modelform_factory(model = Profile,
+        widgets={"white_list": CustomSelectMultiple }, 
+        fields = ['white_list',],
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_title'] = 'White list'
+        return context
+
+    def get_object(self):
+        return Profile.objects.get(pk=self.request.user.profile.id)
+
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(is_master, name='dispatch')
+class BlackListUpdate(LoginRequiredMixin, UpdateView):
+    model = Profile
+    success_url = reverse_lazy('my-clients')
+    template_name = 'update_form.html'
+    form_class =  modelform_factory(model = Profile,
+        widgets={"black_list": CustomSelectMultiple }, 
+        fields = ['black_list',],
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_title'] = 'Black list'
+        return context
+
+    def get_object(self):
+        return Profile.objects.get(pk=self.request.user.profile.id)
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+
+        if self.object.jobs.filter(client__in=form.cleaned_data['black_list']).count() > 0:
+            messages.error(self.request,("It is impossible to blacklist a client while he has an open order.")) 
+            return redirect('my-clients')  
+
+        self.object.save()
+        return super(BlackListUpdate, self).form_valid(form)
 
 
 @method_decorator(login_required, name='dispatch')
