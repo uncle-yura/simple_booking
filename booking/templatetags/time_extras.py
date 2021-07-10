@@ -1,5 +1,9 @@
 from django import template
 
+from datetime import datetime
+
+import pytz
+
 register = template.Library() 
 
 @register.filter
@@ -20,3 +24,6 @@ def duration(timedelta):
     # Display only minutes
     return '{} min'.format(minutes)
     
+@register.filter
+def expired(booking_date):
+    return booking_date < datetime.now(pytz.utc)

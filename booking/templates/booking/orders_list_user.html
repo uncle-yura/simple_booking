@@ -2,6 +2,8 @@
 
 {% load crispy_forms_tags %}
 
+{% load time_extras %}
+
 {% block content %}
 <div class="container py-5">
   <h1 class="font-weight-bold">Orders list</h1>
@@ -23,7 +25,7 @@
           <td>{{order.booking_date}}</td>
           <td>{{order.get_state_display}}</td>
           <td>
-            {% if order.state != 'C' %}
+            {% if order.state != 'C' and not order.booking_date|expired %}
               <a href="{% url 'order-update' order.pk %}" class="settings" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
               <a href="{% url 'order-cancel' order.pk %}" class="cancel" title="Cancel" data-toggle="tooltip"><i class="fas fa-trash"></i></a>
             {% endif %}
