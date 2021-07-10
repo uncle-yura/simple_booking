@@ -1,13 +1,14 @@
 'use strict';
 
 class Event {
-    constructor(event, id='') {
+    constructor(event, id='', min_step=0) {
         this.event = new Object;
         Object.assign(this.event, event);
 
         this._pos_start = getPosFromStamp(this.event.start);
         this.pos_end = getPosFromStamp(this.event.end);
         this.duration = this.event.end - this.event.start;
+        this.min_step = min_step;
 
         this.card = document.createElement('div');
         this.card.className = "timetable_event";
@@ -51,16 +52,28 @@ class Event {
 
         let pos_duration = this.pos_end - this._pos_start;
         let position_end = pos_duration + position_start;
-    
+        let round_position = true;
+        let next_start = 1;
+        let previous_end = 0;
+
         for(let i=0; i<selectedDayEventsObjList.length; i++) {
             let event = selectedDayEventsObjList[i].event;
             let start = getPosFromStamp(event.start);
             let end = getPosFromStamp(event.end);
     
+            if(end < position_start) {
+                previous_end = end;
+            }
+            
+            if(start > position_end) {
+                next_start = start;
+            }
+
             if( checkPosition(position_start, position_end, event) ) {
                 continue;
             } 
             else {
+                round_position = false;
                 let dif_next;
                 let dif_prev;
                 if(end+pos_duration<1) {
@@ -90,6 +103,11 @@ class Event {
                 
             }
         }
+        if(round_position) {
+            let timeout = this.min_step/1440;
+            position_start = previous_end + Math.round((position_start - previous_end)/timeout)*timeout;
+        }
+
         return position_start;
     }
 

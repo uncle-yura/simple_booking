@@ -108,13 +108,22 @@ function drawNewEvent(position_start) {
 
     if(!selectedDayEventsObjList.hasOwnProperty("new_event")) {
         let selectedDay = $("#id_timetable_header").attr("currentDate");
-        let start_stamp = getStampFromPos(position_start,selectedDay)
+        let start_stamp = getStampFromPos(position_start,selectedDay);
+        let options_array = document.getElementById("id_work_type").options;
+        let min_step = Math.min(...[...Array(options_array.length)].map((_, i) => parseInt(options_array[i].getAttribute('time'),10)/60));
+        
         selectedDayEventsObjList.new_event = new Event({
             'start':start_stamp, 
-            'end':start_stamp+total_time*1000},"id_timetable_new_date");
+            'end':start_stamp+total_time*1000},"id_timetable_new_date",min_step);
         $("#id_timetable_events").append(selectedDayEventsObjList.new_event.card);
 
-        selectedDayEventsObjList.new_event.pos_start = position_start;
+        if( selectedDayEventsObjList.new_event.check_new_position(position_start) ) {
+            selectedDayEventsObjList.new_event.pos_start = position_start;
+        }
+        else {
+            selectedDayEventsObjList.new_event.card.remove();
+            delete selectedDayEventsObjList.new_event;
+        }
     }
     else {
         selectedDayEventsObjList.new_event.pos_start = position_start;

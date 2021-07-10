@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load static %}
     {% load extra_settings %}
-    <link rel="shortcut icon" type="image/png" href="/media/{% get_setting 'FAVICON_LOGO' %}"/>
+    <link rel="shortcut icon" type="image/png" href="/media/{% get_setting 'FAVICON_LOGO' default='icon.png' %}"/>
     <style lang="css">{% bootstrap_theme_css_above_the_fold %}</style>
     <!-- <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"> -->
     <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
