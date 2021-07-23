@@ -2,8 +2,11 @@
 
 function getMasterData(id){
     $('#id_calendar_loading').show();
+    let params = { master: id }
+    if(!(typeof event_id === 'undefined'))params.order = event_id;
+
     $.ajax({
-        data: "master="+id, 
+        data: jQuery.param(params), 
         url: getLocalText('gcal_url'),
     
         success: function (response) {

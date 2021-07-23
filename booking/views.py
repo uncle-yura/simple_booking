@@ -58,6 +58,7 @@ def gcal_data_return(request):
     if not master_id:
         return JsonResponse({'success': False, 'msg':["Master not selected.",]})
 
+    order_id = request.GET.get('order', None)
     master_profile = Profile.objects.filter(id=master_id).first()
     query_set = Profile.objects.filter(user__groups__name='Master')
     exclude_id = []
@@ -107,6 +108,8 @@ def gcal_data_return(request):
                     'time':price.job.time_interval.total_seconds()}})
         
         for event in events['items']:
+            if event['id'] == order_id:
+                continue
             response['events'].update({
                 event['id']:{
                     'start':event['start'],
@@ -115,6 +118,8 @@ def gcal_data_return(request):
 
         while page_token:
             for event in events['items']:
+                if event['id'] == order_id:
+                    continue
                 response['events'].update({
                     event['id']:{
                         'start':event['start'],
@@ -184,6 +189,11 @@ class OrderUpdate(OrderOwnerOnlyMixin, UpdateView):
     form_class = EditOrderForm
     success_url = reverse_lazy('my-orders')
     template_name = 'booking/update_order.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['order_id'] = self.object.gcal_event_id
+        return context
 
     def get_form_kwargs(self):
         kwargs = super(OrderUpdate, self).get_form_kwargs()

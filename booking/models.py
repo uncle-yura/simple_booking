@@ -173,7 +173,9 @@ class Order(models.Model):
         page_token = True
         while page_token:
             for event in events['items']:
-                if has_overlap(order.booking_date, order.booking_date + booking_time_interval, parse_time(event['start']), parse_time(event['end'])):
+                if ( has_overlap(order.booking_date, order.booking_date + booking_time_interval, 
+                    parse_time(event['start']), parse_time(event['end'])) and
+                        order.gcal_event_id != event['id']):
                     return "This date already booked."
             page_token = events.get('nextPageToken')
 
