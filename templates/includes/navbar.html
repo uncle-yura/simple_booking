@@ -6,35 +6,94 @@
     body {
       padding-top: 70px;
     }
+
+    @media (min-width: 992px) {
+    .animate {
+        animation-duration: 0.3s;
+        -webkit-animation-duration: 0.3s;
+        animation-fill-mode: both;
+        -webkit-animation-fill-mode: both;
+    }
+    }
+
+    @keyframes slideIn {
+    0% {
+        transform: translateY(1rem);
+        opacity: 0;
+    }
+    100% {
+        transform:translateY(0rem);
+        opacity: 1;
+    }
+    0% {
+        transform: translateY(1rem);
+        opacity: 0;
+    }
+    }
+
+    @-webkit-keyframes slideIn {
+    0% {
+        -webkit-transform: transform;
+        -webkit-opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0);
+        -webkit-opacity: 1;
+    }
+    0% {
+        -webkit-transform: translateY(1rem);
+        -webkit-opacity: 0;
+    }
+    }
+
+    .slideIn {
+    -webkit-animation-name: slideIn;
+    animation-name: slideIn;
+    }
 </style>
 
 <nav class="navbar fixed-top navbar-expand navbar-light bg-light" style="height: 70px;">
-    <a class="navbar-brand" href="/">
-        <img src="/media/{% get_setting 'NAVBAR_LOGO' default='logo.png' %}" width="30" height="30" alt="LOGO">
-    </a>
-
-    <div class="dropdown">
-        <button class="btn btn-secondary-outline btn-sm dropdown-toggle"
-                type="button" id="dropdownMenu1" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-          Menu
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <a class="dropdown-item" href="{% url 'blog-home'%}">Blog</a>
-            {% for tag in nav_tags %}
-               <a class="dropdown-item" href="/blog/tag/{{ tag.tag_slug }}"> {{ tag.tag_name }}</a>
-            {% endfor %}
-            <a class="dropdown-item" href="{% url 'new-order'%}">Book a service</a>
+    <div class="col-5">
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle"
+                    type="button" id="dropdownMenu1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" style="font-size: 1.2em;">
+            Menu
+            </button>
+            <div class="dropdown-menu  animate slideIn" aria-labelledby="dropdownMenu1">
+                <a class="dropdown-item" href="{% url 'index'%}">Home</a>
+                <a class="dropdown-item" href="{% url 'blog-home'%}">Blog</a>
+                {% for tag in nav_tags %}
+                <a class="dropdown-item" href="/blog/tag/{{ tag.tag_slug }}"> {{ tag.tag_name }}</a>
+                {% endfor %}
+                <a class="dropdown-item" href="{% url 'new-order'%}">Book a service</a>
+                <a class="dropdown-item" href="{% url 'contact'%}">Contact</a>
+            </div>
         </div>
-      </div>
+    </div>
 
-    <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'contact'%}">Contact</a>
-            </li>
-        </ul>
+    <div class="col-2 text-center">
+        <a class="navbar-brand" href="/">
+            <img src="/media/{% get_setting 'NAVBAR_LOGO' default='logo.png' %}" width="30" height="30" alt="LOGO">
+        </a>
+    </div>
 
-        <a class="text-dark" href="{% url 'new-order'%}">Book a service</a>
+
+    <div class="col-3 text-right">
+
+    </div>
+
+    <div class="col-2 d-flex flex-row justify-content-end">  
+        {% if contact_social %}
+            {% for share in contact_social %}
+            <div class="mx-2">
+                <a class="text-dark" href="{{ share.share_url }}" style="font-size: 1.5em;">
+                    {% if share.share_icon %}<i class="{{ share.share_icon }}"></i>{% endif %}{{ share.share_text }}</a>    
+            </div>
+            {% endfor %}
+        {% endif %}
+        <div class="mx-2">
+            <a class="btn-outline-secondary btn" href="{% url 'new-order'%}">Book a service</a>
+        </div>
     </div>
 </nav>

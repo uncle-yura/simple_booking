@@ -102,6 +102,7 @@ TEMPLATES = [
                 'blog.context_processors.share', 
                 'blog.context_processors.top_posts', 
                 'contact.context_processors.contact_short', 
+                'contact.context_processors.contact_social', 
             ],
         },
     },

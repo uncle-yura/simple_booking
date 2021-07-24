@@ -1,6 +1,11 @@
 from django.contrib import admin
 
-from .models import Contact, ContactsList
+from .models import *
+
+
+@admin.register(SocialContact)
+class SocialContactAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Contact)
