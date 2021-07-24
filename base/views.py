@@ -3,14 +3,16 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DeleteView
 from django.urls import reverse_lazy
+from django.db.models import Max, Min
 
 from verify_email.email_handler import send_verification_email
 
 from .forms import *
-
+from booking.models import JobType
 
 def index(request):
-    return render(request=request, template_name='base/index.html', context={})
+    context={'pricelist':JobType.objects.all().annotate(min_price=Min('prices__price')).annotate(max_price=Max('prices__price'))}
+    return render(request=request, template_name='base/index.html', context=context)
 
 
 def register(request):

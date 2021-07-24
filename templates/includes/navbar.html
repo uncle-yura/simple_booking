@@ -50,6 +50,10 @@
     -webkit-animation-name: slideIn;
     animation-name: slideIn;
     }
+
+    .dropdown-item:active {
+        background-color: rgba(161, 156, 156, 0.616);
+    }
 </style>
 
 <nav class="navbar fixed-top navbar-expand navbar-light bg-light" style="height: 70px;">
@@ -60,7 +64,7 @@
                     aria-haspopup="true" aria-expanded="false" style="font-size: 1.2em;">
             Menu
             </button>
-            <div class="dropdown-menu  animate slideIn" aria-labelledby="dropdownMenu1">
+            <div class="dropdown-menu animate slideIn" aria-labelledby="dropdownMenu1">
                 <a class="dropdown-item" href="{% url 'index'%}">Home</a>
                 <a class="dropdown-item" href="{% url 'blog-home'%}">Blog</a>
                 {% for tag in nav_tags %}
@@ -78,10 +82,7 @@
         </a>
     </div>
 
-
-    <div class="col-3 text-right">
-
-    </div>
+    <div class="col-3 text-right"></div>
 
     <div class="col-2 d-flex flex-row justify-content-end">  
         {% if contact_social %}
