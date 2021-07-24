@@ -30,6 +30,7 @@ class Article(models.Model):
 	article_content = HTMLField()
 	article_slug = models.SlugField()
 	article_tags = models.ManyToManyField(Tag)
+	article_top_posts = models.BooleanField(default=False)
 
 	def __str__(self):
 		return self.article_title

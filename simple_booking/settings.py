@@ -100,6 +100,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'blog.context_processors.menu', 
                 'blog.context_processors.share', 
+                'blog.context_processors.top_posts', 
                 'contact.context_processors.contact_short', 
             ],
         },
