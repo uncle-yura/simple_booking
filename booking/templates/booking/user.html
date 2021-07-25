@@ -14,6 +14,9 @@
                 <h4 class="card-title font-weight-bold text-center">Hello, {{ user.username|title }}</h4>
                 <hr>
                 <div class="card-text">
+                    {% if user.profile.avatar %}
+                    <img class="d-flex mr-3" src="/media/{{ user.profile.avatar }}" width="100%" alt="Avatar">
+                    {% endif %}
                     <p class="text-muted mb-0" style="font-size: 12px">Username:</p>
                     <p>{{ user.username }}</p>
                     <p class="text-muted mb-0" style="font-size: 12px">Name:</p>
@@ -95,7 +98,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ user_form|crispy }}
                     {{ profile_form|crispy }}

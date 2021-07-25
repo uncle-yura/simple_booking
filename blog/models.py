@@ -1,6 +1,7 @@
 from django.db import models
 
 from tinymce.models import HTMLField
+from uuid_storage.storage import UUIDStorage
 
 from datetime import datetime
 
@@ -26,7 +27,7 @@ class Tag(models.Model):
 class Article(models.Model):
 	article_title = models.CharField(max_length=200)
 	article_published = models.DateTimeField('date published',  default=datetime.now)
-	article_image = models.ImageField(upload_to='images/')
+	article_image = models.ImageField(upload_to='images/', storage=UUIDStorage)
 	article_content = HTMLField()
 	article_slug = models.SlugField()
 	article_tags = models.ManyToManyField(Tag)

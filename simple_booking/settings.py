@@ -67,6 +67,8 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'base.apps.BaseConfig',
     'contact.apps.ContactConfig',
+    'django_cleanup.apps.CleanupConfig',
+    'uuid_storage.apps.UuidStorageConfig',
 ]
 
 MIDDLEWARE = [

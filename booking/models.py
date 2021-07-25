@@ -9,17 +9,20 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+from uuid_storage.storage import UUIDStorage
+
 from dateutil import parser
 from datetime import datetime,timedelta
 
 import pytz
 import json
 
+
 class JobType(models.Model):
     name = models.CharField(max_length=100, help_text='Enter a work type')
     description = models.TextField(max_length=200, blank=True)
     time_interval = models.DurationField(default=timedelta(minutes=15))
-    image = models.ImageField(upload_to='images/', blank=True)
+    image = models.ImageField(upload_to='images/', storage=UUIDStorage, blank=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -34,6 +37,7 @@ class Profile(models.Model):
         NOBODY = 'N', 'Nobody'
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to='images/', storage=UUIDStorage, blank=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+380123456789'.")
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True) # validators should be a list
     comment = models.CharField(max_length=200, blank=True)
