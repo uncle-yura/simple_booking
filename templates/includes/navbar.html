@@ -4,7 +4,7 @@
 
 <style>
     body {
-      padding-top: 70px;
+      padding-top: 5em;
     }
 
     @media (min-width: 992px) {
@@ -56,7 +56,7 @@
     }
 </style>
 
-<nav class="navbar fixed-top navbar-expand navbar-light bg-light" style="height: 70px;">
+<nav class="navbar fixed-top navbar-expand navbar-light bg-light" style="height: 5em;">
     <div class="col-5">
         <div class="dropdown">
             <button class="btn btn-outline-secondary dropdown-toggle"
@@ -76,15 +76,13 @@
         </div>
     </div>
 
-    <div class="col-2 text-center">
+    <div class="col-2 text-center d-none d-sm-block">
         <a class="navbar-brand" href="/">
             <img src="/media/{% get_setting 'NAVBAR_LOGO' default='logo.png' %}" width="30" height="30" alt="LOGO">
         </a>
     </div>
 
-    <div class="col-3 text-right"></div>
-
-    <div class="col-2 d-flex flex-row justify-content-end">  
+    <div class="col-7 col-sm-5 d-flex flex-row align-items-center justify-content-end">  
         {% if contact_social %}
             {% for share in contact_social %}
             <div class="mx-2">
@@ -94,7 +92,7 @@
             {% endfor %}
         {% endif %}
         <div class="mx-2">
-            <a class="btn-outline-secondary btn" href="{% url 'new-order'%}">Book a service</a>
+            <a class="btn btn-outline-secondary" href="{% url 'new-order'%}">Book a service</a>
         </div>
     </div>
 </nav>

@@ -1,12 +1,14 @@
 {% extends "base_generic.html" %}
 
+{% load extra_settings %}
+
 {% block content %}
 
 {% if top_posts %}
 <div id="carouselHomePage" class="carousel slide p-0" data-ride="carousel">
     <div class="carousel-inner" role="listbox">
     {% for article in top_posts %}
-        <div class="carousel-item article-banner {% if forloop.first %}active{% endif%}" style="background-image: url('{{ article.article_image.url }}');">      
+        <div class="carousel-item article banner {% if forloop.first %}active{% endif%}" style="background-image: url('{{ article.article_image.url }}');">      
             <div class="carousel-caption">
                 <h3>{{ article.article_title }}</h3>
                 <div style="overflow: hidden; max-height: 1.5em;">
@@ -36,37 +38,74 @@
                 <h3 class="text-center"> 
                     About us
                 </h3>
+                {% autoescape off %}
+                {% get_setting 'ABOUT_US' default='Nothing' %}
+                {% endautoescape %}
             </div>
         </div>
 
         {% if pricelist %}
         <div class='col-sm-12 col-md-12 col-lg-4 col-xl-4 pb-4'>
-            <div class='card p-4'>
+            {% with random_price=pricelist|random %}
+            <div class='card p-4 banner' style="background-image: url('/media/{{ random_price.image }}');">
                 <h3 class="text-center"> 
-                    Our prices
+                    Popular job: {{ random_price.name }}
                 </h3>
-                <table class="table table-striped table-borderless">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Time</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for job in pricelist %}
-                        <tr>
-                            <th scope="row">{{ forloop.counter }}</th>
-                            <td>{{ job.name }}</td>
-                            <td>{{ job.time_interval }}</td>
-                            <td>{% if job.min_price != job.max_price %} From {{ job.min_price }} to {{ job.max_price }} {% else %} {{ job.min_price }} {% endif %}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>   
-                <a class="btn-outline-secondary btn" href="{% url 'new-order'%}">Book a service</a>
+ 
+                <div class="card mb-4 mt-4 p-2" style="background: rgba(255, 255, 255, 0.3); font-size: 1.1em;">
+                    <p>{{ random_price.description|linebreaks }}</p>
+
+                    <p>Time: {{ random_price.time_interval }}</p>
+                    <p>Cost: {% if random_price.min_price != random_price.max_price %} From {{ random_price.min_price }} to {{ random_price.max_price }} {% else %} {{ random_price.min_price }} {% endif %}</p>
+                </div>
+
+                <div class="text-center">
+                    <button type="button" class="btn btn-info m-2" data-toggle="modal" data-target="#pricelistModalScrollable">
+                        View all prices
+                    </button>
+    
+                    <a class="btn-primary btn m-2" href="{% url 'new-order'%}">Book a service</a>
+                </div>
+                
+                <div class="modal" id="pricelistModalScrollable" tabindex="-1" role="dialog" aria-labelledby="pricelistModalScrollableLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="pricelistModalCenteredLabel">Our prices</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-striped table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Time</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for job in pricelist %}
+                                        <tr>
+                                            <th scope="row">{{ forloop.counter }}</th>
+                                            <td>{{ job.name }}</td>
+                                            <td>{{ job.time_interval }}</td>
+                                            <td>{% if job.min_price != job.max_price %} From {{ job.min_price }} to {{ job.max_price }} {% else %} {{ job.min_price }} {% endif %}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>  
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>  
+            {% endwith %}
         </div>
         {% endif %}
 
@@ -83,6 +122,10 @@
                 <h3 class="text-center"> 
                     How to find us
                 </h3>
+
+                {% autoescape off %}
+                {% get_setting 'HOW_TO_FIND' default='No way' %}
+                {% endautoescape %}
             </div>  
         </div>
 
@@ -99,12 +142,16 @@
 
 
 <style>
-    .article-banner { 
-        height: calc(100vh - 70px);
+    .banner { 
+
         background-repeat: no-repeat;
         background-size: cover;
         z-index: auto;
         position: relative;
+    }
+
+    .article {
+        height: calc(100vh - 70px);
     }
 </style>
 {% endblock %}

@@ -17,7 +17,7 @@ import json
 
 class JobType(models.Model):
     name = models.CharField(max_length=100, help_text='Enter a work type')
-    description = models.CharField(max_length=200, blank=True)
+    description = models.TextField(max_length=200, blank=True)
     time_interval = models.DurationField(default=timedelta(minutes=15))
     image = models.ImageField(upload_to='images/', blank=True)
 
