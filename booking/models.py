@@ -4,6 +4,7 @@ from django.core.validators import RegexValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
+from django.contrib.auth.models import Group
 
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -16,6 +17,8 @@ from datetime import datetime,timedelta
 
 import pytz
 import json
+
+group, new_group = Group.objects.get_or_create(name='Master')
 
 
 class JobType(models.Model):
@@ -40,7 +43,7 @@ class Profile(models.Model):
     avatar = models.ImageField(upload_to='images/', storage=UUIDStorage, blank=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+380123456789'.")
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True) # validators should be a list
-    comment = models.CharField(max_length=200, blank=True)
+    comment = models.TextField(max_length=200, blank=True)
     discount = models.DecimalField(default=0, max_digits=2, decimal_places=2)
 
     masters = models.ManyToManyField('self', through='Order', through_fields=('client', 'master',),)

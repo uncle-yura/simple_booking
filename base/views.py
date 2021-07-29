@@ -8,10 +8,12 @@ from django.db.models import Max, Min
 from verify_email.email_handler import send_verification_email
 
 from .forms import *
-from booking.models import JobType
+from booking.models import JobType, Profile
 
 def index(request):
-    context={'pricelist':JobType.objects.all().annotate(min_price=Min('prices__price')).annotate(max_price=Max('prices__price'))}
+    context={'pricelist':JobType.objects.all().annotate(min_price=Min('prices__price')).annotate(max_price=Max('prices__price')),
+        'masters':Profile.objects.filter(user__groups__name='Master')
+        }
     return render(request=request, template_name='base/index.html', context=context)
 
 

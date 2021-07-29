@@ -1,9 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
 
 from tinymce.models import HTMLField
 from uuid_storage.storage import UUIDStorage
 
 from datetime import datetime
+
+group, new_group = Group.objects.get_or_create(name='Moderator')
 
 
 class SocialShare(models.Model):

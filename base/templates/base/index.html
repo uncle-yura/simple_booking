@@ -34,7 +34,7 @@
 <div class="p-5">
     <div class="row">
         <div class="col-12 pb-4">
-            <div class='card p-4'>
+            <div class='card p-4' style="max-height: calc(100vh - 70px); overflow-y: auto;">
                 <h3 class="text-center"> 
                     About us
                 </h3>
@@ -45,21 +45,28 @@
         </div>
 
         {% if pricelist %}
-        <div class='col-sm-12 col-md-12 col-lg-4 col-xl-4 pb-4'>
+        <div class='col-sm-12 col-md-6 col-lg-6 col-xl-4 pb-4'>
             {% with random_price=pricelist|random %}
-            <div class='card p-4 banner' style="background-image: url('/media/{{ random_price.image }}');">
-                <h3 class="text-center"> 
+            <div class='card p-4 banner' style="height: 50vh; background-image: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/media/{{ random_price.image }}');">
+                <h3 class="text-center text-white"> 
                     Popular job: {{ random_price.name }}
                 </h3>
- 
-                <div class="card mb-4 mt-4 p-2" style="background: rgba(255, 255, 255, 0.3); font-size: 1.1em;">
-                    <p>{{ random_price.description|linebreaks }}</p>
 
-                    <p>Time: {{ random_price.time_interval }}</p>
-                    <p>Cost: {% if random_price.min_price != random_price.max_price %} From {{ random_price.min_price }} to {{ random_price.max_price }} {% else %} {{ random_price.min_price }} {% endif %}</p>
+                <div class="text-white p-4" style="overflow-y: auto;">
+                    <p >{{ random_price.description|linebreaks }}</p>
                 </div>
 
-                <div class="text-center">
+                <div class="mt-auto text-center">
+                    <div class="text-info">
+                        <i class="fa fa-clock" aria-hidden="true"></i>
+                        {{ random_price.time_interval }}
+                    </div>
+                    <div class="text-warning">
+                        Cost: {% if random_price.min_price != random_price.max_price %} from {{ random_price.min_price }} to {{ random_price.max_price }} {% else %} {{ random_price.min_price }} {% endif %}
+                        {% get_setting 'PRICE_CURRENCY' default='USD' %}
+                    </div>
+                    <br>
+
                     <button type="button" class="btn btn-info m-2" data-toggle="modal" data-target="#pricelistModalScrollable">
                         View all prices
                     </button>
@@ -109,19 +116,36 @@
         </div>
         {% endif %}
 
-        <div class='col-sm-12 col-md-12 col-lg-4 col-xl-4 pb-4'>
-            <div class='card p-4'>
-                <h3 class="text-center"> 
-                    Our specialists
-                </h3>
+        <div class='col-sm-12 col-md-6 col-lg-6 col-xl-4 pb-4'>
+            <div class='card'>
+                 <div id="carouselMaster" class="carousel slide" data-ride="carousel" >
+                    <div class="carousel-inner" role="listbox">
+                    {% for master in masters %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif%}" style="height: 50vh;" >    
+                            <div class="banner p-4" style="height: 100%; background-image: linear-gradient(to top, rgba(0,0,0,0.0), rgb(255, 255, 255)), url('/media/{{ master.avatar }}');">
+                                <h3>{{ master }}</h3>
+                                {{ master.comment|linebreaks}}
+                            </div>  
+                        </div>
+                    {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselMaster" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselMaster" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
             </div>  
         </div>
 
-        <div class='col-sm-12 col-md-12 col-lg-4 col-xl-4 pb-4'>
-            <div class='card p-4'>
-                <h3 class="text-center"> 
+        <div class='col-sm-12 col-md-12 col-lg-12 col-xl-4 pb-4'>
+            <div class='card' style="height: 50vh;">
+                <div class="card-header">
                     How to find us
-                </h3>
+                </div>
 
                 {% autoescape off %}
                 {% get_setting 'HOW_TO_FIND' default='No way' %}
@@ -143,9 +167,9 @@
 
 <style>
     .banner { 
-
         background-repeat: no-repeat;
         background-size: cover;
+        background-position: center;
         z-index: auto;
         position: relative;
     }
