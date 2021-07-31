@@ -23,7 +23,7 @@ function getMasterData(id){
                         .attr("value",response.prices[price].id)
                         .attr("price",response.prices[price].price)
                         .attr("time",response.prices[price].time)
-                        .text(response.prices[price].name + ' - ' + response.prices[price].str_time + ' - ' + response.prices[price].price));
+                        .text(response.prices[price].name + ' - ' + response.prices[price].str_time + ' - ' + response.prices[price].price + ' ' + getLocalText('currencyName')));
                 }
             }
    

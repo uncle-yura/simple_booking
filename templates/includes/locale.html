@@ -18,7 +18,8 @@
             'defaultSelectedDate': "Choose time",
             'defaultCalendar':"Select a master to see his free days",
             'typeError':"You have not chosen a service.",
-            'responseError':"Responce error."
+            'responseError':"Responce error.",
+            'currencyName': "{% get_setting 'PRICE_CURRENCY' default='USD' %}",
         }
         return localText[key];
     }
