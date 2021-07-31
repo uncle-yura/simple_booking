@@ -256,8 +256,12 @@ class OrderCancel(OrderOwnerOnlyMixin, UpdateView):
     model = Order
     form_class = CancelOrderForm
     success_url = reverse_lazy('my-orders')
-    template_name = 'booking/cancel_order.html'
+    template_name = 'delete_form.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_title'] = 'Cancel order'
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -402,8 +406,13 @@ class PublicPriceListView(ListView):
 class PriceListCreate(LoginRequiredMixin, CreateView):
     model = PriceList
     fields = ['job','price',]
-    template_name = 'booking/add_price.html'
+    template_name = 'update_form.html'
     success_url = reverse_lazy('my-prices')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_title'] = 'Add price'
+        return context
 
     def form_valid(self, form):
         try:
@@ -422,7 +431,12 @@ class PriceListCreate(LoginRequiredMixin, CreateView):
 class PriceListDelete(PriceOwnerOnlyMixin, DeleteView):
     model = PriceList
     success_url = reverse_lazy('my-prices')
-    template_name = 'booking/delete_price.html'
+    template_name = 'delete_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_title'] = 'Delete price'
+        return context
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request,('Price deleted')) 
@@ -436,10 +450,13 @@ class PriceListUpdate(PriceOwnerOnlyMixin, UpdateView):
     model = PriceList
     fields = ['job','price',]
     success_url = reverse_lazy('my-prices')
-    template_name = 'booking/update_price.html'
+    template_name = 'update_form.html'
 
     def get_context_data(self, **kwargs):
         data = super(PriceListUpdate, self).get_context_data(**kwargs)
+
+        data['form_title'] = 'Update price:'
+
         if self.request.POST:
             data['pricelist'] = PriceListFormSet(self.request.POST, instance=self.object.profile)
         else:

@@ -15,7 +15,7 @@
                 <hr>
                 <div class="card-text">
                     {% if user.profile.avatar %}
-                    <img class="d-flex mr-3" src="/media/{{ user.profile.avatar }}" width="100%" alt="Avatar">
+                    <img class="d-flex mr-3" src="{{ MEDIA_URL }}{{ user.profile.avatar }}" width="100%" alt="Avatar">
                     {% endif %}
                     <p class="text-muted mb-0" style="font-size: 12px">Username:</p>
                     <p>{{ user.username }}</p>

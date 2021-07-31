@@ -25,9 +25,19 @@ class ArticleTagListView(ListView):
 class ArticleCreateView(PermissionRequiredMixin, CreateView):
     model = Article
     permission_required = 'blog.add_article'
-    template_name = 'blog/new_article.html'
+    template_name = 'update_form.html'
     fields = '__all__'
     success_url = reverse_lazy('blog-home')
+
+
+    class Media:
+        js = ('tinymce/tinymce.min.js', 
+            'django_tinymce/init_tinymce.js',)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_title'] = 'New article'
+        return context
 
 
 class ArticleDetailView(DetailView):
@@ -40,18 +50,33 @@ class ArticleDetailView(DetailView):
 class ArticleUpdateView(PermissionRequiredMixin, UpdateView):
     model = Article
     permission_required = 'blog.change_article'
-    template_name = 'blog/update_article.html'
+    template_name = 'update_form.html'
     slug_field = 'article_slug'
     slug_url_kwarg = 'article_slug'
     fields = '__all__'
     success_url = reverse_lazy('blog-home')
+
+
+    class Media:
+        js = ('tinymce/tinymce.min.js', 
+            'django_tinymce/init_tinymce.js',)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_title'] = 'Update article:'
+        return context
 
 
 class ArticleDeleteView(PermissionRequiredMixin, DeleteView):
     model = Article
     permission_required = 'blog.delete_article'
-    template_name = 'blog/delete_article.html'
+    template_name = 'delete_form.html'
     slug_field = 'article_slug'
     slug_url_kwarg = 'article_slug'
     fields = '__all__'
     success_url = reverse_lazy('blog-home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_title'] = 'Delete article'
+        return context

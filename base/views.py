@@ -9,10 +9,12 @@ from verify_email.email_handler import send_verification_email
 
 from .forms import *
 from booking.models import JobType, Profile
+from gallery.models import Photo
 
 def index(request):
     context={'pricelist':JobType.objects.all().annotate(min_price=Min('prices__price')).annotate(max_price=Max('prices__price')),
-        'masters':Profile.objects.filter(user__groups__name='Master')
+        'masters':Profile.objects.filter(user__groups__name='Master'),
+        'reviews':Photo.objects.all().order_by('-id')[:12],
         }
     return render(request=request, template_name='base/index.html', context=context)
 

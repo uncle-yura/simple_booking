@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'base.apps.BaseConfig',
     'contact.apps.ContactConfig',
+    'gallery.apps.GalleryConfig',
     'django_cleanup.apps.CleanupConfig',
     'uuid_storage.apps.UuidStorageConfig',
 ]
@@ -98,6 +99,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'blog.context_processors.menu', 

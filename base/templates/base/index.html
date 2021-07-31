@@ -47,7 +47,7 @@
         {% if pricelist %}
         <div class='col-sm-12 col-md-6 col-lg-6 col-xl-4 pb-4'>
             {% with random_price=pricelist|random %}
-            <div class='card p-4 banner' style="height: 50vh; background-image: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/media/{{ random_price.image }}');">
+            <div class='card p-4 banner' style="height: 50vh; background-image: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{{ MEDIA_URL }}{{ random_price.image }}');">
                 <h3 class="text-center text-white"> 
                     Popular job: {{ random_price.name }}
                 </h3>
@@ -122,7 +122,7 @@
                     <div class="carousel-inner" role="listbox">
                     {% for master in masters %}
                         <div class="carousel-item {% if forloop.first %}active{% endif%}" style="height: 50vh;" >    
-                            <div class="banner p-4" style="height: 100%; background-image: linear-gradient(to top, rgba(0,0,0,0.0), rgb(255, 255, 255)), url('/media/{{ master.avatar }}');">
+                            <div class="banner p-4" style="height: 100%; background-image: linear-gradient(to top, rgba(0,0,0,0.0), rgb(255, 255, 255)), url('{{ MEDIA_URL }}{{ master.avatar }}');">
                                 <h3>{{ master }}</h3>
                                 {{ master.comment|linebreaks}}
                             </div>  
@@ -154,10 +154,55 @@
         </div>
 
         <div class="col-12 pb-4">
-            <div class='card p-4'>
-                <h3 class="text-center"> 
+            <div class='card px-4'>
+                <h3 class="card-title text-center py-2"> 
                     Reviews
                 </h3>
+                {% if reviews %}
+                <div id="carouselMultiItemReview" class="carousel slide p-0" data-ride="carousel">                 
+                    <div class="carousel-inner" role="listbox">
+                        <a class="carousel-control-prev" href="#carouselMultiItemReview" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselMultiItemReview" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+
+                        <div class="carousel-item active">
+                            <div class="row">
+                                {% for review in reviews %}
+                                <div class="col-lg-3 mb-4 {% cycle '' 'd-none d-lg-block' 'd-none d-lg-block' 'd-none d-lg-block' %}">
+                                    <div class="card">
+                                        <a href="{% url 'photo' review.pk %}">
+                                            <img
+                                                src="{{ MEDIA_URL }}{{ review.image }}"
+                                                class="w-100 shadow-1-strong rounded-top"
+                                                alt=""
+                                            />
+                                        </a>
+                                        <div class="card-footer">
+                                            {% if review.title%}
+                                                <p>{{ review.title }}</p>
+                                            {% endif %}
+                                            <span class="badge badge-pill badge-dark">{{ review.published }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if forloop.counter|divisibleby:4 and not forloop.last %}
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                {% endif %}
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>                    
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

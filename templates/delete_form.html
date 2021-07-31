@@ -8,15 +8,14 @@
     <div class="container py-5">
         <br><br>
         <div class="container">
-            <h1 class="font-weight-bold">{{ article.article_title }}</h1>
-            <p class="font-weight-bold" style="font-size:15px">{{ article.article_published }}</p>
+            <h1 class="font-weight-bold">{{ form_title }}</h1>
             
             <form method="POST">
                 {% csrf_token %}
                 <p>Are you sure you want to delete "{{ object }}"?</p>               
                 <br>
                 <button class="btn btn-primary" type="submit">Delete</button>
-                <a class="btn btn-outline-primary" href="{% url 'blog-home' %}">Cancel</a>
+                <a class="btn btn-outline-secondary" href="{{request.META.HTTP_REFERER|escape}}">Back</a>
             </form>
             <br><br>
         </div>

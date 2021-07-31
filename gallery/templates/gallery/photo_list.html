@@ -1,0 +1,104 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <div class="row p-4">
+        <div class="col-12">
+            <h1 class="font-weight-bold">Photo gallery</h1>
+
+            {% if perms.gallery.add_photo %}
+                <a href="{% url 'new-photo' %}"  class="btn btn-outline-secondary btn-sm">Add photo</a>
+                <br>
+            {% endif %}
+            <hr>
+            <br>
+        </div>
+        <div class="gallery col-12 mb-4 mb-lg-0">
+            {% if photo_list %}
+                {% for photo in photo_list %}
+                <div class="button-container">
+                    <a href="{% url 'photo' photo.pk %}">
+                        <img
+                            src="{{ MEDIA_URL }}{{ photo.image }}"
+                            class="w-100 shadow-1-strong rounded mb-4"
+                            alt=""
+                        />
+   
+                    </a>
+
+                    {% if perms.gallery.change_photo %}
+                    <form style="right:1em;"><button formaction="{% url 'edit-photo' photo.pk %}" class="btn btn-outline-warning btn-sm m-1">Edit</button></form>
+                    {% endif %}
+
+                    {% if perms.gallery.delete_photo %}
+                    <form style="left:1em;"><button formaction="{% url 'delete-photo' photo.pk %}" class="btn btn-outline-danger btn-sm m-1">Delete</button></form>
+                    {% endif %} 
+                </div>
+
+                {% endfor %}
+            {% else %}
+                <p>No image available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    {% block pagination %}
+      {% if is_paginated %}
+      <hr>
+          <div class="pagination">
+              <span class="page-links">
+                  {% if page_obj.has_previous %}
+                      <a class="btn btn-primary btn-sm" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous</a>
+                  {% endif %}
+                  <span class="page-current">
+                      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                  </span>
+                  {% if page_obj.has_next %}
+                      <a class="btn btn-primary btn-sm" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a>
+                  {% endif %}
+              </span>
+          </div>
+      {% endif %}
+    {% endblock %} 
+
+    <style>
+        .button-container{
+            display:inline-block;
+            position:relative;
+        }
+
+        .button-container form{
+            position: absolute;
+            bottom:2em;
+        }
+
+        .gallery {
+	    	-webkit-column-count: 4; /* Chrome, Safari, Opera */
+            -moz-column-count: 4; /* Firefox */
+            column-count: 4;
+    	}	
+
+        @media (max-width: 1300px) {
+		    .gallery {
+	        	-webkit-column-count: 3; /* Chrome, Safari, Opera */
+                -moz-column-count: 3; /* Firefox */
+                column-count: 3;
+	    	}
+		}
+
+        @media (max-width: 900px) {
+		    .gallery {
+	        	-webkit-column-count: 2; /* Chrome, Safari, Opera */
+                -moz-column-count: 2; /* Firefox */
+                column-count: 2;
+	    	}
+		}
+
+        @media (max-width: 500px) {
+		    .gallery {
+	        	-webkit-column-count: 1; /* Chrome, Safari, Opera */
+                -moz-column-count: 1; /* Firefox */
+                column-count: 1;
+	    	}
+		}
+    </style>
+{% endblock %}
