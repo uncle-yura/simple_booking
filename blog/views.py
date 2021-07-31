@@ -24,7 +24,7 @@ class ArticleTagListView(ListView):
 
 class ArticleCreateView(PermissionRequiredMixin, CreateView):
     model = Article
-    permission_required = 'article.create_article'
+    permission_required = 'blog.add_article'
     template_name = 'blog/new_article.html'
     fields = '__all__'
     success_url = reverse_lazy('blog-home')
@@ -39,7 +39,7 @@ class ArticleDetailView(DetailView):
 
 class ArticleUpdateView(PermissionRequiredMixin, UpdateView):
     model = Article
-    permission_required = 'article.change_article'
+    permission_required = 'blog.change_article'
     template_name = 'blog/update_article.html'
     slug_field = 'article_slug'
     slug_url_kwarg = 'article_slug'
@@ -49,7 +49,7 @@ class ArticleUpdateView(PermissionRequiredMixin, UpdateView):
 
 class ArticleDeleteView(PermissionRequiredMixin, DeleteView):
     model = Article
-    permission_required = 'article.delete_article'
+    permission_required = 'blog.delete_article'
     template_name = 'blog/delete_article.html'
     slug_field = 'article_slug'
     slug_url_kwarg = 'article_slug'

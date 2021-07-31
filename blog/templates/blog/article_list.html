@@ -6,7 +6,7 @@
     <div class="container py-5">
         <h1 class="font-weight-bold">Articles</h1>
         <hr>
-        {% if perms.blog.create_article %}
+        {% if perms.blog.add_article %}
             <a href="{% url 'new-article' %}"  class="btn btn-outline-secondary btn-sm">Create post</a>
             <br>
         {% endif %}
