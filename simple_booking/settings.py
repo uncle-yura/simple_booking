@@ -144,12 +144,12 @@ DATABASES = {
     # }
 
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('POSTGRESQL_NAME','django_db'),
-        'USER' : os.environ.get('POSTGRESQL_USER','user_name'),
-        'PASSWORD' : os.environ.get('POSTGRESQL_PW','password'),
-        'HOST' : os.environ.get('POSTGRESQL_HOST','127.0.0.1'),
-        'PORT' : os.environ.get('POSTGRESQL_PORT', '5432'),
+        'ENGINE': 'django.db.backends.'+os.environ.get('SQL_BACKEND','postgresql_psycopg2'),
+        'NAME': os.environ.get('SQL_NAME','django_db'),
+        'USER' : os.environ.get('SQL_USER','user_name'),
+        'PASSWORD' : os.environ.get('SQL_PW','password'),
+        'HOST' : os.environ.get('SQL_HOST','127.0.0.1'),
+        'PORT' : os.environ.get('SQL_PORT', '5432'),
     }
 }
 
