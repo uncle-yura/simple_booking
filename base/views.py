@@ -18,6 +18,8 @@ def index(request):
         }
     return render(request=request, template_name='base/index.html', context=context)
 
+def privacy_policy(request):
+    return render(request=request, template_name='base/privacy_policy.html')
 
 def register(request):
     if request.method == "POST":

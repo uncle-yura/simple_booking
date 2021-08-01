@@ -5,17 +5,21 @@
 {% block content %}
 
 <div class="container py-5">
-    <h1 class="font-weight-bold">Register</h1>
-    <hr>
-    <br>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form|crispy }}                    
+    <div class="card p-4">
+        <h1 class="font-weight-bold">Register</h1>
+        <hr>
         <br>
-        <button class="btn btn-primary" type="submit">Register</button>
-    </form>
-    <br><br>
-    <p>If you already have an account, <a href="{% url 'login'%}">login</a> instead.</p>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}                    
+            <br>
+            <button class="btn btn-primary" type="submit">Register</button>
+        </form>
+        <br><br>
+        <p>If you already have an account, <a href="{% url 'login'%}">login</a> instead.</p>
+        
+        {% include 'includes/social_login.html' %}
+    </div>
 </div>
 
 {% endblock %}

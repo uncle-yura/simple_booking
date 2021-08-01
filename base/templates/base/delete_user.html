@@ -4,15 +4,17 @@
 
 {% block content %}
 <div class="container py-5">
-    <h1 class="font-weight-bold">Delete account</h1>
-    <hr>
-    <br>
-    <form action="" method="post">
-        {% csrf_token %}
-        <p>Are you sure you want to delete your account?</p>
-        <input class="btn btn-primary" type="submit" value="Confirm"/>
-        <a class="btn btn-outline-primary" href="{% url 'user' %}">Cancel</a>
-    </form>
-    <br><br>
+    <div class="card p-4">
+        <h1 class="font-weight-bold">Delete account</h1>
+        <hr>
+        <br>
+        <form action="" method="post">
+            {% csrf_token %}
+            <p>Are you sure you want to delete your account?</p>
+            <input class="btn btn-primary" type="submit" value="Confirm"/>
+            <a class="btn btn-outline-primary" href="{% url 'user' %}">Cancel</a>
+        </form>
+        <br><br>
+    </div>
 </div>
 {% endblock %}

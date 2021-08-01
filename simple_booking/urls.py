@@ -25,6 +25,7 @@ urlpatterns = [
     path('verification/', include('verify_email.urls')),
     path('tinymce/', include('tinymce.urls')),
     path('bootstrap_customizer/', include(bootstrap_customizer_urls)),
+    path('social-auth/', include('social_django.urls', namespace="social")),
 ]
 
 urlpatterns += [

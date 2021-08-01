@@ -72,7 +72,7 @@ class Profile(models.Model):
 
     def get_uniq_masters(self):
         white_list = Profile.objects.filter(user__groups__name='Master').filter(white_list__in = [self])
-        return (self.masters.all()|white_list).exclude(black_list__in = [self]).order_by().distinct()
+        return (self.masters.all()|white_list).exclude(black_list__in = [self]).order_by().distinct()[:7]
 
     def get_uniq_clients(self):
         return (self.clients.all()|self.white_list.all()).exclude(pk__in=self.black_list.all()).order_by().distinct()

@@ -17,7 +17,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -56,6 +55,7 @@ INSTALLED_APPS = [
     'django_underconstruction',
     'django.contrib.sites',
     'bootstrap_customizer',
+    'social_django',
     'captcha',
     'bootstrap',
     'fontawesome',
@@ -86,6 +86,23 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.instagram.InstagramOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('DJANGO_AUTH_FACEBOOK_KEY', '123456789012345')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('DJANGO_AUTH_FACEBOOK_SECRET', '1234567890abcdef1234567890abcdef')
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('DJANGO_AUTH_GOOGLE_KEY', '123456789012345')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('DJANGO_AUTH_GOOGLE_SECRET', '1234567890abcdef1234567890abcdef')
+
+SOCIAL_AUTH_INSTAGRAM_KEY = os.environ.get('DJANGO_AUTH_INSTAGRAM_KEY', '123456789012345')
+SOCIAL_AUTH_INSTAGRAM_SECRET = os.environ.get('DJANGO_AUTH_INSTAGRAM_SECRET', '1234567890abcdef1234567890abcdef')
+SOCIAL_AUTH_INSTAGRAM_EXTRA_DATA = [('user', 'user'),]
+
 SITE_ID = 1
 
 ROOT_URLCONF = 'simple_booking.urls'
@@ -107,6 +124,8 @@ TEMPLATES = [
                 'blog.context_processors.top_posts', 
                 'contact.context_processors.contact_short', 
                 'contact.context_processors.contact_social', 
+                'social_django.context_processors.backends', 
+                'social_django.context_processors.login_redirect',
             ],
         },
     },

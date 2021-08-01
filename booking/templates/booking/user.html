@@ -76,9 +76,11 @@
                 <hr>
                 <p class="text-muted mb-0"  style="font-size: 12px">Your masters:</p>
                     {% if user.profile.get_uniq_masters %}
+                    <ul class="list-group">
                         {% for member in user.profile.get_uniq_masters %}
-                            {{ member }}
+                        <li class="list-group-item border-0">{{ member }}</li>
                         {% endfor %}
+                    </ul>   
                     {% else %}
                         You haven't had a single master yet. 
                     {% endif %}
