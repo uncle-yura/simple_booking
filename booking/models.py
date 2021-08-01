@@ -18,8 +18,6 @@ from datetime import datetime,timedelta
 import pytz
 import json
 
-group, new_group = Group.objects.get_or_create(name='Master')
-
 
 class JobType(models.Model):
     name = models.CharField(max_length=100, help_text='Enter a work type')

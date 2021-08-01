@@ -7,8 +7,6 @@ from uuid_storage.storage import UUIDStorage
 
 from datetime import datetime
 
-group, new_group = Group.objects.get_or_create(name='Moderator')
-
 
 class SocialShare(models.Model):
 	share_name = models.CharField(max_length=20)
