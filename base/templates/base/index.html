@@ -114,11 +114,13 @@
             </div>  
             {% endwith %}
         {% else %}
-        <div class='card p-4'>
+        <div class='card'>
             <div class="card-header">
                 Our prices
             </div>
-            There are no any prices.
+            <div class="card-body">
+                There are no any prices.
+            </div>
         </div>
         {% endif %}
         </div>
@@ -148,11 +150,13 @@
                 </div>
             </div>
             {% else %}
-            <div class='card p-4'>
+            <div class='card'>
                 <div class="card-header">
                     Our masters
                 </div>
-                There are no any master.
+                <div class="card-body">
+                    There are no any master.
+                </div>
             </div>
             {% endif %}  
         </div>
@@ -164,7 +168,7 @@
                 </div>
 
                 {% autoescape off %}
-                {% get_setting 'HOW_TO_FIND' default='No way' %}
+                {% get_setting 'HOW_TO_FIND' default='<div class="card-body">No way</div>' %}
                 {% endautoescape %}
             </div>  
         </div>
@@ -219,6 +223,8 @@
                     </div>                    
                 {% else %}
                     There are no any review.
+                    <br>
+                    <br>
                 {% endif %}
                 </div>
             </div>
