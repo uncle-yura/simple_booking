@@ -44,8 +44,8 @@
             </div>
         </div>
 
-        {% if pricelist %}
         <div class='col-sm-12 col-md-6 col-lg-6 col-xl-4 pb-4'>
+        {% if pricelist %}
             {% with random_price=pricelist|random %}
             <div class='card p-4 banner' style="height: 50vh; background-image: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{{ MEDIA_URL }}{{ random_price.image }}');">
                 <h3 class="text-center text-white"> 
@@ -113,12 +113,20 @@
                 </div>
             </div>  
             {% endwith %}
+        {% else %}
+        <div class='card p-4'>
+            <div class="card-header">
+                Our prices
+            </div>
+            There are no any prices.
         </div>
         {% endif %}
+        </div>
 
         <div class='col-sm-12 col-md-6 col-lg-6 col-xl-4 pb-4'>
+            {% if masters %}
             <div class='card'>
-                 <div id="carouselMaster" class="carousel slide" data-ride="carousel" >
+                <div id="carouselMaster" class="carousel slide" data-ride="carousel" >
                     <div class="carousel-inner" role="listbox">
                     {% for master in masters %}
                         <div class="carousel-item {% if forloop.first %}active{% endif%}" style="height: 50vh;" >    
@@ -138,7 +146,15 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
-            </div>  
+            </div>
+            {% else %}
+            <div class='card p-4'>
+                <div class="card-header">
+                    Our masters
+                </div>
+                There are no any master.
+            </div>
+            {% endif %}  
         </div>
 
         <div class='col-sm-12 col-md-12 col-lg-12 col-xl-4 pb-4'>
@@ -201,7 +217,9 @@
                             </div>
                         </div>
                     </div>                    
-                    {% endif %}
+                {% else %}
+                    There are no any review.
+                {% endif %}
                 </div>
             </div>
         </div>
