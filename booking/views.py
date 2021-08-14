@@ -140,6 +140,9 @@ class UserView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(UserView, self).get_context_data(**kwargs)
+
+        context['discount_form'] = DiscountForm(instance=self.object.user.profile)
+
         if self.object == self.request.user.profile \
                 or self.request.user.groups.filter(name="Master").exists():
             return context
@@ -307,6 +310,7 @@ class OrderView(LoginRequiredMixin, DetailView):
             raise Http404
 
 
+@method_decorator(is_master, name='dispatch')
 class JobsByUserListView(LoginRequiredMixin, ListView):
     model = Order
     template_name = 'booking/orders_list_master.html'

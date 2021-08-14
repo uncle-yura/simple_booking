@@ -9,7 +9,7 @@
 <br><br>
 <div class="container mx-auto">
     <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-3 pb-4">
+        <div class="col-sm-12 col-md-12 col-lg-4 pb-4">
             <div class="card p-4">
                 <h4 class="card-title font-weight-bold text-center">Profile {{ profile.user.username|title }}</h4>
                 <hr>
@@ -24,11 +24,23 @@
                       <p class="text-muted mb-0"  style="font-size: 12px">Phone:</p>
                       <p>{{ profile.phone_number }} </p>
                       
+                      {% if request.user|has_group:"Master" %}
+                      <p class="text-muted mb-0"  style="font-size: 12px">Discount:</p>
+                      <p>{{ profile.discount }} </p>
+
+                      <p class="text-muted mb-0"  style="font-size: 12px">Comment:</p>
+                      <p>{{ profile.comment }} </p>
+                      {% endif %}
                 </div>
+                {% if request.user|has_group:"Master" %}
+                <div class="text-right">
+                    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileDiscountModal">Add discount</button>
+                </div>
+                {% endif %}
             </div>
         </div>
        
-        <div class="col-sm-12 col-md-12 col-lg-3 pb-4">
+        <div class="col-sm-12 col-md-12 col-lg-4 pb-4">
             <div class="card p-4">
                 <h4 class="card-title font-weight-bold text-center">Masters</h4>
                 <hr>
@@ -37,6 +49,31 @@
                     {% endfor %}
             </div>
         </div>
+
+        {% if request.user|has_group:"Master" %}
+        <div class="modal fade" tabindex="-1" id="profileDiscountModal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Profile Discount</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ discount_form|crispy }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        </form>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
     <br>
     <br>

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.forms import widgets
 from django.forms.models import inlineformset_factory
 from django.forms.widgets import SelectMultiple, Select
 
@@ -130,6 +131,13 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('phone_number', 'avatar', )
+        widgets = {'avatar':forms.FileInput,}
+
+
+class DiscountForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('discount', 'comment', )
 
 
 class MasterProfileForm(forms.ModelForm):
