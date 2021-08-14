@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from booking.models import JobType,PriceList,Profile,Order,User
+from booking.models import JobType, PriceList, Profile, Order, User
 
 from decimal import Decimal
 
@@ -12,8 +12,8 @@ class JobTypeModelTest(TestCase):
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
         JobType.objects.create(
-            name='full', 
-            description='Need more time.', 
+            name='full',
+            description='Need more time.',
             time_interval=datetime.timedelta(minutes=15))
 
     def test_name_label(self):
@@ -51,11 +51,12 @@ class PriceListModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
-        user=User.objects.create(username='testuser', password='12345')
-        job = JobType.objects.create(name='full', description='Need more time.' , time_interval=datetime.timedelta(minutes=15))
+        user = User.objects.create(username='testuser', password='12345')
+        job = JobType.objects.create(
+            name='full', description='Need more time.', time_interval=datetime.timedelta(minutes=15))
         PriceList.objects.create(
-            profile=user.profile, 
-            job=job, 
+            profile=user.profile,
+            job=job,
             price=15.24)
 
     def test_object_name_is_name(self):
@@ -77,15 +78,13 @@ class ProfileModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
-        user=User.objects.create(username='testuser', password='12345')
-        user.profile.phone_number="+380123456789"
+        user = User.objects.create(username='testuser', password='12345')
+        user.profile.phone_number = "+380123456789"
         user.profile.comment = "Test comment"
         user.profile.discount = 0.5
-        user.profile.gcal_key = "123456789012345678901234567890123456789012345678901234"
         user.profile.gcal_link = "123456789012345678901234567890123456789012"
         user.profile.timetable = Profile.TIME_TABLE.ALL
         user.save()
-
 
     def test_phone_number_label(self):
         profile = Profile.objects.get(id=1)
@@ -107,16 +106,6 @@ class ProfileModelTest(TestCase):
         max_length = profile._meta.get_field('gcal_link').max_length
         self.assertEqual(max_length, 42)
 
-    def test_gcal_key_label(self):
-        profile = Profile.objects.get(id=1)
-        field_label = profile._meta.get_field('gcal_key').verbose_name
-        self.assertEqual(field_label, 'gcal key')
-
-    def test_gcal_key_max_length(self):
-        profile = Profile.objects.get(id=1)
-        max_length = profile._meta.get_field('gcal_key').max_length
-        self.assertEqual(max_length, 54)
-
     def test_object_name_is_name(self):
         profile = Profile.objects.get(id=1)
         expected_object_name = f'{profile}'
@@ -136,9 +125,10 @@ class OrderModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
-        user1=User.objects.create(username='testuser1', password='12345')
-        user2=User.objects.create(username='testuser2', password='12345')
-        job = JobType.objects.create(name='full', description='Need more time.' , time_interval=datetime.timedelta(minutes=15))
+        user1 = User.objects.create(username='testuser1', password='12345')
+        user2 = User.objects.create(username='testuser2', password='12345')
+        job = JobType.objects.create(
+            name='full', description='Need more time.', time_interval=datetime.timedelta(minutes=15))
         Order.objects.create(
             client=user1.profile,
             master=user2.profile,
@@ -146,7 +136,6 @@ class OrderModelTest(TestCase):
             client_comment="Test comment",
             state=Order.STATE_TABLE.CANCELED)
         Order.objects.get(id=1).work_type.set((job,))
-
 
     def test_object_name_is_name(self):
         order = Order.objects.get(id=1)

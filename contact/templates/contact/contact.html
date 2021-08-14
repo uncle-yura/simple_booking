@@ -9,7 +9,7 @@
             {% if contacts %}
                 {% for contact in contacts %}
                 <div class='card p-4 mb-2'>
-                    <h4 class="card-title font-weight-bold text-center">{{ contact.name }}</h4>
+                    <h5 class="font-weight-bold text-center">{{ contact.name }}</h5>
                     <hr>
                     <div class="card-text">
                         <p>{{ contact.content|safe }}</p>

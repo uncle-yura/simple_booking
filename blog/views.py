@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView, DeleteView, CreateView, U
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
 
-from .models import Article,Tag
+from .models import Article, Tag
 
 
 class BlogListView(ListView):
@@ -29,10 +29,9 @@ class ArticleCreateView(PermissionRequiredMixin, CreateView):
     fields = '__all__'
     success_url = reverse_lazy('blog-home')
 
-
     class Media:
-        js = ('tinymce/tinymce.min.js', 
-            'django_tinymce/init_tinymce.js',)
+        js = ('tinymce/tinymce.min.js',
+              'django_tinymce/init_tinymce.js',)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -56,10 +55,9 @@ class ArticleUpdateView(PermissionRequiredMixin, UpdateView):
     fields = '__all__'
     success_url = reverse_lazy('blog-home')
 
-
     class Media:
-        js = ('tinymce/tinymce.min.js', 
-            'django_tinymce/init_tinymce.js',)
+        js = ('tinymce/tinymce.min.js',
+              'django_tinymce/init_tinymce.js',)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

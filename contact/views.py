@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from .forms import *
 from .models import *
 
+
 class ContactFormView(CreateView):
     template_name = 'contact/contact.html'
     form_class = ContactForm
@@ -17,7 +18,8 @@ class ContactFormView(CreateView):
 
     def form_valid(self, form):
         if form.send_email():
-            messages.success(self.request,('Message sent')) 
+            messages.success(self.request, ('Message sent'))
         else:
-            messages.error(self.request,('Message not sent, please try again later.')) 
+            messages.error(
+                self.request, ('Message not sent, please try again later.'))
         return super().form_valid(form)

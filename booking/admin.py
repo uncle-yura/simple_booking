@@ -5,6 +5,7 @@ from .models import *
 
 # Register your models here.
 
+
 class OrdersInline(admin.TabularInline):
     model = Order
 

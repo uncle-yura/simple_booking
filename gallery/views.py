@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from .models import *
 
 
-class PhotoListView(PermissionRequiredMixin,ListView):
+class PhotoListView(PermissionRequiredMixin, ListView):
     model = Photo
     permission_required = 'gallery.view_photo'
     template_name = 'gallery/photo_list.html'
@@ -20,7 +20,6 @@ class PhotoCreateView(PermissionRequiredMixin, CreateView):
     fields = '__all__'
     success_url = reverse_lazy('gallery-home')
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form_title'] = 'New photo'
@@ -33,7 +32,6 @@ class PhotoUpdateView(PermissionRequiredMixin, UpdateView):
     template_name = 'update_form.html'
     fields = '__all__'
     success_url = reverse_lazy('gallery-home')
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

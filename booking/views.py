@@ -17,7 +17,7 @@ from .templatetags.time_extras import duration
 
 from googleapiclient.errors import HttpError
 
-from datetime import datetime,date,timedelta
+from datetime import datetime, date, timedelta
 
 import math
 
@@ -26,53 +26,57 @@ import math
 def userpage(request):
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
-        master_form = MasterProfileForm(request.POST, instance=request.user.profile)
+        profile_form = ProfileForm(
+            request.POST, request.FILES, instance=request.user.profile)
+        master_form = MasterProfileForm(
+            request.POST, instance=request.user.profile)
 
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
-            messages.success(request,('Your profile was successfully updated!'))
+            messages.success(
+                request, ('Your profile was successfully updated!'))
         elif master_form.is_valid():
             master_form.save()
-            messages.success(request,('Your master profile was successfully updated!'))
+            messages.success(
+                request, ('Your master profile was successfully updated!'))
         else:
-            messages.error(request,('Unable to complete request'))
-        return redirect ('user')
+            messages.error(request, ('Unable to complete request'))
+        return redirect('user')
 
     user_form = UserForm(instance=request.user)
     profile_form = ProfileForm(instance=request.user.profile)
     master_form = MasterProfileForm(instance=request.user.profile)
-    
+
     return render(request=request,
-        template_name="booking/user.html",
-        context={"user":request.user,
-            "user_form":user_form, 
-            "profile_form":profile_form , 
-            "master_form":master_form })
+                  template_name="booking/user.html",
+                  context={"user": request.user,
+                           "user_form": user_form,
+                           "profile_form": profile_form,
+                           "master_form": master_form})
 
 
 @login_required
 @require_ajax
 def gcal_data_return(request):
-    master_id=request.GET.get('master', None)
+    master_id = request.GET.get('master', None)
     if not master_id:
-        return JsonResponse({'success': False, 'msg':["Master not selected.",]})
+        return JsonResponse({'success': False, 'msg': ["Master not selected.", ]})
 
     order_id = request.GET.get('order', None)
     master_profile = Profile.objects.filter(id=master_id).first()
     query_set = Profile.objects.filter(user__groups__name='Master')
     exclude_id = []
     for master in query_set:
-        timetable = master.timetable 
+        timetable = master.timetable
         if timetable is not "A" \
-            and not (timetable is "M" and master.clients.filter(id__exact=request.user.profile.id).count()>0 ) \
-            and not (timetable is "V" and request.user.profile.orders.count()>0):
+                and not (timetable is "M" and master.clients.filter(id__exact=request.user.profile.id).count() > 0) \
+                and not (timetable is "V" and request.user.profile.orders.count() > 0):
             exclude_id.append(master.id)
     query_set = query_set.exclude(id__in=exclude_id)
-    
+
     if master_profile in query_set:
-        now = datetime.combine(date.today(), 
-            datetime.min.time())
+        now = datetime.combine(date.today(),
+                               datetime.min.time())
 
         date_max = datetime.today() + timedelta(days=master_profile.booking_time_range)
         date_max = date_max.isoformat() + 'Z'
@@ -82,38 +86,38 @@ def gcal_data_return(request):
         events = {}
 
         try:
-            events = eventsResult.list(calendarId=master_profile.gcal_link, 
-                pageToken=page_token, 
-                singleEvents=True,
-                orderBy='startTime',
-                timeMin=now.isoformat() + 'Z', 
-                timeMax=date_max).execute()
+            events = eventsResult.list(calendarId=master_profile.gcal_link,
+                                       pageToken=page_token,
+                                       singleEvents=True,
+                                       orderBy='startTime',
+                                       timeMin=now.isoformat() + 'Z',
+                                       timeMax=date_max).execute()
         except HttpError:
-            return JsonResponse({'success': False, 'msg':["This master has closed booking access.",]})
+            return JsonResponse({'success': False, 'msg': ["This master has closed booking access.", ]})
 
         response = {
             'success': True,
-            'events':{},
-            'prices':{},
-            'range':master_profile.booking_time_range,
-            'delay':str(math.floor((datetime.now() + master_profile.booking_time_delay).timestamp()*1000)), }
+            'events': {},
+            'prices': {},
+            'range': master_profile.booking_time_range,
+            'delay': str(math.floor((datetime.now() + master_profile.booking_time_delay).timestamp()*1000)), }
 
         for price in master_profile.prices.all():
             response['prices'].update({
-                price.job.id:{
-                    'id':price.job.id,
-                    'name':str(price),
-                    'price':price.price,
-                    'str_time':duration(price.job.time_interval),
-                    'time':price.job.time_interval.total_seconds()}})
-        
+                price.job.id: {
+                    'id': price.job.id,
+                    'name': str(price),
+                    'price': price.price,
+                    'str_time': duration(price.job.time_interval),
+                    'time': price.job.time_interval.total_seconds()}})
+
         for event in events['items']:
             if event['id'] == order_id:
                 continue
             response['events'].update({
-                event['id']:{
-                    'start':event['start'],
-                    'end':event['end'],}})
+                event['id']: {
+                    'start': event['start'],
+                    'end': event['end'], }})
             page_token = events.get('nextPageToken')
 
         while page_token:
@@ -121,23 +125,23 @@ def gcal_data_return(request):
                 if event['id'] == order_id:
                     continue
                 response['events'].update({
-                    event['id']:{
-                        'start':event['start'],
-                        'end':event['end'],}})
+                    event['id']: {
+                        'start': event['start'],
+                        'end': event['end'], }})
             page_token = events.get('nextPageToken')
     else:
-        return JsonResponse({'success': False, 'msg':["It is impossible to get a reservation from this master.",]})
+        return JsonResponse({'success': False, 'msg': ["It is impossible to get a reservation from this master.", ]})
     return JsonResponse(response)
 
 
-class UserView(LoginRequiredMixin,DetailView):
+class UserView(LoginRequiredMixin, DetailView):
     model = Profile
     template_name = 'booking/view_user.html'
 
     def get_context_data(self, **kwargs):
         context = super(UserView, self).get_context_data(**kwargs)
         if self.object == self.request.user.profile \
-            or self.request.user.groups.filter(name="Master").exists():
+                or self.request.user.groups.filter(name="Master").exists():
             return context
         else:
             raise Http404
@@ -153,34 +157,37 @@ class OrderCreate(CreateView):
     def get_form_kwargs(self):
         kwargs = super(OrderCreate, self).get_form_kwargs()
         kwargs['request'] = self.request
-        return kwargs 
+        return kwargs
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         master_calendar = self.object.master.get_master_calendar()
         work_type = form.cleaned_data['work_type']
 
-        error_message = Order.check_date(self.object, master_calendar, work_type)
+        error_message = Order.check_date(
+            self.object, master_calendar, work_type)
         if not error_message:
             event = Order.make_new_event(work_type,
-                 self.object.client_comment, 
-                 self.object.booking_date, 
-                 self.request.user.profile)
+                                         self.object.client_comment,
+                                         self.object.booking_date,
+                                         self.request.user.profile)
 
             try:
-                event_id = master_calendar.insert(calendarId=self.object.master.gcal_link,body=event).execute()
+                event_id = master_calendar.insert(
+                    calendarId=self.object.master.gcal_link, body=event).execute()
             except HttpError:
-                messages.error(self.request,("Server connection error, unable to add new event.")) 
+                messages.error(
+                    self.request, ("Server connection error, unable to add new event."))
                 return redirect('new-order')
 
             self.object.client = self.request.user.profile
             self.object.gcal_event_id = event_id['id']
             self.object.save()
 
-            messages.success(self.request,('New order created!'))
+            messages.success(self.request, ('New order created!'))
             return super(OrderCreate, self).form_valid(form)
         else:
-            messages.error(self.request,error_message) 
+            messages.error(self.request, error_message)
             return redirect('new-order')
 
 
@@ -198,13 +205,13 @@ class OrderUpdate(OrderOwnerOnlyMixin, UpdateView):
     def get_form_kwargs(self):
         kwargs = super(OrderUpdate, self).get_form_kwargs()
         kwargs['request'] = self.request
-        return kwargs 
+        return kwargs
 
     def get_form(self):
         form = super().get_form(form_class=self.form_class)
-        
+
         master = form.fields['master'].queryset.first()
-        
+
         query_set = form.fields['work_type'].queryset
         include_id = []
         for price in master.prices.all():
@@ -213,12 +220,12 @@ class OrderUpdate(OrderOwnerOnlyMixin, UpdateView):
         form.fields['work_type'].queryset = query_set
 
         choices = form.fields['work_type'].choices
-        form.fields['work_type'].widget = OrderPriceMultiSelect(choices=choices, attrs={'preloaded':True}, custom_attrs={
-            'time':query_set.values_list('name','time_interval'),
-            'price':master.prices.all().values_list('job__name','price')})
+        form.fields['work_type'].widget = OrderPriceMultiSelect(choices=choices, attrs={'preloaded': True}, custom_attrs={
+            'time': query_set.values_list('name', 'time_interval'),
+            'price': master.prices.all().values_list('job__name', 'price')})
 
         form.fields['master'].widget.attrs.update({'range': int(master.booking_time_range),
-            'delay': str(math.floor((datetime.now() + master.booking_time_delay).timestamp()*1000))})
+                                                   'delay': str(math.floor((datetime.now() + master.booking_time_delay).timestamp()*1000))})
         return form
 
     def form_valid(self, form):
@@ -228,27 +235,30 @@ class OrderUpdate(OrderOwnerOnlyMixin, UpdateView):
             master_calendar = self.object.master.get_master_calendar()
             work_type = form.cleaned_data['work_type']
 
-            error_message = Order.check_date(self.object, master_calendar, work_type)
+            error_message = Order.check_date(
+                self.object, master_calendar, work_type)
             if not error_message:
                 event = Order.make_new_event(work_type,
-                    self.object.client_comment, 
-                    self.object.booking_date, 
-                    self.request.user.profile)
+                                             self.object.client_comment,
+                                             self.object.booking_date,
+                                             self.request.user.profile)
 
                 try:
-                    master_calendar.update(calendarId=self.object.master.gcal_link, eventId=self.object.gcal_event_id, body=event).execute()
+                    master_calendar.update(calendarId=self.object.master.gcal_link,
+                                           eventId=self.object.gcal_event_id, body=event).execute()
                 except HttpError:
-                    messages.error(self.request,("Server connection error, unable to update event.")) 
-                    return redirect('my-orders')  
+                    messages.error(
+                        self.request, ("Server connection error, unable to update event."))
+                    return redirect('my-orders')
 
                 self.object.save()
-                messages.success(self.request,('Order data updated!'))
-                return super(OrderUpdate, self).form_valid(form)    
+                messages.success(self.request, ('Order data updated!'))
+                return super(OrderUpdate, self).form_valid(form)
             else:
-                messages.error(self.request,error_message) 
-                return redirect('my-orders')      
-        else:              
-            messages.error(self.request,("This event canceled by master.")) 
+                messages.error(self.request, error_message)
+                return redirect('my-orders')
+        else:
+            messages.error(self.request, ("This event canceled by master."))
             return redirect('my-orders')
 
 
@@ -270,14 +280,16 @@ class OrderCancel(OrderOwnerOnlyMixin, UpdateView):
             master_calendar = self.object.master.get_master_calendar()
 
             try:
-                master_calendar.delete(calendarId=self.object.master.gcal_link, eventId=self.object.gcal_event_id).execute()
+                master_calendar.delete(
+                    calendarId=self.object.master.gcal_link, eventId=self.object.gcal_event_id).execute()
             except HttpError:
-                messages.error(self.request,("Server connection error, unable to delete event.")) 
-                return redirect('my-orders')  
-  
+                messages.error(
+                    self.request, ("Server connection error, unable to delete event."))
+                return redirect('my-orders')
+
         self.object.state = Order.STATE_TABLE.CANCELED
         self.object.save()
-        messages.success(self.request,('Order canceled.')) 
+        messages.success(self.request, ('Order canceled.'))
 
         return super(OrderCancel, self).form_valid(form)
 
@@ -289,7 +301,7 @@ class OrderView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(OrderView, self).get_context_data(**kwargs)
         if self.object.client == self.request.user.profile \
-            or self.request.user.groups.filter(name="Master").exists():
+                or self.request.user.groups.filter(name="Master").exists():
             return context
         else:
             raise Http404
@@ -328,10 +340,11 @@ class WhiteListUpdate(LoginRequiredMixin, UpdateView):
     model = Profile
     success_url = reverse_lazy('my-clients')
     template_name = 'update_form.html'
-    form_class =  modelform_factory(model = Profile,
-        widgets={"white_list": CustomSelectMultiple }, 
-        fields = ['white_list',],
-        )
+    form_class = modelform_factory(model=Profile,
+                                   widgets={
+                                       "white_list": CustomSelectMultiple},
+                                   fields=['white_list', ],
+                                   )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -348,10 +361,11 @@ class BlackListUpdate(LoginRequiredMixin, UpdateView):
     model = Profile
     success_url = reverse_lazy('my-clients')
     template_name = 'update_form.html'
-    form_class =  modelform_factory(model = Profile,
-        widgets={"black_list": CustomSelectMultiple }, 
-        fields = ['black_list',],
-        )
+    form_class = modelform_factory(model=Profile,
+                                   widgets={
+                                       "black_list": CustomSelectMultiple},
+                                   fields=['black_list', ],
+                                   )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -365,8 +379,9 @@ class BlackListUpdate(LoginRequiredMixin, UpdateView):
         self.object = form.save(commit=False)
 
         if self.object.jobs.filter(client__in=form.cleaned_data['black_list']).count() > 0:
-            messages.error(self.request,("It is impossible to blacklist a client while he has an open order.")) 
-            return redirect('my-clients')  
+            messages.error(
+                self.request, ("It is impossible to blacklist a client while he has an open order."))
+            return redirect('my-clients')
 
         self.object.save()
         return super(BlackListUpdate, self).form_valid(form)
@@ -389,7 +404,8 @@ class PublicPriceListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        pricelist = PriceList.objects.filter(profile__id=self.kwargs['pk']).order_by('-id')
+        pricelist = PriceList.objects.filter(
+            profile__id=self.kwargs['pk']).order_by('-id')
         if pricelist.count() > 0:
             return pricelist
         else:
@@ -405,7 +421,7 @@ class PublicPriceListView(ListView):
 @method_decorator(is_master, name='dispatch')
 class PriceListCreate(LoginRequiredMixin, CreateView):
     model = PriceList
-    fields = ['job','price',]
+    fields = ['job', 'price', ]
     template_name = 'update_form.html'
     success_url = reverse_lazy('my-prices')
 
@@ -419,10 +435,10 @@ class PriceListCreate(LoginRequiredMixin, CreateView):
             self.object = form.save(commit=False)
             self.object.profile = self.request.user.profile
             self.object.save()
-            messages.success(self.request,('Price created')) 
-        except IntegrityError as e: 
+            messages.success(self.request, ('Price created'))
+        except IntegrityError as e:
             if 'unique constraint'.lower() in str(e).lower():
-               messages.error(self.request,('Price already exist')) 
+                messages.error(self.request, ('Price already exist'))
             return redirect('my-prices')
         else:
             return super(PriceListCreate, self).form_valid(form)
@@ -439,7 +455,7 @@ class PriceListDelete(PriceOwnerOnlyMixin, DeleteView):
         return context
 
     def delete(self, request, *args, **kwargs):
-        messages.success(self.request,('Price deleted')) 
+        messages.success(self.request, ('Price deleted'))
         return super(PriceListDelete, self).delete(request, *args, **kwargs)
 
     def get_queryset(self):
@@ -448,7 +464,7 @@ class PriceListDelete(PriceOwnerOnlyMixin, DeleteView):
 
 class PriceListUpdate(PriceOwnerOnlyMixin, UpdateView):
     model = PriceList
-    fields = ['job','price',]
+    fields = ['job', 'price', ]
     success_url = reverse_lazy('my-prices')
     template_name = 'update_form.html'
 
@@ -458,7 +474,8 @@ class PriceListUpdate(PriceOwnerOnlyMixin, UpdateView):
         data['form_title'] = 'Update price:'
 
         if self.request.POST:
-            data['pricelist'] = PriceListFormSet(self.request.POST, instance=self.object.profile)
+            data['pricelist'] = PriceListFormSet(
+                self.request.POST, instance=self.object.profile)
         else:
             data['pricelist'] = PriceListFormSet(instance=self.object.profile)
         return data
@@ -472,10 +489,10 @@ class PriceListUpdate(PriceOwnerOnlyMixin, UpdateView):
             if pricelist.is_valid():
                 pricelist.instance = self.object
                 pricelist.save()
-                messages.success(self.request,('Price updated')) 
-        except IntegrityError as e: 
+                messages.success(self.request, ('Price updated'))
+        except IntegrityError as e:
             if 'unique constraint'.lower() in str(e).lower():
-                messages.error(self.request,('Price already exist')) 
+                messages.error(self.request, ('Price already exist'))
             return redirect('my-prices')
         else:
             return super(PriceListUpdate, self).form_valid(form)

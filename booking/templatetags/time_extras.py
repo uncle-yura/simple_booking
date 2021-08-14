@@ -4,7 +4,8 @@ from datetime import datetime
 
 import pytz
 
-register = template.Library() 
+register = template.Library()
+
 
 @register.filter
 def duration(timedelta):
@@ -23,7 +24,8 @@ def duration(timedelta):
         return '{}h'.format(hours)
     # Display only minutes
     return '{} min'.format(minutes)
-    
+
+
 @register.filter
 def expired(booking_date):
     return booking_date < datetime.now(pytz.utc)

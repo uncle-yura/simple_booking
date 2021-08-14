@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from django.contrib.messages import constants as messages
 from pathlib import Path
 
 import os
@@ -21,15 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-x9-5w5rix&5(-o$lgplwo!kvxl(a3p9o=0l6!c%$5fm4n#32-!')
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY', 'django-insecure-x9-5w5rix&5(-o$lgplwo!kvxl(a3p9o=0l6!c%$5fm4n#32-!')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = os.environ.get('SERVERNAMES', '').split()
 
 if not DEBUG:
-    SECURE_HSTS_SECONDS = int( os.environ.get('SERVER_HSTS_SECONDS', 3600) )
+    SECURE_HSTS_SECONDS = int(os.environ.get('SERVER_HSTS_SECONDS', 3600))
 
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
@@ -41,7 +43,7 @@ if not DEBUG:
 
     CSRF_COOKIE_SECURE = True
 
-UNDER_CONSTRUCTION = bool( os.environ.get('DJANGO_UNDER_CONSTRUCTION', False) )
+UNDER_CONSTRUCTION = bool(os.environ.get('DJANGO_UNDER_CONSTRUCTION', False))
 
 # Application definition
 
@@ -93,11 +95,13 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('DJANGO_AUTH_FACEBOOK_KEY', '123456789012345')
-SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('DJANGO_AUTH_FACEBOOK_SECRET', '1234567890abcdef1234567890abcdef')
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email',]
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get(
+    'DJANGO_AUTH_FACEBOOK_KEY', '123456789012345')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get(
+    'DJANGO_AUTH_FACEBOOK_SECRET', '1234567890abcdef1234567890abcdef')
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', ]
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-  'fields': 'id, name, email, picture.type(large)'
+    'fields': 'id, name, email, picture.type(large)'
 }
 SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [
     ('name', 'name'),
@@ -105,9 +109,11 @@ SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [
     ('picture', 'picture'),
 ]
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('DJANGO_AUTH_GOOGLE_KEY', '123456789012-1234567890abcdefghijklmnoprstuvwx.apps.googleusercontent.com')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('DJANGO_AUTH_GOOGLE_SECRET', '1234567890abcdefghijklm ')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email',]
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get(
+    'DJANGO_AUTH_GOOGLE_KEY', '123456789012-1234567890abcdefghijklmnoprstuvwx.apps.googleusercontent.com')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get(
+    'DJANGO_AUTH_GOOGLE_SECRET', '1234567890abcdefghijklm ')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', ]
 
 SITE_ID = 1
 
@@ -125,12 +131,12 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'blog.context_processors.menu', 
-                'blog.context_processors.share', 
-                'blog.context_processors.top_posts', 
-                'contact.context_processors.contact_short', 
-                'contact.context_processors.contact_social', 
-                'social_django.context_processors.backends', 
+                'blog.context_processors.menu',
+                'blog.context_processors.share',
+                'blog.context_processors.top_posts',
+                'contact.context_processors.contact_short',
+                'contact.context_processors.contact_social',
+                'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
             ],
         },
@@ -150,12 +156,12 @@ DATABASES = {
     # }
 
     'default': {
-        'ENGINE': 'django.db.backends.'+os.environ.get('SQL_BACKEND','postgresql_psycopg2'),
-        'NAME': os.environ.get('SQL_NAME','django_db'),
-        'USER' : os.environ.get('SQL_USER','user_name'),
-        'PASSWORD' : os.environ.get('SQL_PW','password'),
-        'HOST' : os.environ.get('SQL_HOST','127.0.0.1'),
-        'PORT' : os.environ.get('SQL_PORT', '5432'),
+        'ENGINE': 'django.db.backends.'+os.environ.get('SQL_BACKEND', 'postgresql_psycopg2'),
+        'NAME': os.environ.get('SQL_NAME', 'django_db'),
+        'USER': os.environ.get('SQL_USER', 'user_name'),
+        'PASSWORD': os.environ.get('SQL_PW', 'password'),
+        'HOST': os.environ.get('SQL_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('SQL_PORT', '5432'),
     }
 }
 
@@ -222,23 +228,23 @@ if DEBUG:
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = os.environ.get('DJANGO_EMAIL_HOST', 'localhost')
-    EMAIL_USE_TLS = bool( os.environ.get('DJANGO_EMAIL_USE_TLS', False) )
-    EMAIL_USE_SSL = bool( os.environ.get('DJANGO_EMAIL_USE_SSL', False) )
-    EMAIL_PORT = int( os.environ.get('DJANGO_EMAIL_PORT', 587) )
-    EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_HOST_USER','email')
-    EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_HOST_PASSWORD','password')
+    EMAIL_USE_TLS = bool(os.environ.get('DJANGO_EMAIL_USE_TLS', False))
+    EMAIL_USE_SSL = bool(os.environ.get('DJANGO_EMAIL_USE_SSL', False))
+    EMAIL_PORT = int(os.environ.get('DJANGO_EMAIL_PORT', 587))
+    EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_HOST_USER', 'email')
+    EMAIL_HOST_PASSWORD = os.environ.get(
+        'DJANGO_EMAIL_HOST_PASSWORD', 'password')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-from django.contrib.messages import constants as messages
 
 MESSAGE_TAGS = {
-        messages.DEBUG: 'alert-info',
-        messages.INFO: 'alert-info',
-        messages.SUCCESS: 'alert-success',
-        messages.WARNING: 'alert-warning',
-        messages.ERROR: 'alert-danger',
- }
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
 
 SERVICE_SECRETS = os.path.join(BASE_DIR, 'service_secret.json')
 
@@ -274,8 +280,10 @@ TINYMCE_DEFAULT_CONFIG = {
     'statusbar': True,
     'paste_data_images': True,
     'block_unsupported_drop ': True,
-    }
+}
 
-RECAPTCHA_ACTIVE = bool( os.environ.get('DJANGO_RECAPTCHA_ACTIVE', False) )
-RECAPTCHA_PUBLIC_KEY = os.environ.get('DJANGO_RECAPTCHA_PUBLIC_KEY', 'recaptchapublickeymustbehere')
-RECAPTCHA_PRIVATE_KEY = os.environ.get('DJANGO_RECAPTCHA_PRIVATE_KEY', 'recaptchaprivatekeymustbehere')
+RECAPTCHA_ACTIVE = bool(os.environ.get('DJANGO_RECAPTCHA_ACTIVE', False))
+RECAPTCHA_PUBLIC_KEY = os.environ.get(
+    'DJANGO_RECAPTCHA_PUBLIC_KEY', 'recaptchapublickeymustbehere')
+RECAPTCHA_PRIVATE_KEY = os.environ.get(
+    'DJANGO_RECAPTCHA_PRIVATE_KEY', 'recaptchaprivatekeymustbehere')

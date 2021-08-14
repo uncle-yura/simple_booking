@@ -4,6 +4,7 @@ from django.contrib import messages
 
 from extra_settings.models import Setting
 
+
 def require_ajax(func):
     def decorator(request, *args, **kwargs):
         if not request.is_ajax():
@@ -11,6 +12,7 @@ def require_ajax(func):
         return func(request, *args, **kwargs)
 
     return decorator
+
 
 def check_orders_count(func):
     def decorator(request, *args, **kwargs):
@@ -22,6 +24,7 @@ def check_orders_count(func):
         return func(request, *args, **kwargs)
 
     return decorator
+
 
 def is_master(func):
     def decorator(request, *args, **kwargs):

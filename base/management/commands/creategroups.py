@@ -11,9 +11,10 @@ GROUPS_PERMISSIONS = {
         Photo: ['add', 'change', 'delete', 'view'],
     },
     'Master': {
-        Profile: ['view',],
+        Profile: ['view', ],
     },
 }
+
 
 class Command(BaseCommand):
     def __init__(self, *args, **kwargs):

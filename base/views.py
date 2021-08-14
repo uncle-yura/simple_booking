@@ -11,29 +11,34 @@ from .forms import *
 from booking.models import JobType, Profile
 from gallery.models import Photo
 
+
 def index(request):
-    context={'pricelist':JobType.objects.all().annotate(min_price=Min('prices__price')).annotate(max_price=Max('prices__price')),
-        'masters':Profile.objects.filter(user__groups__name='Master'),
-        'reviews':Photo.objects.all().order_by('-id')[:12],
-        }
+    context = {'pricelist': JobType.objects.all().annotate(min_price=Min('prices__price')).annotate(max_price=Max('prices__price')),
+               'masters': Profile.objects.filter(user__groups__name='Master'),
+               'reviews': Photo.objects.all().order_by('-id')[:12],
+               }
     return render(request=request, template_name='base/index.html', context=context)
+
 
 def privacy_policy(request):
     return render(request=request, template_name='base/privacy_policy.html')
+
 
 def register(request):
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
             user = send_verification_email(request, form)
-            messages.warning(request, "Click the link in the email message to confirm your email address.")
+            messages.warning(
+                request, "Click the link in the email message to confirm your email address.")
             return redirect('index')
-        messages.error(request, "Unsuccessful registration. Invalid information.")
+        messages.error(
+            request, "Unsuccessful registration. Invalid information.")
     form = NewUserForm
-    return render (request=request, template_name='base/register.html', context={"form":form})
+    return render(request=request, template_name='base/register.html', context={"form": form})
 
 
-class UserDelete(LoginRequiredMixin,DeleteView):
+class UserDelete(LoginRequiredMixin, DeleteView):
     model = User
     success_url = reverse_lazy('index')
     template_name = 'base/delete_user.html'
