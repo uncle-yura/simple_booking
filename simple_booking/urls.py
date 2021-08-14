@@ -20,7 +20,8 @@ from django.conf.urls.static import static
 from bootstrap_customizer import urls as bootstrap_customizer_urls
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path(settings.ADMIN_URL+'/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('verification/', include('verify_email.urls')),
     path('tinymce/', include('tinymce.urls')),
@@ -47,7 +48,6 @@ urlpatterns += [
 urlpatterns += [
     path('gallery/', include('gallery.urls')),
 ]
-
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -48,6 +48,7 @@ UNDER_CONSTRUCTION = bool(os.environ.get('DJANGO_UNDER_CONSTRUCTION', False))
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_honeypot',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -197,6 +198,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+ADMIN_URL = os.environ.get('DJANGO_ADMIN_URL', 'notsecureadmin')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
