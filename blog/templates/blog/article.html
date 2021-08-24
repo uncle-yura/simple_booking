@@ -1,5 +1,5 @@
 {% extends "base_generic.html" %}
-
+{% load i18n %} 
 {% block content %}
     <div class="article-banner text-center">
         <br><br>
@@ -20,11 +20,11 @@
             <button class="btn btn-outline-info btn-sm dropdown-toggle"
                     type="button" id="dropdownMenu1" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-              Share
+                    {% translate "Share" %}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
                 {% for share in share_tags %}
-                    <a class="dropdown-item" href="{{ share.share_url }}{{ request.build_absolute_uri }}{{ share.share_text }}{{ article.article_title }}">{% if share.share_icon %}<i class="{{ share.share_icon }} "></i>{% endif %} Share with {{ share.share_name }}</a>
+                    <a class="dropdown-item" href="{{ share.share_url }}{{ request.build_absolute_uri }}{{ share.share_text }}{{ article.article_title }}">{% if share.share_icon %}<i class="{{ share.share_icon }} "></i>{% endif %} {% translate "Share with" %} {{ share.share_name }}</a>
                 {% endfor %}
             </div>
         </div>

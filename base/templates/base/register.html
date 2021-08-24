@@ -1,25 +1,23 @@
 {% extends "base_generic.html" %}
-
 {% load crispy_forms_tags %}
-
+{% load i18n %} 
 {% block content %}
-
 <div class="container py-5">
     <div class="card p-4">
-        <h1 class="font-weight-bold">Register</h1>
+        {% translate "Register" as the_title %}
+        <h1 class="font-weight-bold">{{ the_title }}</h1>
         <hr>
         <br>
         <form method="POST">
             {% csrf_token %}
             {{ form|crispy }}                    
             <br>
-            <button class="btn btn-primary" type="submit">Register</button>
+            <button class="btn btn-primary" type="submit">{{ the_title }}</button>
         </form>
         <br><br>
-        <p>If you already have an account, <a href="{% url 'login'%}">login</a> instead.</p>
+        <p>{% translate "If you already have an account, you can" %} <a href="{% url 'login'%}">{% translate "login" %}</a> {% translate "here" %}.</p>
         
         {% include 'includes/social_login.html' %}
     </div>
 </div>
-
 {% endblock %}

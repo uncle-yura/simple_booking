@@ -1,13 +1,12 @@
 {% extends "base_generic.html" %}
-
 {% load crispy_forms_tags %}
-
+{% load i18n %} 
 {% block content %}
     <div class="container py-5">
-        <h1 class="font-weight-bold">Articles</h1>
+        <h1 class="font-weight-bold">{% translate "Articles" %}</h1>
         <hr>
         {% if perms.blog.add_article %}
-            <a href="{% url 'new-article' %}"  class="btn btn-outline-secondary btn-sm">Create post</a>
+            <a href="{% url 'new-article' %}"  class="btn btn-outline-secondary btn-sm">{% translate "Create post" %}</a>
             <br>
         {% endif %}
 
@@ -24,11 +23,11 @@
                                 <div class="container mx-auto">
                                     <div class="row">
                                     {% if perms.blog.change_article %}
-                                    <form><button formaction="{% url 'edit-article' article.article_slug %}" class="btn btn-outline-warning btn-sm m-1">Edit post</button></form>
+                                    <form><button formaction="{% url 'edit-article' article.article_slug %}" class="btn btn-outline-warning btn-sm m-1">{% translate "Edit post" %}</button></form>
                                     {% endif %}
             
                                     {% if perms.blog.delete_article %}
-                                    <form><button formaction="{% url 'delete-article' article.article_slug %}" class="btn btn-outline-danger btn-sm m-1">Delete post</button></form>
+                                    <form><button formaction="{% url 'delete-article' article.article_slug %}" class="btn btn-outline-danger btn-sm m-1">{% translate "Delete post" %}</button></form>
                                     {% endif %} 
                                     </div>
                                 </div>
@@ -45,7 +44,7 @@
                                    <p style="display: inline; white-space: nowrap;">{{ article.article_content|safe|truncatewords:20}}</p> 
                                 </div>
                                 <br>
-                                <button class="btn btn-outline-primary btn-sm">View post</button>
+                                <button class="btn btn-outline-primary btn-sm">{% translate "View post" %}</button>
                             </div>   
                         </div>
                     </a>
@@ -53,25 +52,7 @@
                 {% endfor %}
             </div>
         </div>
-
-        {% block pagination %}
-          {% if is_paginated %}
-            <hr>
-            <div class="pagination">
-                <span class="page-links">
-                    {% if page_obj.has_previous %}
-                        <a class="btn btn-primary btn-sm" href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous</a>
-                    {% endif %}
-                    <span class="page-current">
-                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                    </span>
-                    {% if page_obj.has_next %}
-                        <a class="btn btn-primary btn-sm" href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a>
-                    {% endif %}
-                </span>
-            </div>
-          {% endif %}
-        {% endblock %} 
+        {% include 'includes/pagination.html' %}
 
         {% else %}
         <p>There are no articles.</p>

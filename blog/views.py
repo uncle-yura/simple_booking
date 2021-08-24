@@ -1,6 +1,7 @@
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 
 from .models import Article, Tag
 
@@ -35,7 +36,7 @@ class ArticleCreateView(PermissionRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form_title'] = 'New article'
+        context['form_title'] = _('New article')
         return context
 
 
@@ -61,7 +62,7 @@ class ArticleUpdateView(PermissionRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form_title'] = 'Update article:'
+        context['form_title'] = _('Update article:')
         return context
 
 
@@ -76,5 +77,5 @@ class ArticleDeleteView(PermissionRequiredMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form_title'] = 'Delete article'
+        context['form_title'] = _('Delete article')
         return context

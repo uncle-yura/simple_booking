@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from django.contrib.messages import constants as messages
+from django.utils.translation import gettext_lazy as _
+
 from pathlib import Path
 
 import os
@@ -189,7 +191,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'uk-UA'
+LANGUAGE_CODE = os.environ.get('DJANGO_LANGUAGR_CODE', 'en-GB')
+
+LANGUAGES = [
+   ('uk', _('Ukrainian')),
+   ('en', _('English')),
+]
 
 TIME_ZONE = 'Europe/Kiev'
 
@@ -198,6 +205,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'),]
 
 ADMIN_URL = os.environ.get('DJANGO_ADMIN_URL', 'notsecureadmin')
 

@@ -1,18 +1,17 @@
 {% extends "base_generic.html" %}
-
 {% load crispy_forms_tags %}
-
+{% load i18n %} 
 {% block content %}
 <div class="container py-5">
     <div class="card p-4">
-        <h1 class="font-weight-bold">Delete account</h1>
+        <h1 class="font-weight-bold">{% translate "Delete account" %}</h1>
         <hr>
         <br>
         <form action="" method="post">
             {% csrf_token %}
-            <p>Are you sure you want to delete your account?</p>
+            <p>{% translate "Are you sure you want to delete your account?" %}</p>
             <input class="btn btn-primary" type="submit" value="Confirm"/>
-            <a class="btn btn-outline-primary" href="{% url 'user' %}">Cancel</a>
+            <a class="btn btn-outline-primary" href="{% url 'user' %}">{% translate "Cancel" %}</a>
         </form>
         <br><br>
     </div>

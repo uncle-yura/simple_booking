@@ -1,9 +1,7 @@
 {% extends "base_generic.html" %}
-
 {% load extra_settings %}
-
+{% load i18n %} 
 {% block content %}
-
 {% if top_posts %}
 <div id="carouselHomePage" class="carousel slide p-0" data-ride="carousel">
     <div class="carousel-inner" role="listbox">
@@ -15,18 +13,18 @@
                     <p style="display: inline; white-space: nowrap;">{{ article.article_content|safe|truncatewords:20}}</p> 
                 </div>
                 <br>
-                <a href="{% url 'article' article.article_slug %}" style="text-decoration: none" class="btn btn-outline-info btn-sm">Read more ...</a>
+                <a href="{% url 'article' article.article_slug %}" style="text-decoration: none" class="btn btn-outline-info btn-sm">{% translate "Read more ..." %}</a>
             </div>  
         </div>
     {% endfor %}
     </div>
     <a class="carousel-control-prev" href="#carouselHomePage" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
+        <span class="sr-only">{% translate "Previous" %}</span>
     </a>
     <a class="carousel-control-next" href="#carouselHomePage" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
+        <span class="sr-only">{% translate "Next" %}</span>
     </a>
 </div>
 {% endif %}
@@ -36,7 +34,7 @@
         <div class="col-12 pb-4">
             <div class='card p-4' style="max-height: calc(100vh - 70px); overflow-y: auto;">
                 <h3 class="text-center"> 
-                    About us
+                    {% translate "About us" %}
                 </h3>
                 {% autoescape off %}
                 {% get_setting 'ABOUT_US' default='Nothing' %}
@@ -49,7 +47,7 @@
             {% with random_price=pricelist|random %}
             <div class='card p-4 banner' style="height: 50vh; background-image: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{{ MEDIA_URL }}{{ random_price.image }}');">
                 <h3 class="text-center text-white"> 
-                    Popular job: {{ random_price.name }}
+                    {% translate "Popular job:" %} {{ random_price.name }}
                 </h3>
 
                 <div class="text-white p-4" style="overflow-y: auto;">
@@ -62,24 +60,24 @@
                         {{ random_price.time_interval }}
                     </div>
                     <div class="text-warning">
-                        Cost: {% if random_price.min_price != random_price.max_price %} from {{ random_price.min_price }} to {{ random_price.max_price }} {% else %} {{ random_price.min_price }} {% endif %}
+                        {% translate "Cost:" %} {% if random_price.min_price != random_price.max_price %} {% translate "from" %} {{ random_price.min_price }} {% translate "to" %} {{ random_price.max_price }} {% else %} {{ random_price.min_price }} {% endif %}
                         {% get_setting 'PRICE_CURRENCY' default='USD' %}
                     </div>
                     <br>
 
                     <button type="button" class="btn btn-info m-2" data-toggle="modal" data-target="#pricelistModalScrollable">
-                        View all prices
+                        {% translate "View all prices" %}
                     </button>
     
-                    <a class="btn-primary btn m-2" href="{% url 'new-order'%}">Book a service</a>
+                    <a class="btn-primary btn m-2" href="{% url 'new-order'%}">{% translate "Book a service" %}</a>
                 </div>
                 
                 <div class="modal" id="pricelistModalScrollable" tabindex="-1" role="dialog" aria-labelledby="pricelistModalScrollableLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="pricelistModalCenteredLabel">Our prices</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <h5 class="modal-title" id="pricelistModalCenteredLabel">{% translate "Our prices" %}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="{% translate 'Close' %}">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -88,9 +86,9 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
-                                            <th>Time</th>
-                                            <th>Price</th>
+                                            <th>{% translate "Name" %}</th>
+                                            <th>{% translate "Time" %}</th>
+                                            <th>{% translate "Price" %}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -99,14 +97,14 @@
                                             <th scope="row">{{ forloop.counter }}</th>
                                             <td>{{ job.name }}</td>
                                             <td>{{ job.time_interval }}</td>
-                                            <td>{% if job.min_price != job.max_price %} From {{ job.min_price }} to {{ job.max_price }} {% else %} {{ job.min_price }} {% endif %}</td>
+                                            <td>{% if job.min_price != job.max_price %} {% translate "From" %} {{ job.min_price }} {% translate "to" %} {{ job.max_price }} {% else %} {{ job.min_price }} {% endif %}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>  
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{% translate "Close" %}</button>
                             </div>
                         </div>
                     </div>
@@ -116,10 +114,10 @@
         {% else %}
         <div class='card'>
             <div class="card-header">
-                Our prices
+                {% translate "Our prices" %}
             </div>
             <div class="card-body">
-                There are no any prices.
+                {% translate "There are no any prices." %}
             </div>
         </div>
         {% endif %}
@@ -141,21 +139,21 @@
                     </div>
                     <a class="carousel-control-prev" href="#carouselMaster" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
+                        <span class="sr-only">{% translate "Previous" %}</span>
                     </a>
                     <a class="carousel-control-next" href="#carouselMaster" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
+                        <span class="sr-only">{% translate "Next" %}</span>
                     </a>
                 </div>
             </div>
             {% else %}
             <div class='card'>
                 <div class="card-header">
-                    Our masters
+                    {% translate "Our masters" %}
                 </div>
                 <div class="card-body">
-                    There are no any master.
+                    {% translate "There are no any master." %}
                 </div>
             </div>
             {% endif %}  
@@ -164,30 +162,30 @@
         <div class='col-sm-12 col-md-12 col-lg-12 col-xl-4 pb-4'>
             <div class='card' style="height: 50vh;">
                 <div class="card-header">
-                    How to find us
+                    {% translate "How to find us" %}
                 </div>
-
+                {% translate "<div class='card-body'>No way</div>" as no_way %}
                 {% autoescape off %}
-                {% get_setting 'HOW_TO_FIND' default='<div class="card-body">No way</div>' %}
+                {% get_setting 'HOW_TO_FIND' default=no_way %}
                 {% endautoescape %}
-            </div>  
+            </div>
         </div>
 
         <div class="col-12 pb-4">
             <div class='card px-4'>
                 <h3 class="card-title text-center py-2"> 
-                    Reviews
+                    {% translate "Reviews" %}
                 </h3>
                 {% if reviews %}
                 <div id="carouselMultiItemReview" class="carousel slide p-0" data-ride="carousel">                 
                     <div class="carousel-inner" role="listbox">
                         <a class="carousel-control-prev" href="#carouselMultiItemReview" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
+                            <span class="sr-only">{% translate "Previous" %}</span>
                         </a>
                         <a class="carousel-control-next" href="#carouselMultiItemReview" role="button" data-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
+                            <span class="sr-only">{% translate "Next" %}</span>
                         </a>
 
                         <div class="carousel-item active">
@@ -222,7 +220,7 @@
                         </div>
                     </div>                    
                 {% else %}
-                    There are no any review.
+                    {% translate "There are no any review." %}
                     <br>
                     <br>
                 {% endif %}
@@ -231,8 +229,6 @@
         </div>
     </div>
 </div>
-
-
 
 <style>
     .banner { 

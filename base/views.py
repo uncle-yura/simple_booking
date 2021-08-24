@@ -10,7 +10,7 @@ from verify_email.email_handler import send_verification_email
 from .forms import *
 from booking.models import JobType, Profile
 from gallery.models import Photo
-
+from django.utils.translation import gettext as _
 
 def index(request):
     context = {'pricelist': JobType.objects.all().annotate(min_price=Min('prices__price')).annotate(max_price=Max('prices__price')),
@@ -30,10 +30,10 @@ def register(request):
         if form.is_valid():
             user = send_verification_email(request, form)
             messages.warning(
-                request, "Click the link in the email message to confirm your email address.")
+                request, _("Click the link in the email message to confirm your email address."))
             return redirect('index')
         messages.error(
-            request, "Unsuccessful registration. Invalid information.")
+            request, _("Unsuccessful registration. Invalid information."))
     form = NewUserForm
     return render(request=request, template_name='base/register.html', context={"form": form})
 

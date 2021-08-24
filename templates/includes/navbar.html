@@ -1,7 +1,6 @@
 {% load static %}
-
+{% load i18n %} 
 {% load extra_settings %}
-
 <style>
     body {
       padding-top: 5em;
@@ -62,18 +61,18 @@
             <button class="btn btn-outline-secondary dropdown-toggle"
                     type="button" id="dropdownMenu1" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false" style="font-size: 1.2em;">
-            Menu
+                    {% translate "Menu" %}
             </button>
             <div class="dropdown-menu animate slideIn" aria-labelledby="dropdownMenu1">
-                <a class="dropdown-item" href="{% url 'index'%}">Home</a>
-                <a class="dropdown-item" href="{% url 'blog-home'%}">Blog</a>
+                <a class="dropdown-item" href="{% url 'index'%}">{% translate "Home" %}</a>
+                <a class="dropdown-item" href="{% url 'blog-home'%}">{% translate "Blog" %}</a>
                 {% for tag in nav_tags %}
                 <a class="dropdown-item" href="/blog/tag/{{ tag.tag_slug }}"> {{ tag.tag_name }}</a>
                 {% endfor %}
-                <a class="dropdown-item" href="{% url 'new-order'%}">Book a service</a>
-                <a class="dropdown-item" href="{% url 'contact'%}">Contact</a>
+                <a class="dropdown-item" href="{% url 'new-order'%}">{% translate "Book a service" %}</a>
+                <a class="dropdown-item" href="{% url 'contact'%}">{% translate "Contact" %}</a>
                 {% if perms.gallery.view_photo %}
-                <a class="dropdown-item" href="{% url 'gallery-home' %}">Gallery</a>
+                <a class="dropdown-item" href="{% url 'gallery-home' %}">{% translate "Gallery" %}</a>
                 {% endif %}
             </div>
         </div>
@@ -95,7 +94,7 @@
             {% endfor %}
         {% endif %}
         <div class="mx-2">
-            <a class="btn btn-outline-secondary" href="{% url 'new-order'%}">Book a service</a>
+            <a class="btn btn-outline-secondary" href="{% url 'new-order'%}">{% translate "Book a service" %}</a>
         </div>
     </div>
 </nav>

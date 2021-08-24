@@ -1,24 +1,23 @@
 {% load extra_settings %}
-
+{% load i18n %} 
 <script>
     'use strict'
-
     function getLocalText(key, ...args) {
         const localText = {
             'gcal_url' : "{% url 'gcal-data' %}",
-            'dayNames' : "MON,TUE,WEN,THU,FRI,SAT,SUN",
-            'monthNames' : "January,February,March,April,May,June,July,August,September,October,November,December",
-            'fromTo' : `From ${args[0]} to ${args[1]}`,
-            'busyFromTo' : `Busy from ${args[0]} to ${args[1]}`,
-            'priceTotal' : `Total price: ${args[0]} {% get_setting 'PRICE_CURRENCY' default='USD' %}`,
-            'timeTotal' : `Total time: ${args[0]} min`,
-            'selDate' : `Date: ${args[0]}`,
-            'defaultTotalTime': "Select the master",
-            'defaultTotalPrice': "Select a service",
-            'defaultSelectedDate': "Choose time",
-            'defaultCalendar':"Select a master to see his free days",
-            'typeError':"You have not chosen a service.",
-            'responseError':"Responce error.",
+            'dayNames' : '{% translate "MON,TUE,WEN,THU,FRI,SAT,SUN" %}',
+            'monthNames' : '{% translate "January,February,March,April,May,June,July,August,September,October,November,December" %}',
+            'fromTo' : `{% translate "From ${args[0]} to ${args[1]}" %}`,
+            'busyFromTo' : `{% translate "Busy from ${args[0]} to ${args[1]}" %}`,
+            'priceTotal' : `{% translate "Total price:" %} ${args[0]}` + '{% get_setting "PRICE_CURRENCY" default="USD" %}',
+            'timeTotal' : `{% translate "Total time: ${args[0]} min" %}`,
+            'selDate' : `{% translate "Date:" %} ${args[0]}`,
+            'defaultTotalTime': '{% translate "Select the master" %}',
+            'defaultTotalPrice': '{% translate "Select a service" %}',
+            'defaultSelectedDate': '{% translate "Choose time" %}',
+            'defaultCalendar': '{% translate "Select a master to see his free days" %}',
+            'typeError': '{% translate "You have not chosen a service." %}',
+            'responseError': '{% translate "Responce error." %}',
             'currencyName': "{% get_setting 'PRICE_CURRENCY' default='USD' %}",
         }
         return localText[key];

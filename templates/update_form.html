@@ -1,7 +1,6 @@
 {% extends "base_generic.html" %}
-
 {% load crispy_forms_tags %}
-
+{% load i18n %} 
 {% block content %}
 <div class="container py-5">
   <div class="card p-4">
@@ -12,12 +11,11 @@
         {% csrf_token %}
         {{ form|crispy }}                    
         <br>
-        <button class="btn btn-primary" type="submit">Save</button>
-        <a class="btn btn-outline-secondary" href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+        <button class="btn btn-primary" type="submit">{% translate "Save" %}</button>
+        <a class="btn btn-outline-secondary" href="{{request.META.HTTP_REFERER|escape}}">{% translate "Back" %}</a>
     </form>
     <br><br>
   </div>
 </div>
-
 {{form.media}}
 {% endblock %}
