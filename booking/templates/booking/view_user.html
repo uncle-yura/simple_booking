@@ -1,40 +1,37 @@
 {% extends "base_generic.html" %}
-
 {% load crispy_forms_tags %}
-
-{% block content %}
-
 {% load auth_extras %}
-
+{% load i18n %} 
+{% block content %}
 <br><br>
 <div class="container mx-auto">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-4 pb-4">
             <div class="card p-4">
-                <h4 class="card-title font-weight-bold text-center">Profile {{ profile.user.username|title }}</h4>
+                <h4 class="card-title font-weight-bold text-center">{% translate "Profile" %} {{ profile.user.username|title }}</h4>
                 <hr>
                 <div class="card-text">
-                    <p class="text-muted mb-0" style="font-size: 12px">Username:</p>
+                    <p class="text-muted mb-0" style="font-size: 12px">{% get_verbose_field_name profile.user 'username' %}:</p>
                     <p>{{ profile.user.username }}</p>
-                    <p class="text-muted mb-0" style="font-size: 12px">Name:</p>
+                    <p class="text-muted mb-0" style="font-size: 12px">{% translate "Name" %}:</p>
                       <p>{{ profile.user.first_name }} {{ profile.user.last_name }}</p>
-                      <p class="text-muted mb-0" style="font-size: 12px">Email:</p>
+                      <p class="text-muted mb-0" style="font-size: 12px">{% get_verbose_field_name profile.user 'email' %}:</p>
                       <p>{{ profile.user.email }} </p>
 
-                      <p class="text-muted mb-0"  style="font-size: 12px">Phone:</p>
+                      <p class="text-muted mb-0"  style="font-size: 12px">{% get_verbose_field_name profile 'phone_number' %}:</p>
                       <p>{{ profile.phone_number }} </p>
                       
                       {% if request.user|has_group:"Master" %}
-                      <p class="text-muted mb-0"  style="font-size: 12px">Discount:</p>
+                      <p class="text-muted mb-0"  style="font-size: 12px">{% get_verbose_field_name profile 'discount' %}:</p>
                       <p>{{ profile.discount }} </p>
 
-                      <p class="text-muted mb-0"  style="font-size: 12px">Comment:</p>
+                      <p class="text-muted mb-0"  style="font-size: 12px">{% get_verbose_field_name profile 'comment' %}:</p>
                       <p>{{ profile.comment }} </p>
                       {% endif %}
                 </div>
                 {% if request.user|has_group:"Master" %}
                 <div class="text-right">
-                    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileDiscountModal">Add discount</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileDiscountModal">{% translate "Add discount" %}</button>
                 </div>
                 {% endif %}
             </div>
@@ -42,7 +39,7 @@
        
         <div class="col-sm-12 col-md-12 col-lg-4 pb-4">
             <div class="card p-4">
-                <h4 class="card-title font-weight-bold text-center">Masters</h4>
+                <h4 class="card-title font-weight-bold text-center">{% translate "Masters" %}</h4>
                 <hr>
                     {% for member in profile.get_uniq_masters %}
                         {{ member }}
@@ -55,8 +52,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit Profile Discount</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <h5 class="modal-title">{% translate "Edit Profile Discount" %}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="{% translate 'Close' %}">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -66,9 +63,9 @@
                             {{ discount_form|crispy }}
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">{% translate "Save changes" %}</button>
                         </form>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{% translate "Close" %}</button>
                     </div>
                 </div>
             </div>
@@ -77,7 +74,6 @@
     </div>
     <br>
     <br>
-    <a class="btn btn-outline-secondary" href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+    <a class="btn btn-outline-secondary" href="{{request.META.HTTP_REFERER|escape}}">{% translate "Back" %}</a>
 </div>
-
 {% endblock %}

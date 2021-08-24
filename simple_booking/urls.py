@@ -27,6 +27,7 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     path('bootstrap_customizer/', include(bootstrap_customizer_urls)),
     path('social-auth/', include('social_django.urls', namespace="social")),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
 urlpatterns += [

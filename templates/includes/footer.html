@@ -37,6 +37,7 @@
                     <a class="btn btn-sm btn-secondary" href="{% url 'login'%}?next={{request.path}}">{% translate "Login" %}</a>
                     <a class="text-light"  href="{% url 'register'%}?next={{request.path}}">{% translate "Register" %}</a>
                     {% endif %}
+                    {% include 'includes/langswitch.html' %}
                 </div>
                 <div class="col-sm-12 col-md-4 col-lg-6">  
                     <h5>
@@ -52,7 +53,6 @@
                 </div>
             </div>
         <div class="container text-center py-2">
-
             <p style="font-size:12px">
                 {% autoescape off %}
                     {% get_setting 'FOOTER_COPYRIGHT' default='Uncle-Yura Studio' %}

@@ -1,44 +1,40 @@
 {% extends "base_generic.html" %}
-
 {% load crispy_forms_tags %}
-
-{% block content %}
-
 {% load auth_extras %}
-
+{% load i18n %} 
+{% block content %}
 <br><br>
 <div class="container py-5">
     <div class="card p-4">
-        <h4 class="card-title font-weight-bold text-center">Order {{ order|title }}</h4>
+        <h4 class="card-title font-weight-bold text-center">{% translate "Order" %} {{ order|title }}</h4>
         <hr>
         
         {% if request.user.profile == order.client %}
-        <p class="text-muted mb-0" style="font-size: 12px">Master:</p>
+        <p class="text-muted mb-0" style="font-size: 12px">{% get_verbose_field_name order 'master' %}:</p>
         <p>{{ order.master }}</p>
         {% elif request.user|has_group:"Master" %}
-        <p class="text-muted mb-0" style="font-size: 12px">Client:</p>
+        <p class="text-muted mb-0" style="font-size: 12px">{% get_verbose_field_name order 'client' %}:</p>
         <p><a href="{% url 'user-view' order.client.pk %}" class="settings" title="View" data-toggle="tooltip"><i class="fas fa-eye"></i> {{ order.client }}</a></p>
         {% else %}
-        <p class="text-muted mb-0" style="font-size: 12px">Client:</p>
+        <p class="text-muted mb-0" style="font-size: 12px">{% get_verbose_field_name order 'client' %}:</p>
         <p>{{ order.client }}</p>
         {% endif %}
 
-        <p class="text-muted mb-0" style="font-size: 12px">Date:</p>
+        <p class="text-muted mb-0" style="font-size: 12px">{% get_verbose_field_name order 'booking_date' %}:</p>
         <p>{{ order.booking_date }}</p>
-        <p class="text-muted mb-0" style="font-size: 12px">Work type:</p>
+        <p class="text-muted mb-0" style="font-size: 12px">{% get_verbose_field_name order 'work_type' %}:</p>
         <ul>
             {% for work in order.work_type.all %}
             <li>{{ work }} </li>
             {% endfor %}
         </ul>
-        <p class="text-muted mb-0"  style="font-size: 12px">Comment:</p>
+        <p class="text-muted mb-0"  style="font-size: 12px">{% get_verbose_field_name order 'client_comment' %}:</p>
         <p>{{ order.client_comment }} </p>
         <br>
         <br>
         <div>
-            <a class="btn btn-outline-secondary" href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+            <a class="btn btn-outline-secondary" href="{{request.META.HTTP_REFERER|escape}}">{% translate "Back" %}</a>
         </div>
     </div>
 </div>
-
 {% endblock %}

@@ -1,18 +1,17 @@
 {% extends "base_generic.html" %}
-
 {% load crispy_forms_tags %}
-
+{% load i18n %} 
 {% block content %}
 <div class="container py-5">
-  <h1 class="font-weight-bold">Price list</h1>
+  <h1 class="font-weight-bold">{% translate "Price list" %}</h1>
   <br>
     {% if pricelist_list %}
     <table class="table table-striped table-hover">
       <thead>
         <tr>
-            <th>Job</th>                        
-            <th>Price</th>
-            <th>Action</th>
+            <th>{% translate "Job" %}</th>                        
+            <th>{% translate "Price" %}</th>
+            <th>{% translate "Action" %}</th>
         </tr>
       </thead>
       <tbody>
@@ -21,8 +20,8 @@
           <td>{{price}}</td>
           <td>{{price.price}}</td>
           <td>
-            <a href="{% url 'price-update' price.pk %}" class="settings" title="Edit" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-            <a href="{% url 'price-delete' price.pk %}" class="delete" title="Delete" data-toggle="tooltip"><i class="fas fa-trash"></i></a>
+            <a href="{% url 'price-update' price.pk %}" class="settings" title="{% translate 'Edit' %}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+            <a href="{% url 'price-delete' price.pk %}" class="delete" title="{% translate 'Delete' %}" data-toggle="tooltip"><i class="fas fa-trash"></i></a>
         </td>
         </tr>
         {% endfor %}
@@ -32,13 +31,13 @@
     {% include 'includes/pagination.html' %}
     
     {% else %}
-      <p>There are no prices.</p>
+      <p>{% translate "There are no prices." %}</p>
     {% endif %}
     <br><br>
-    <a class="btn btn-primary add-new" href="{% url 'price-add' %}">Add</a>
-    <a class="btn btn-outline-info" href="{% url 'public-prices' request.user.profile.pk%}">Share link</a>
+    <a class="btn btn-primary add-new" href="{% url 'price-add' %}">{% translate "Add" %}</a>
+    <a class="btn btn-outline-info" href="{% url 'public-prices' request.user.profile.pk%}">{% translate "Share link" %}</a>
     <br>
     <br>
-    <a class="btn btn-outline-secondary" href="{% url 'user' %}">Back</a>
+    <a class="btn btn-outline-secondary" href="{% url 'user' %}">{% translate "Back" %}</a>
   </div>
 {% endblock %}

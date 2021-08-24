@@ -1,5 +1,5 @@
 from django import template
-
+from django.utils.translation import gettext as _
 from datetime import datetime
 
 import pytz
@@ -18,12 +18,12 @@ def duration(timedelta):
         minutes = 0
     if hours and minutes:
         # Display both
-        return '{}h et {} min'.format(hours, minutes)
+        return _('{} h et {} min').format(hours, minutes)
     elif hours:
         # Display only hours
-        return '{}h'.format(hours)
+        return _('{} h').format(hours)
     # Display only minutes
-    return '{} min'.format(minutes)
+    return _('{} min').format(minutes)
 
 
 @register.filter

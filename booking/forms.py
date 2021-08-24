@@ -1,9 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.forms import widgets
 from django.forms.models import inlineformset_factory
 from django.forms.widgets import SelectMultiple, Select
+from django.utils.translation import gettext_lazy as _
 
 from .models import Order, PriceList, Profile
 
@@ -121,9 +121,9 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email',)
         help_texts = {
-            'first_name': "Enter your first name here.",
-            'last_name': "Enter your last name here.",
-            'email': "Enter your email address here."
+            'first_name': _("Enter your first name here."),
+            'last_name': _("Enter your last name here."),
+            'email': _("Enter your email address here."),
         }
 
 

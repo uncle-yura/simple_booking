@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.forms.models import modelform_factory
+from django.utils.translation import gettext as _
 
 from .models import *
 from .forms import *
@@ -34,13 +35,13 @@ def userpage(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             messages.success(
-                request, ('Your profile was successfully updated!'))
+                request, _('Your profile was successfully updated!'))
         elif master_form.is_valid():
             master_form.save()
             messages.success(
-                request, ('Your master profile was successfully updated!'))
+                request, _('Your master profile was successfully updated!'))
         else:
-            messages.error(request, ('Unable to complete request'))
+            messages.error(request, _('Unable to complete request'))
         return redirect('user')
 
     user_form = UserForm(instance=request.user)
@@ -60,7 +61,7 @@ def userpage(request):
 def gcal_data_return(request):
     master_id = request.GET.get('master', None)
     if not master_id:
-        return JsonResponse({'success': False, 'msg': ["Master not selected.", ]})
+        return JsonResponse({'success': False, 'msg': [_("Master not selected."), ]})
 
     order_id = request.GET.get('order', None)
     master_profile = Profile.objects.filter(id=master_id).first()
@@ -68,9 +69,9 @@ def gcal_data_return(request):
     exclude_id = []
     for master in query_set:
         timetable = master.timetable
-        if timetable is not "A" \
-                and not (timetable is "M" and master.clients.filter(id__exact=request.user.profile.id).count() > 0) \
-                and not (timetable is "V" and request.user.profile.orders.count() > 0):
+        if timetable is not Profile.TIME_TABLE.ALL \
+                and not (timetable is Profile.TIME_TABLE.MY and master.clients.filter(id__exact=request.user.profile.id).count() > 0) \
+                and not (timetable is Profile.TIME_TABLE.VERIFIED and request.user.profile.orders.count() > 0):
             exclude_id.append(master.id)
     query_set = query_set.exclude(id__in=exclude_id)
 
@@ -93,7 +94,7 @@ def gcal_data_return(request):
                                        timeMin=now.isoformat() + 'Z',
                                        timeMax=date_max).execute()
         except HttpError:
-            return JsonResponse({'success': False, 'msg': ["This master has closed booking access.", ]})
+            return JsonResponse({'success': False, 'msg': [_("This master has closed booking access."), ]})
 
         response = {
             'success': True,
@@ -130,7 +131,7 @@ def gcal_data_return(request):
                         'end': event['end'], }})
             page_token = events.get('nextPageToken')
     else:
-        return JsonResponse({'success': False, 'msg': ["It is impossible to get a reservation from this master.", ]})
+        return JsonResponse({'success': False, 'msg': [_("It is impossible to get a reservation from this master."), ]})
     return JsonResponse(response)
 
 
@@ -180,14 +181,14 @@ class OrderCreate(CreateView):
                     calendarId=self.object.master.gcal_link, body=event).execute()
             except HttpError:
                 messages.error(
-                    self.request, ("Server connection error, unable to add new event."))
+                    self.request, _("Server connection error, unable to add new event."))
                 return redirect('new-order')
 
             self.object.client = self.request.user.profile
             self.object.gcal_event_id = event_id['id']
             self.object.save()
 
-            messages.success(self.request, ('New order created!'))
+            messages.success(self.request, _('New order created!'))
             return super(OrderCreate, self).form_valid(form)
         else:
             messages.error(self.request, error_message)
@@ -251,17 +252,17 @@ class OrderUpdate(OrderOwnerOnlyMixin, UpdateView):
                                            eventId=self.object.gcal_event_id, body=event).execute()
                 except HttpError:
                     messages.error(
-                        self.request, ("Server connection error, unable to update event."))
+                        self.request, _("Server connection error, unable to update event."))
                     return redirect('my-orders')
 
                 self.object.save()
-                messages.success(self.request, ('Order data updated!'))
+                messages.success(self.request, _('Order data updated!'))
                 return super(OrderUpdate, self).form_valid(form)
             else:
                 messages.error(self.request, error_message)
                 return redirect('my-orders')
         else:
-            messages.error(self.request, ("This event canceled by master."))
+            messages.error(self.request, _("This event canceled by master."))
             return redirect('my-orders')
 
 
@@ -273,7 +274,7 @@ class OrderCancel(OrderOwnerOnlyMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form_title'] = 'Cancel order'
+        context['form_title'] = _('Cancel order')
         return context
 
     def form_valid(self, form):
@@ -287,12 +288,12 @@ class OrderCancel(OrderOwnerOnlyMixin, UpdateView):
                     calendarId=self.object.master.gcal_link, eventId=self.object.gcal_event_id).execute()
             except HttpError:
                 messages.error(
-                    self.request, ("Server connection error, unable to delete event."))
+                    self.request, _("Server connection error, unable to delete event."))
                 return redirect('my-orders')
 
         self.object.state = Order.STATE_TABLE.CANCELED
         self.object.save()
-        messages.success(self.request, ('Order canceled.'))
+        messages.success(self.request, _('Order canceled.'))
 
         return super(OrderCancel, self).form_valid(form)
 
@@ -352,7 +353,7 @@ class WhiteListUpdate(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form_title'] = 'White list'
+        context['form_title'] = _('White list')
         return context
 
     def get_object(self):
@@ -373,7 +374,7 @@ class BlackListUpdate(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form_title'] = 'Black list'
+        context['form_title'] = _('Black list')
         return context
 
     def get_object(self):
@@ -384,7 +385,7 @@ class BlackListUpdate(LoginRequiredMixin, UpdateView):
 
         if self.object.jobs.filter(client__in=form.cleaned_data['black_list']).count() > 0:
             messages.error(
-                self.request, ("It is impossible to blacklist a client while he has an open order."))
+                self.request, _("It is impossible to blacklist a client while he has an open order."))
             return redirect('my-clients')
 
         self.object.save()
@@ -431,7 +432,7 @@ class PriceListCreate(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form_title'] = 'Add price'
+        context['form_title'] = _('Add price')
         return context
 
     def form_valid(self, form):
@@ -439,10 +440,10 @@ class PriceListCreate(LoginRequiredMixin, CreateView):
             self.object = form.save(commit=False)
             self.object.profile = self.request.user.profile
             self.object.save()
-            messages.success(self.request, ('Price created'))
+            messages.success(self.request, _('Price created'))
         except IntegrityError as e:
             if 'unique constraint'.lower() in str(e).lower():
-                messages.error(self.request, ('Price already exist'))
+                messages.error(self.request, _('Price already exist'))
             return redirect('my-prices')
         else:
             return super(PriceListCreate, self).form_valid(form)
@@ -455,11 +456,11 @@ class PriceListDelete(PriceOwnerOnlyMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form_title'] = 'Delete price'
+        context['form_title'] = _('Delete price')
         return context
 
     def delete(self, request, *args, **kwargs):
-        messages.success(self.request, ('Price deleted'))
+        messages.success(self.request, _('Price deleted'))
         return super(PriceListDelete, self).delete(request, *args, **kwargs)
 
     def get_queryset(self):
@@ -475,7 +476,7 @@ class PriceListUpdate(PriceOwnerOnlyMixin, UpdateView):
     def get_context_data(self, **kwargs):
         data = super(PriceListUpdate, self).get_context_data(**kwargs)
 
-        data['form_title'] = 'Update price:'
+        data['form_title'] = _('Update price:')
 
         if self.request.POST:
             data['pricelist'] = PriceListFormSet(
@@ -493,10 +494,10 @@ class PriceListUpdate(PriceOwnerOnlyMixin, UpdateView):
             if pricelist.is_valid():
                 pricelist.instance = self.object
                 pricelist.save()
-                messages.success(self.request, ('Price updated'))
+                messages.success(self.request, _('Price updated'))
         except IntegrityError as e:
             if 'unique constraint'.lower() in str(e).lower():
-                messages.error(self.request, ('Price already exist'))
+                messages.error(self.request, _('Price already exist'))
             return redirect('my-prices')
         else:
             return super(PriceListUpdate, self).form_valid(form)

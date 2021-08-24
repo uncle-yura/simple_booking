@@ -12,6 +12,11 @@ from booking.models import JobType, Profile
 from gallery.models import Photo
 from django.utils.translation import gettext as _
 
+
+def switch_lang(request):
+    return render(request, 'base/langswitch.html')
+
+
 def index(request):
     context = {'pricelist': JobType.objects.all().annotate(min_price=Min('prices__price')).annotate(max_price=Max('prices__price')),
                'masters': Profile.objects.filter(user__groups__name='Master'),

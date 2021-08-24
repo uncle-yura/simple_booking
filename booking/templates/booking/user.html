@@ -1,35 +1,32 @@
 {% extends "base_generic.html" %}
-
 {% load crispy_forms_tags %}
-
-{% block content %}
-
 {% load auth_extras %}
-
+{% load i18n %} 
+{% block content %}
 <br><br>
 <div class="container mx-auto">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-4 pb-4">
             <div class="card p-4">
-                <h4 class="card-title font-weight-bold text-center">Hello, {{ user.username|title }}</h4>
+                <h4 class="card-title font-weight-bold text-center">{% translate "Hello" %}, {{ user.username|title }}</h4>
                 <hr>
                 <div class="card-text">
                     {% if user.profile.avatar %}
-                    <img class="d-flex mr-3" src="{{ MEDIA_URL }}{{ user.profile.avatar }}" width="100%" alt="Avatar">
+                    <img class="d-flex mr-3" src="{{ MEDIA_URL }}{{ user.profile.avatar }}" width="100%" alt="{% get_verbose_field_name user.profile 'avatar' %}">
                     {% endif %}
-                    <p class="text-muted mb-0" style="font-size: 12px">Username:</p>
+                    <p class="text-muted mb-0" style="font-size: 12px">{% get_verbose_field_name user 'username' %}:</p>
                     <p>{{ user.username }}</p>
-                    <p class="text-muted mb-0" style="font-size: 12px">Name:</p>
+                    <p class="text-muted mb-0" style="font-size: 12px">{% translate "Name" %}:</p>
                       <p>{{ user.first_name }} {{ user.last_name }}</p>
-                      <p class="text-muted mb-0" style="font-size: 12px">Email:</p>
+                      <p class="text-muted mb-0" style="font-size: 12px">{% get_verbose_field_name user 'email' %}:</p>
                       <p>{{ user.email }} </p>
 
-                      <p class="text-muted mb-0"  style="font-size: 12px">Phone:</p>
+                      <p class="text-muted mb-0"  style="font-size: 12px">{% get_verbose_field_name user.profile 'phone_number' %}:</p>
                       <p>{{ user.profile.phone_number }} </p>
                       
                     <div class="text-right">
-                        <a class="btn btn-outline-secondary btn-sm" href="{% url 'user-delete' user.pk %}">Delete profile</a>
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileModal">Edit Profile</button>
+                        <a class="btn btn-outline-secondary btn-sm" href="{% url 'user-delete' user.pk %}">{% translate "Delete profile" %}</a>
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileModal">{% translate "Edit Profile" %}</button>
                     </div>
                 </div>
             </div>
@@ -37,31 +34,31 @@
         {% if request.user|has_group:"Master" %}
         <div class="col-sm-12 col-md-12 col-lg-4 pb-4">
             <div class="card p-4">
-                <h4 class="card-title font-weight-bold text-center">Master profile</h4>
+                <h4 class="card-title font-weight-bold text-center">{% translate "Master profile" %}</h4>
                 <hr>
                 <div class="card-text">
-                    <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-prices'%}">My prices</a>
-                    <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-clients'%}">My clients</a>
-                    <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-jobs'%}">My jobs</a>
+                    <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-prices'%}">{% translate "My prices" %}</a>
+                    <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-clients'%}">{% translate "My clients" %}</a>
+                    <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-jobs'%}">{% translate "My jobs" %}</a>
                     <hr>
-                    <p class="text-muted mb-0"  style="font-size: 12px">Timetable:</p>
+                    <p class="text-muted mb-0"  style="font-size: 12px">{% translate "Timetable" %}:</p>
                     <p> {{ user.profile.get_timetable_display  }} </p>
-                    <p class="text-muted mb-0"  style="font-size: 12px">Booking time range:</p>
+                    <p class="text-muted mb-0"  style="font-size: 12px">{% get_verbose_field_name user.profile 'booking_time_range' %}:</p>
                     <p> {{ user.profile.booking_time_range  }} </p>
-                    <p class="text-muted mb-0"  style="font-size: 12px">Booking time delay:</p>
+                    <p class="text-muted mb-0"  style="font-size: 12px">{% get_verbose_field_name user.profile 'booking_time_delay' %}:</p>
                     <p> {{ user.profile.booking_time_delay  }} </p>
-                    <p class="text-muted mb-0"  style="font-size: 12px">Link:</p>
+                    <p class="text-muted mb-0"  style="font-size: 12px">{% get_verbose_field_name user.profile 'gcal_link' %}:</p>
                     <p> {{ user.profile.gcal_link|truncatechars:15 }} </p>
-                    <p class="text-muted mb-0"  style="font-size: 12px">Service account:</p>
-                    <button type="button" onclick="copyToClipboard('service_account_link')" class="btn btn-sm btn-secondary">Copy link</button>
+                    <p class="text-muted mb-0"  style="font-size: 12px">{% translate "Service account:" %}</p>
+                    <button type="button" onclick="copyToClipboard('service_account_link')" class="btn btn-sm btn-secondary">{% translate "Copy link" %}</button>
                     <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="sr-only">Toggle Dropdown</span>
+                      <span class="sr-only">{% translate "Toggle Dropdown" %}</span>
                     </button>
                     <div class="dropdown-menu">
                       <a class="dropdown-item" id="service_account_link" href="mailto:{{ user.profile.get_gcal_account }}">{{ user.profile.get_gcal_account }}</a>
                     </div>
                     <div class="text-right">
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileMasterModal">Edit Profile</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileMasterModal">{% translate "Edit Profile" %}</button>
                     </div>
                 </div>
             </div>
@@ -69,12 +66,12 @@
         {% endif %}
         <div class="col-sm-12 col-md-12 col-lg-4 pb-4">
             <div class="card p-4">
-                <h4 class="card-title font-weight-bold text-center">Your orders</h4>
+                <h4 class="card-title font-weight-bold text-center">{% translate "Your orders" %}</h4>
                 <hr>
                 <div class="card-text">
-                <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-orders'%}">My orders</a>
+                <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-orders'%}">{% translate "My orders" %}</a>
                 <hr>
-                <p class="text-muted mb-0"  style="font-size: 12px">Your masters:</p>
+                <p class="text-muted mb-0"  style="font-size: 12px">{% translate "Your masters:" %}</p>
                     {% if user.profile.get_uniq_masters %}
                     <ul class="list-group">
                         {% for member in user.profile.get_uniq_masters %}
@@ -82,7 +79,7 @@
                         {% endfor %}
                     </ul>   
                     {% else %}
-                        You haven't had a single master yet. 
+                        {% translate "You haven't had a single master yet." %}
                     {% endif %}
                 </div>
             </div>
@@ -94,8 +91,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Profile</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title">{% translate "Edit Profile" %}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="{% translate 'Close' %}">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -106,9 +103,9 @@
                     {{ profile_form|crispy }}
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary">{% translate "Save changes" %}</button>
                 </form>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{% translate "Close" %}</button>
             </div>
         </div>
     </div>
@@ -119,8 +116,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Master Profile</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title">{% translate "Edit Master Profile" %}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="{% translate 'Close' %}">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -130,9 +127,9 @@
                     {{ master_form|crispy }}
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary">{% translate "Save changes" %}</button>
                 </form>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{% translate "Close" %}</button>
             </div>
         </div>
     </div>
@@ -149,7 +146,5 @@
         textArea.remove();
     }
 </script>
-
 {% endif %}
-
 {% endblock %}

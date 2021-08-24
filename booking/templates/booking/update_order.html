@@ -1,16 +1,13 @@
 {% extends "base_generic.html" %}
-
 {% load crispy_forms_tags %}
-
 {% load static %}
-
+{% load i18n %} 
 {% block content %}
-
 <div class="container py-5">
     <div class="row">
         <div class='col-sm-12 col-md-12 col-lg-12 col-xl-12 pb-4'>
           <div class='card p-4'>
-            <h1 class="font-weight-bold">Order {{object}}</h1>
+            <h1 class="font-weight-bold">{% translate "Order" %} {{object}}</h1>
           </div>
         </div>
 
@@ -31,8 +28,8 @@
 
                         <br>
 
-                        <button class="btn btn-primary" type="submit">Save</button>
-                        <a class="btn btn-outline-secondary" href="{% url 'my-orders' %}">Cancel</a> 
+                        <button class="btn btn-primary" type="submit">{% translate "Save" %}</button>
+                        <a class="btn btn-outline-secondary" href="{% url 'my-orders' %}">{% translate "Cancel" %}</a> 
                     </div>
                 </form> 
             </div>   
@@ -42,8 +39,8 @@
             <div class='card p-4' 
                 id='id_calendar_card' data-container="body"
                 data-toggle="popover" data-placement="left"
-                data-content="You have not chosen a day and time.">
-                <div id='id_calendar_loading' class="spinner-border spinner-border-sm" role="status"><span class="sr-only">Loading...</span></div>
+                data-content="{% translate 'You have not chosen a day and time.' %}">
+                <div id='id_calendar_loading' class="spinner-border spinner-border-sm" role="status"><span class="sr-only">{% translate "Loading..." %}</span></div>
                 <div id='id_calendar_header'></div>
                 <div id='id_calendar_body'></div>
             </div>  
@@ -56,7 +53,7 @@
     <div class="modal-content">
         <div class="modal-header">
         <h5 class="modal-title" id="id_timetable_header"></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{% translate 'Close' %}">
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
@@ -64,7 +61,7 @@
             <div class='timetable_events_container' id='id_timetable_events'></div>
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">{% translate "Close" %}</button>
         </div>
     </div>
     </div>

@@ -1,6 +1,7 @@
 from django.views.generic.edit import CreateView
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.utils.translation import gettext as _
 
 from .forms import *
 from .models import *
@@ -18,8 +19,8 @@ class ContactFormView(CreateView):
 
     def form_valid(self, form):
         if form.send_email():
-            messages.success(self.request, ('Message sent'))
+            messages.success(self.request, _('Message sent'))
         else:
             messages.error(
-                self.request, ('Message not sent, please try again later.'))
+                self.request, _('Message not sent, please try again later.'))
         return super().form_valid(form)

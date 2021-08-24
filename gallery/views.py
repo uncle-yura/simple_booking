@@ -1,6 +1,7 @@
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
+from django.utils.translation import gettext as _
 
 from .models import *
 
@@ -22,7 +23,7 @@ class PhotoCreateView(PermissionRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form_title'] = 'New photo'
+        context['form_title'] = _('New photo')
         return context
 
 
@@ -35,7 +36,7 @@ class PhotoUpdateView(PermissionRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form_title'] = 'Update photo'
+        context['form_title'] = _('Update photo')
         return context
 
 
@@ -53,5 +54,5 @@ class PhotoDeleteView(PermissionRequiredMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form_title'] = 'Delete photo'
+        context['form_title'] = _('Delete photo')
         return context

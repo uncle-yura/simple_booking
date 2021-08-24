@@ -1,0 +1,19 @@
+{% load i18n %} 
+<div class='pt-1'>
+    <form id="lang_form" action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <select id="lang_select" name="language" class="form-control form-control-sm bg-dark text-white">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                    {{ language.name_local }} ({{ language.code }})
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+    <script>
+        $('#lang_select').change(function() { $('#lang_form').submit(); });
+    </script>
+</div>

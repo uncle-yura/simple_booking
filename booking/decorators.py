@@ -1,6 +1,7 @@
 from django.http.response import HttpResponseBadRequest
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.utils.translation import gettext as _
 
 from extra_settings.models import Setting
 
@@ -19,7 +20,7 @@ def check_orders_count(func):
         order_limit = Setting.get('FUTURE_ORDERS_LIMIT', default=3)
 
         if request.user.profile.get_future_orders_count() >= order_limit:
-            messages.error(request, "You have too many booked orders.")
+            messages.error(request, _("You have too many booked orders."))
             return redirect('index')
         return func(request, *args, **kwargs)
 

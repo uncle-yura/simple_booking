@@ -1,12 +1,12 @@
 {% extends "base_generic.html" %}
-
+{% load i18n %} 
 {% block content %}
     <div class="row p-4">
         <div class="col-12">
-            <h1 class="font-weight-bold">Photo gallery</h1>
+            <h1 class="font-weight-bold">{% translate "Photo gallery" %}</h1>
 
             {% if perms.gallery.add_photo %}
-                <a href="{% url 'new-photo' %}"  class="btn btn-outline-secondary btn-sm">Add photo</a>
+                <a href="{% url 'new-photo' %}"  class="btn btn-outline-secondary btn-sm">{% translate "Add photo" %}</a>
                 <br>
             {% endif %}
             <hr>
@@ -25,17 +25,17 @@
                     </a>
 
                     {% if perms.gallery.change_photo %}
-                    <form style="right:1em;"><button formaction="{% url 'edit-photo' photo.pk %}" class="btn btn-outline-warning btn-sm m-1">Edit</button></form>
+                    <form style="right:1em;"><button formaction="{% url 'edit-photo' photo.pk %}" class="btn btn-outline-warning btn-sm m-1">{% translate "Edit" %}</button></form>
                     {% endif %}
 
                     {% if perms.gallery.delete_photo %}
-                    <form style="left:1em;"><button formaction="{% url 'delete-photo' photo.pk %}" class="btn btn-outline-danger btn-sm m-1">Delete</button></form>
+                    <form style="left:1em;"><button formaction="{% url 'delete-photo' photo.pk %}" class="btn btn-outline-danger btn-sm m-1">{% translate "Delete" %}</button></form>
                     {% endif %} 
                 </div>
 
                 {% endfor %}
             {% else %}
-                <p>No image available.</p>
+                <p>{% translate "No image available." %}</p>
             {% endif %}
         </div>
     </div>
