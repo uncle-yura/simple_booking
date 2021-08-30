@@ -24,9 +24,9 @@
                       <p class="text-muted mb-0"  style="font-size: 12px">{% get_verbose_field_name user.profile 'phone_number' %}:</p>
                       <p>{{ user.profile.phone_number }} </p>
                       
-                    <div class="text-right">
-                        <a class="btn btn-outline-secondary btn-sm" href="{% url 'user-delete' user.pk %}">{% translate "Delete profile" %}</a>
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileModal">{% translate "Edit Profile" %}</button>
+                    <div class="text-right mt-3">
+                        <a class="btn btn-outline-secondary btn-sm my-1" href="{% url 'user-delete' user.pk %}">{% translate "Delete profile" %}</a>
+                        <button type="button" class="btn btn-outline-primary btn-sm my-1" data-toggle="modal" data-target="#profileModal">{% translate "Edit Profile" %}</button>
                     </div>
                 </div>
             </div>
@@ -37,9 +37,9 @@
                 <h4 class="card-title font-weight-bold text-center">{% translate "Master profile" %}</h4>
                 <hr>
                 <div class="card-text">
-                    <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-prices'%}">{% translate "My prices" %}</a>
-                    <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-clients'%}">{% translate "My clients" %}</a>
-                    <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-jobs'%}">{% translate "My jobs" %}</a>
+                    <a class="btn btn-sm btn-outline-info my-1"  href="{% url 'my-prices'%}">{% translate "My prices" %}</a>
+                    <a class="btn btn-sm btn-outline-info my-1"  href="{% url 'my-clients'%}">{% translate "My clients" %}</a>
+                    <a class="btn btn-sm btn-outline-info my-1"  href="{% url 'my-jobs'%}">{% translate "My jobs" %}</a>
                     <hr>
                     <p class="text-muted mb-0"  style="font-size: 12px">{% translate "Timetable" %}:</p>
                     <p> {{ user.profile.get_timetable_display  }} </p>
@@ -57,7 +57,7 @@
                     <div class="dropdown-menu">
                       <a class="dropdown-item" id="service_account_link" href="mailto:{{ user.profile.get_gcal_account }}">{{ user.profile.get_gcal_account }}</a>
                     </div>
-                    <div class="text-right">
+                    <div class="text-right mt-3">
                         <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileMasterModal">{% translate "Edit Profile" %}</button>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                 <h4 class="card-title font-weight-bold text-center">{% translate "Your orders" %}</h4>
                 <hr>
                 <div class="card-text">
-                <a class="btn btn-sm btn-outline-info m-2"  href="{% url 'my-orders'%}">{% translate "My orders" %}</a>
+                <a class="btn btn-sm btn-outline-info my-1"  href="{% url 'my-orders'%}">{% translate "My orders" %}</a>
                 <hr>
                 <p class="text-muted mb-0"  style="font-size: 12px">{% translate "Your masters:" %}</p>
                     {% if user.profile.get_uniq_masters %}

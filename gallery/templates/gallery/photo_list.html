@@ -23,7 +23,6 @@
                             alt=""
                         />
                     </a>
-
                     {% if perms.gallery.change_photo %}
                     <form style="right:1em;"><button formaction="{% url 'edit-photo' photo.pk %}" class="btn btn-outline-warning btn-sm m-1">{% translate "Edit" %}</button></form>
                     {% endif %}
@@ -32,16 +31,15 @@
                     <form style="left:1em;"><button formaction="{% url 'delete-photo' photo.pk %}" class="btn btn-outline-danger btn-sm m-1">{% translate "Delete" %}</button></form>
                     {% endif %} 
                 </div>
-
                 {% endfor %}
             {% else %}
                 <p>{% translate "No image available." %}</p>
             {% endif %}
         </div>
     </div>
-
-    {% include 'includes/pagination.html' %}
-
+    <div class="p-4">
+        {% include 'includes/pagination.html' %}
+    </div>
     <style>
         .button-container{
             display:inline-block;

@@ -23,7 +23,7 @@ import json
 
 class JobType(models.Model):
     name = models.CharField(
-        verbose_name=_("Name"),
+        verbose_name=_("Job name"),
         help_text=_("Enter here job name."),
         max_length=100,
         )
@@ -231,7 +231,7 @@ class Order(models.Model):
     work_type = models.ManyToManyField(
         to=JobType,
         verbose_name=_("Job"),
-        help_text=_("Select the job for this client here."),
+        help_text=_("Select the job for this order here."),
         )
     booking_date = models.DateTimeField(
         verbose_name=_("Date"),

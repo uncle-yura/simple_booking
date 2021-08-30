@@ -133,7 +133,7 @@ function drawNewEvent(position_start) {
 function drawTimetable(date) {
     let currentDate = new Date(date);
 
-    $("#id_timetable_header").html("Booking on " + currentDate.toLocaleDateString());
+    $("#id_timetable_header").html(getLocalText('booking') + currentDate.toLocaleDateString());
     $("#id_timetable_header").attr("currentDate",date);
     selectedDayEventsObjList = []
     $("#id_timetable_events").html("");

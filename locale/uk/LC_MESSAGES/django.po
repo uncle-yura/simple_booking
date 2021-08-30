@@ -1,0 +1,2331 @@
+# Django Simple Booking Project.
+# Copyright (c) 2021 uncle-yura
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <uncle-yura@tuta.io>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-30 13:34+0300\n"
+"PO-Revision-Date: 2021-08-30 10:36\n"
+"Last-Translator: uncle-yura <uncle-yura@tuta.io>\n"
+"Language-Team: Ukrainian\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+
+
+#: .\base\templates\base\delete_user.html:7
+msgid "Delete account"
+msgstr "Видалити обліковий запис"
+
+#: .\base\templates\base\delete_user.html:12
+msgid "Are you sure you want to delete your account?"
+msgstr "Ви впевнені, що хочете видалити свій обліковий запис?"
+
+#: .\base\templates\base\delete_user.html:14
+#: .\booking\templates\booking\orders_list_user.html:28
+#: .\booking\templates\booking\update_order.html:32
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: .\base\templates\base\index.html:16
+msgid "Read more ..."
+msgstr "Читати далі ..."
+
+#: .\base\templates\base\index.html:23 .\base\templates\base\index.html:142
+#: .\base\templates\base\index.html:184 .\templates\includes\pagination.html:8
+msgid "Previous"
+msgstr "Попереднє"
+
+#: .\base\templates\base\index.html:27 .\base\templates\base\index.html:146
+#: .\base\templates\base\index.html:188 .\templates\includes\pagination.html:14
+msgid "Next"
+msgstr "Далі"
+
+#: .\base\templates\base\index.html:37
+msgid "About us"
+msgstr "Про нас"
+
+#: .\base\templates\base\index.html:50
+msgid "Popular job:"
+msgstr "Популярна робота:"
+
+#: .\base\templates\base\index.html:63
+msgid "Cost:"
+msgstr "Вартість:"
+
+#: .\base\templates\base\index.html:63
+msgid "from"
+msgstr "від"
+
+#: .\base\templates\base\index.html:63 .\base\templates\base\index.html:100
+msgid "to"
+msgstr "по"
+
+#: .\base\templates\base\index.html:69
+msgid "View all prices"
+msgstr "Переглянути всі ціни"
+
+#: .\base\templates\base\index.html:72 .\templates\includes\navbar.html:72
+#: .\templates\includes\navbar.html:97
+msgid "Book a service"
+msgstr "Запис"
+
+#: .\base\templates\base\index.html:79 .\base\templates\base\index.html:117
+msgid "Our prices"
+msgstr "Наші ціни"
+
+#: .\base\templates\base\index.html:80 .\base\templates\base\index.html:107
+#: .\booking\templates\booking\new_order.html:62
+#: .\booking\templates\booking\update_order.html:56
+#: .\booking\templates\booking\update_order.html:64
+#: .\booking\templates\booking\user.html:95
+#: .\booking\templates\booking\user.html:108
+#: .\booking\templates\booking\user.html:120
+#: .\booking\templates\booking\user.html:132
+#: .\booking\templates\booking\view_user.html:56
+#: .\booking\templates\booking\view_user.html:68
+msgid "Close"
+msgstr "Закрити"
+
+#: .\base\templates\base\index.html:89 .\blog\models.py:11
+#: .\booking\templates\booking\user.html:19
+#: .\booking\templates\booking\view_user.html:16 .\contact\models.py:9
+#: .\contact\models.py:36 .\venv\Lib\site-packages\extra_settings\models.py:91
+msgid "Name"
+msgstr "Ім'я"
+
+#: .\base\templates\base\index.html:90 .\booking\models.py:37
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2186
+msgid "Time"
+msgstr "Час"
+
+#: .\base\templates\base\index.html:91 .\booking\models.py:208
+#: .\booking\templates\booking\price_list_public.html:13
+#: .\booking\templates\booking\price_list_user.html:13
+msgid "Price"
+msgstr "Ціна"
+
+#: .\base\templates\base\index.html:100
+msgid "From"
+msgstr "Від"
+
+#: .\base\templates\base\index.html:120
+msgid "There are no any prices."
+msgstr "Немає цін."
+
+#: .\base\templates\base\index.html:153
+msgid "Our masters"
+msgstr "Наші майстри"
+
+#: .\base\templates\base\index.html:156
+msgid "There are no any master."
+msgstr "Немає жодного майстра."
+
+#: .\base\templates\base\index.html:165
+msgid "How to find us"
+msgstr "Як нас знайти"
+
+#: .\base\templates\base\index.html:167
+msgid "<div class='card-body'>No way</div>"
+msgstr "<div class='card-body'>Немає шляху</div>"
+
+#: .\base\templates\base\index.html:177
+msgid "Reviews"
+msgstr "Відгуки"
+
+#: .\base\templates\base\index.html:223
+msgid "There are no any review."
+msgstr "Немає жодного відгуку."
+
+#: .\base\templates\base\register.html:7 .\templates\includes\footer.html:38
+msgid "Register"
+msgstr "Зареєструватися"
+
+#: .\base\templates\base\register.html:18
+msgid "If you already have an account, you can"
+msgstr "Якщо у вас вже є аккаунт, ви можете"
+
+#: .\base\templates\base\register.html:18
+msgid "login"
+msgstr "вхід"
+
+#: .\base\templates\base\register.html:18
+msgid "here"
+msgstr "сюди"
+
+#: .\base\views.py:38
+msgid "Click the link in the email message to confirm your email address."
+msgstr "Перейдіть за посиланням у повідомленні, щоб підтвердити свою електронну адресу."
+
+#: .\base\views.py:41
+msgid "Unsuccessful registration. Invalid information."
+msgstr "Невдала реєстрація. Невірна інформація."
+
+#: .\blog\models.py:12
+msgid "Enter here social share name."
+msgstr "Введіть тут ім'я соціального контакту."
+
+#: .\blog\models.py:16 .\contact\models.py:14
+msgid "Icon"
+msgstr "Іконка"
+
+#: .\blog\models.py:17
+msgid "Enter here icon name from fontawesome (Example: fab fa-facebook)."
+msgstr "Введіть тут назву значка з fontawesome (Приклад: fab fa-facebook)."
+
+#: .\blog\models.py:22 .\contact\models.py:20
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2115
+msgid "Text"
+msgstr "Текст"
+
+#: .\blog\models.py:23
+msgid "Enter here the text to be displayed in the link (Example: &t=New post )."
+msgstr "Введіть тут текст, який буде відображатися в посиланні (Наприклад: &t=New post )."
+
+#: .\blog\models.py:27 .\contact\models.py:26
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2312
+msgid "URL"
+msgstr "URL-адреса"
+
+#: .\blog\models.py:28
+msgid "Enter here link to social share account. (Example: https://www.facebook.com/sharer/sharer.php?u=)"
+msgstr "Введіть посилання на аккаунт соціальних мереж. (Наприклад: https://www.facebook.com/sharer/sharer.php?u=)"
+
+#: .\blog\models.py:37
+msgid "Tag"
+msgstr "Тег"
+
+#: .\blog\models.py:38
+msgid "Enter here the tag name."
+msgstr "Введіть тут назву мітки."
+
+#: .\blog\models.py:42 .\blog\models.py:76
+msgid "Link"
+msgstr "Посилання"
+
+#: .\blog\models.py:43
+msgid "Enter here the link of tag (Example: photos)"
+msgstr "Введіть тут посилання на мітку (Приклад: photos)"
+
+#: .\blog\models.py:56 .\gallery\models.py:10
+msgid "Title"
+msgstr "Заголовок"
+
+#: .\blog\models.py:57
+msgid "Enter here the article title."
+msgstr "Введіть тут назву статті."
+
+#: .\blog\models.py:61 .\gallery\models.py:15
+msgid "Date published"
+msgstr "Дата публікації"
+
+#: .\blog\models.py:62 .\gallery\models.py:16
+msgid "Enter here thr published date."
+msgstr "Введіть тут дату публікації."
+
+#: .\blog\models.py:66
+msgid "Cover"
+msgstr "Обкладинка"
+
+#: .\blog\models.py:67
+msgid "Upload article cover here."
+msgstr "Завантажити обкладинку статті тут."
+
+#: .\blog\models.py:72
+msgid "Article"
+msgstr "Стаття"
+
+#: .\blog\models.py:73
+msgid "Enter here the article content."
+msgstr "Введіть тут вміст статті."
+
+#: .\blog\models.py:77
+msgid "Enter here the link of article (Example: happy_new_post)."
+msgstr "Введіть тут посилання на статтю (Наприклад: happy_new_post)."
+
+#: .\blog\models.py:82
+msgid "Tags"
+msgstr "Мітки"
+
+#: .\blog\models.py:83
+msgid "Select tags for this post."
+msgstr "Обрати мітки для цього повідомлення."
+
+#: .\blog\models.py:87
+msgid "Top"
+msgstr "Топ"
+
+#: .\blog\models.py:88
+msgid "Activate if you want to pin this post on the main page."
+msgstr "Активуйте, якщо ви хочете закріпити цей запис на головній сторінці."
+
+#: .\blog\templates\blog\article.html:23
+msgid "Share"
+msgstr "Поширити"
+
+#: .\blog\templates\blog\article.html:27
+msgid "Share with"
+msgstr "Поширити з"
+
+#: .\blog\templates\blog\article_list.html:6
+msgid "Articles"
+msgstr "Статті"
+
+#: .\blog\templates\blog\article_list.html:9
+msgid "Create post"
+msgstr "Створити"
+
+#: .\blog\templates\blog\article_list.html:26
+msgid "Edit post"
+msgstr "Редагувати"
+
+#: .\blog\templates\blog\article_list.html:30
+msgid "Delete post"
+msgstr "Видалити"
+
+#: .\blog\templates\blog\article_list.html:47
+msgid "View post"
+msgstr "Переглянути"
+
+#: .\blog\views.py:39
+msgid "New article"
+msgstr "Нова стаття"
+
+#: .\blog\views.py:65
+msgid "Update article:"
+msgstr "Оновити статтю:"
+
+#: .\blog\views.py:80
+msgid "Delete article"
+msgstr "Видалити статтю"
+
+#: .\booking\admin.py:33 .\booking\templates\booking\view_user.html:11
+msgid "Profile"
+msgstr "Анкета"
+
+#: .\booking\decorators.py:23
+msgid "You have too many booked orders."
+msgstr "У вас занадто багато замовлень."
+
+#: .\booking\forms.py:124
+msgid "Enter your first name here."
+msgstr "Введіть Ваше ім'я тут."
+
+#: .\booking\forms.py:125
+msgid "Enter your last name here."
+msgstr "Введіть Ваше прізвище тут."
+
+#: .\booking\forms.py:126 .\contact\models.py:57
+msgid "Enter your email address here."
+msgstr "Введіть адресу Вашої електронної пошти."
+
+#: .\booking\models.py:26
+msgid "Job name"
+msgstr "Назва"
+
+#: .\booking\models.py:27
+msgid "Enter here job name."
+msgstr "Введіть тут назву роботи."
+
+#: .\booking\models.py:31
+msgid "Description"
+msgstr "Опис"
+
+#: .\booking\models.py:32
+msgid "Enter here the text to be displayed as description of job. "
+msgstr "Введіть тут текст, який буде відображатися як опис роботи. "
+
+#: .\booking\models.py:38
+msgid "Enter here the time it takes for this job."
+msgstr "Введіть тут час, необхідний для цієї роботи."
+
+#: .\booking\models.py:42 .\gallery\models.py:19
+#: .\venv\Lib\site-packages\django\db\models\fields\files.py:375
+msgid "Image"
+msgstr "Зображення"
+
+#: .\booking\models.py:43
+msgid "Upload your cover image here."
+msgstr "Завантажте зображення для обкладинки тут."
+
+#: .\booking\models.py:58
+msgid "All"
+msgstr "Всі"
+
+#: .\booking\models.py:59 .\booking\templates\booking\user.html:41
+msgid "My clients"
+msgstr "Мої клієнти"
+
+#: .\booking\models.py:60
+msgid "Verified clients"
+msgstr "Перевірені клієнти"
+
+#: .\booking\models.py:61
+msgid "Nobody"
+msgstr "Ніхто"
+
+#: .\booking\models.py:69
+msgid "Phone number must be entered in the format: '+380123456789'."
+msgstr "Номер телефону повинен бути введений в форматі: '+380123456789'."
+
+#: .\booking\models.py:73
+msgid "Profile photo"
+msgstr "Фотографія профілю"
+
+#: .\booking\models.py:74
+msgid "Upload your avatar image here."
+msgstr "Завантажити ваш аватар."
+
+#: .\booking\models.py:80
+msgid "Phone"
+msgstr "Телефон"
+
+#: .\booking\models.py:81
+msgid "Enter your phone number here (Example: +380123456789)"
+msgstr "Введіть тут Ваш номер телефону (приклад: +380123456789)"
+
+#: .\booking\models.py:87 .\booking\models.py:242
+msgid "Comment"
+msgstr "Коментар"
+
+#: .\booking\models.py:88
+msgid "Enter the text about the profile owner here."
+msgstr "Введіть текст про власника профілю тут."
+
+#: .\booking\models.py:93
+msgid "Discount"
+msgstr "Знижка"
+
+#: .\booking\models.py:94
+msgid "Enter the profile discount value here."
+msgstr "Введіть тут значення знижки для профілю."
+
+#: .\booking\models.py:101 .\booking\templates\booking\view_user.html:42
+msgid "Masters"
+msgstr "Майстри"
+
+#: .\booking\models.py:102
+msgid "Your masters listed here."
+msgstr "Тут перераховані ваші майстри."
+
+#: .\booking\models.py:108
+msgid "Clients"
+msgstr "Клієнти"
+
+#: .\booking\models.py:109
+msgid "Your clients listed here."
+msgstr "Тут перераховані Ваші клієнти."
+
+#: .\booking\models.py:114
+msgid "GCalendar link"
+msgstr "Посилання на GCalendar"
+
+#: .\booking\models.py:115
+msgid "Enter your google calendar link here."
+msgstr "Введіть тут посилання на Ваш Google календар."
+
+#: .\booking\models.py:120 .\booking\templates\booking\user.html:44
+msgid "Timetable"
+msgstr "Розклад"
+
+#: .\booking\models.py:121
+msgid "Select your current service booking mode."
+msgstr "Оберіть свій поточний режим бронювання послуг."
+
+#: .\booking\models.py:127
+msgid "Booking delay"
+msgstr "Затримка бронювання"
+
+#: .\booking\models.py:128
+msgid "Enter the minimum delay for booking today."
+msgstr "Введіть мінімальну затримку для бронювання на сьогодні."
+
+#: .\booking\models.py:132
+msgid "Booking range"
+msgstr "Діапазон бронювання"
+
+#: .\booking\models.py:133
+msgid "Enter how many days in advance the booking can be made."
+msgstr "Введіть скільки днів заздалегідь можна зробити бронювання."
+
+#: .\booking\models.py:138
+#: .\booking\templates\booking\clients_list_user.html:38 .\booking\views.py:377
+msgid "Black list"
+msgstr "Чорний список"
+
+#: .\booking\models.py:139
+msgid "Select users who cannot book with you."
+msgstr "Виберіть користувачів, які не зможуть у Вас забронювати."
+
+#: .\booking\models.py:144
+#: .\booking\templates\booking\clients_list_user.html:37 .\booking\views.py:356
+msgid "White list"
+msgstr "Білий список"
+
+#: .\booking\models.py:145
+msgid "Select users who can always book with you."
+msgstr "Виберіть користувачів, які завжди зможуть забронювати у Вас."
+
+#: .\booking\models.py:195
+msgid "Owner"
+msgstr "Власник"
+
+#: .\booking\models.py:196
+msgid "Select the pricelist owner here."
+msgstr "Виберіть власника прайс-листа тут."
+
+#: .\booking\models.py:202 .\booking\models.py:233
+#: .\booking\templates\booking\price_list_public.html:12
+#: .\booking\templates\booking\price_list_user.html:12
+msgid "Job"
+msgstr "Робота"
+
+#: .\booking\models.py:203
+msgid "Select the job here."
+msgstr "Оберіть роботи тут."
+
+#: .\booking\models.py:209
+msgid "Enter the price for this job here."
+msgstr "Введіть ціну для цієї роботи тут."
+
+#: .\booking\models.py:220
+msgid "Active"
+msgstr "Активно"
+
+#: .\booking\models.py:221
+msgid "Canceled"
+msgstr "Скасовано"
+
+#: .\booking\models.py:225
+#: .\booking\templates\booking\clients_list_user.html:12
+#: .\booking\templates\booking\orders_list_master.html:12
+msgid "Client"
+msgstr "Клієнт"
+
+#: .\booking\models.py:226
+msgid "Select the client here."
+msgstr "Виберіть клієнта тут."
+
+#: .\booking\models.py:234
+#| msgid "Select the job for this client here."
+msgid "Select the job for this order here."
+msgstr "Виберіть завдання для цього замовлення тут."
+
+#: .\booking\models.py:237
+#: .\booking\templates\booking\orders_list_master.html:13
+#: .\booking\templates\booking\orders_list_user.html:14
+msgid "Date"
+msgstr "Дата"
+
+#: .\booking\models.py:238
+msgid "Select your booking date here."
+msgstr "Оберіть дату бронювання тут."
+
+#: .\booking\models.py:243
+msgid "Enter a comment for your booking here."
+msgstr "Введіть свій коментар до вашого бронювання тут."
+
+#: .\booking\models.py:249 .\booking\templates\booking\orders_list_user.html:13
+msgid "Master"
+msgstr "Майстер"
+
+#: .\booking\models.py:250
+msgid "Select the master here."
+msgstr "Виберіть майстра тут."
+
+#: .\booking\models.py:257 .\booking\templates\booking\orders_list_user.html:15
+msgid "State"
+msgstr "Стан"
+
+#: .\booking\models.py:258
+msgid "Select your booking status here."
+msgstr "Виберіть статус бронювання тут."
+
+#: .\booking\models.py:264
+msgid "Event"
+msgstr "Подія"
+
+#: .\booking\models.py:265
+msgid "Google calendar event ID."
+msgstr "Подія Google календаря."
+
+#: .\booking\templates\booking\clients_list_user.html:6
+msgid "Client list"
+msgstr "Список клієнтів"
+
+#: .\booking\templates\booking\clients_list_user.html:13
+msgid "Last action"
+msgstr "Остання дія"
+
+#: .\booking\templates\booking\clients_list_user.html:14
+#: .\booking\templates\booking\orders_list_master.html:14
+#: .\booking\templates\booking\orders_list_user.html:16
+#: .\booking\templates\booking\price_list_user.html:14
+msgid "Action"
+msgstr "Дія"
+
+#: .\booking\templates\booking\clients_list_user.html:23
+#: .\booking\templates\booking\orders_list_master.html:23
+#: .\booking\templates\booking\orders_list_user.html:30
+msgid "View"
+msgstr "Дивитись"
+
+#: .\booking\templates\booking\clients_list_user.html:33
+msgid "There are no clients."
+msgstr "Немає клієнтів."
+
+#: .\booking\templates\booking\clients_list_user.html:41
+#: .\booking\templates\booking\orders_list_master.html:38
+#: .\booking\templates\booking\orders_list_user.html:45
+#: .\booking\templates\booking\price_list_user.html:41
+#: .\booking\templates\booking\view_order.html:36
+#: .\booking\templates\booking\view_user.html:77
+#: .\gallery\templates\gallery\photo.html:17 .\templates\delete_form.html:14
+#: .\templates\update_form.html:15
+msgid "Back"
+msgstr "Назад"
+
+#: .\booking\templates\booking\new_order.html:10
+msgid "New order"
+msgstr "Нове замовлення"
+
+#: .\booking\templates\booking\new_order.html:29
+#: .\booking\templates\booking\update_order.html:10
+#: .\booking\templates\booking\view_order.html:9
+#: .\venv\Lib\site-packages\django\forms\formsets.py:405
+#: .\venv\Lib\site-packages\django\forms\formsets.py:412
+msgid "Order"
+msgstr "Замовлення"
+
+#: .\booking\templates\booking\new_order.html:41
+#: .\booking\templates\booking\update_order.html:43
+msgid "Loading..."
+msgstr "Завантажується..."
+
+#: .\booking\templates\booking\orders_list_master.html:6
+#: .\booking\templates\booking\orders_list_user.html:7
+msgid "Orders list"
+msgstr "Список замовлень"
+
+#: .\booking\templates\booking\orders_list_master.html:33
+#: .\booking\templates\booking\orders_list_user.html:40
+msgid "There are no orders."
+msgstr "Нема замовлень."
+
+#: .\booking\templates\booking\orders_list_user.html:27
+#: .\booking\templates\booking\price_list_user.html:23
+#: .\gallery\templates\gallery\photo_list.html:27
+msgid "Edit"
+msgstr "Редагувати"
+
+#: .\booking\templates\booking\price_list_public.html:7
+msgid "Price for"
+msgstr "Вартість для"
+
+#: .\booking\templates\booking\price_list_public.html:29
+#: .\booking\templates\booking\price_list_user.html:34
+msgid "There are no prices."
+msgstr "Немає цін."
+
+#: .\booking\templates\booking\price_list_user.html:6
+msgid "Price list"
+msgstr "Прайс-лист"
+
+#: .\booking\templates\booking\price_list_user.html:24
+#: .\gallery\templates\gallery\photo_list.html:31
+#: .\templates\delete_form.html:13
+#: .\venv\Lib\site-packages\django\forms\formsets.py:417
+msgid "Delete"
+msgstr "Видалити"
+
+#: .\booking\templates\booking\price_list_user.html:37
+msgid "Add"
+msgstr "Додати"
+
+#: .\booking\templates\booking\price_list_user.html:38
+msgid "Share link"
+msgstr "Поширити посилання"
+
+#: .\booking\templates\booking\update_order.html:31
+#: .\templates\update_form.html:14
+msgid "Save"
+msgstr "Зберегти"
+
+#: .\booking\templates\booking\update_order.html:42
+msgid "You have not chosen a day and time."
+msgstr "Ви не обрали день і час."
+
+#: .\booking\templates\booking\user.html:11
+msgid "Hello"
+msgstr "Привіт"
+
+#: .\booking\templates\booking\user.html:28
+msgid "Delete profile"
+msgstr "Видалити профіль"
+
+#: .\booking\templates\booking\user.html:29
+#: .\booking\templates\booking\user.html:61
+#: .\booking\templates\booking\user.html:94
+msgid "Edit Profile"
+msgstr "Редагувати профіль"
+
+#: .\booking\templates\booking\user.html:37
+msgid "Master profile"
+msgstr "Майстер-профіль"
+
+#: .\booking\templates\booking\user.html:40
+msgid "My prices"
+msgstr "Мої ціни"
+
+#: .\booking\templates\booking\user.html:42
+msgid "My jobs"
+msgstr "Мої роботи"
+
+#: .\booking\templates\booking\user.html:52
+msgid "Service account:"
+msgstr "Обліковий запис сервісу:"
+
+#: .\booking\templates\booking\user.html:53
+msgid "Copy link"
+msgstr "Скопіювати"
+
+#: .\booking\templates\booking\user.html:55
+msgid "Toggle Dropdown"
+msgstr "Переключити випадаючий список"
+
+#: .\booking\templates\booking\user.html:69
+msgid "Your orders"
+msgstr "Ваші замовлення"
+
+#: .\booking\templates\booking\user.html:72
+msgid "My orders"
+msgstr "Мої замовлення"
+
+#: .\booking\templates\booking\user.html:74
+msgid "Your masters:"
+msgstr "Ваші майстри:"
+
+#: .\booking\templates\booking\user.html:82
+msgid "You haven't had a single master yet."
+msgstr "У вас ще немає жодного майстра."
+
+#: .\booking\templates\booking\user.html:106
+#: .\booking\templates\booking\user.html:130
+#: .\booking\templates\booking\view_user.html:66
+msgid "Save changes"
+msgstr "Зберегти зміни"
+
+#: .\booking\templates\booking\user.html:119
+msgid "Edit Master Profile"
+msgstr "Редагувати майстер-профіль"
+
+#: .\booking\templates\booking\view_user.html:34
+msgid "Add discount"
+msgstr "Додати знижку"
+
+#: .\booking\templates\booking\view_user.html:55
+msgid "Edit Profile Discount"
+msgstr "Редагувати знижку"
+
+#: .\booking\templatetags\time_extras.py:21
+msgid "{} h et {} min"
+msgstr "{} г, {} зв"
+
+#: .\booking\templatetags\time_extras.py:24
+msgid "{} h"
+msgstr "{} г"
+
+#: .\booking\templatetags\time_extras.py:26
+msgid "{} min"
+msgstr "{} хв"
+
+#: .\booking\views.py:38
+msgid "Your profile was successfully updated!"
+msgstr "Ваш профіль було успішно оновлено!"
+
+#: .\booking\views.py:42
+msgid "Your master profile was successfully updated!"
+msgstr "Ваш головний профіль було успішно оновлено!"
+
+#: .\booking\views.py:44
+msgid "Unable to complete request"
+msgstr "Неможливо завершити запит"
+
+#: .\booking\views.py:64
+msgid "Master not selected."
+msgstr "Майстра не вибрано."
+
+#: .\booking\views.py:97
+msgid "This master has closed booking access."
+msgstr "Цей майстер закрив доступ до бронювання."
+
+#: .\booking\views.py:134
+msgid "It is impossible to get a reservation from this master."
+msgstr "Неможливо забронювати у цього майстра."
+
+#: .\booking\views.py:184
+msgid "Server connection error, unable to add new event."
+msgstr "Помилка з'єднання з сервером, не вдалося додати нову подію."
+
+#: .\booking\views.py:191
+msgid "New order created!"
+msgstr "Нове замовлення створено!"
+
+#: .\booking\views.py:255
+msgid "Server connection error, unable to update event."
+msgstr "Помилка з'єднання з сервером, неможливо оновити подію."
+
+#: .\booking\views.py:259
+msgid "Order data updated!"
+msgstr "Дані замовлення оновлено!"
+
+#: .\booking\views.py:265
+msgid "This event canceled by master."
+msgstr "Ця подія скасована майстром."
+
+#: .\booking\views.py:277
+msgid "Cancel order"
+msgstr "Скасувати замовлення"
+
+#: .\booking\views.py:291
+msgid "Server connection error, unable to delete event."
+msgstr "Помилка з'єднання з сервером, неможливо видалити подію."
+
+#: .\booking\views.py:296
+msgid "Order canceled."
+msgstr "Замовлення скасовано."
+
+#: .\booking\views.py:388
+msgid "It is impossible to blacklist a client while he has an open order."
+msgstr "Не можливо додати клієнта до чорного списку, поки у нього є відкрите замовлення."
+
+#: .\booking\views.py:435
+msgid "Add price"
+msgstr "Додати ціну"
+
+#: .\booking\views.py:443
+msgid "Price created"
+msgstr "Ціну створено"
+
+#: .\booking\views.py:446 .\booking\views.py:500
+msgid "Price already exist"
+msgstr "Ціна вже існує"
+
+#: .\booking\views.py:459
+msgid "Delete price"
+msgstr "Видалити ціну"
+
+#: .\booking\views.py:463
+msgid "Price deleted"
+msgstr "Ціну видалено"
+
+#: .\booking\views.py:479
+msgid "Update price:"
+msgstr "Оновити ціну:"
+
+#: .\booking\views.py:497
+msgid "Price updated"
+msgstr "Ціну оновлено"
+
+#: .\contact\forms.py:21
+msgid "Message from {}: {}"
+msgstr "Повідомлення від {}: {}"
+
+#: .\contact\models.py:10
+msgid "Enter here the social contact name."
+msgstr "Введіть тут ім'я контакту соціальних мереж."
+
+#: .\contact\models.py:15
+msgid "Enter here icon name from fontawesome (Example: fab fa-instagram)."
+msgstr "Введіть тут назву значка з fontawesome (Приклад: fab fa-instagram)."
+
+#: .\contact\models.py:21
+msgid "Enter here the text to be displayed in the link."
+msgstr "Введіть тут текст, який буде відображатися в посиланні."
+
+#: .\contact\models.py:27
+msgid "Enter here link to social contact account."
+msgstr "Введіть посилання на обліковий запис соцконтактів."
+
+#: .\contact\models.py:37
+msgid "Enter here the contact name."
+msgstr "Введіть тут ім'я контакту."
+
+#: .\contact\models.py:41 .\contact\templates\contact\contact.html:27
+#: .\templates\includes\navbar.html:73
+msgid "Contact"
+msgstr "Контакт"
+
+#: .\contact\models.py:42
+msgid "Enter the content of the contact block here."
+msgstr "Введіть вміст блоку контактів."
+
+#: .\contact\models.py:45
+msgid "Short info"
+msgstr "Коротка інформація"
+
+#: .\contact\models.py:46
+msgid "Enter the content of the short contact block here."
+msgstr "Введіть вміст короткого блоку контактів."
+
+#: .\contact\models.py:56
+msgid "EMail"
+msgstr "Ел. пошта"
+
+#: .\contact\models.py:60
+msgid "Subject"
+msgstr "Тема"
+
+#: .\contact\models.py:61
+msgid "Enter the subject of your email here."
+msgstr "Введіть тут тему Вашого повідомлення."
+
+#: .\contact\models.py:65
+msgid "Message"
+msgstr "Повідомлення"
+
+#: .\contact\models.py:66
+msgid "Enter the message of your email here."
+msgstr "Введіть повідомлення Вашої електронного листа тут."
+
+#: .\contact\templates\contact\contact.html:20
+msgid "There are no contacts."
+msgstr "Контактів немає."
+
+#: .\contact\templates\contact\contact.html:34
+msgid "Send"
+msgstr "Надіслати"
+
+#: .\contact\views.py:22
+msgid "Message sent"
+msgstr "Повідомлення надіслано"
+
+#: .\contact\views.py:25
+msgid "Message not sent, please try again later."
+msgstr "Повідомлення не надіслано, спробуйте ще раз пізніше."
+
+#: .\gallery\models.py:11
+msgid "Enter here the photo title."
+msgstr "Введіть тут назву фотографії."
+
+#: .\gallery\models.py:20
+msgid "Upload your image here."
+msgstr "Завантажте ваше зображення тут."
+
+#: .\gallery\templates\gallery\photo_list.html:6
+msgid "Photo gallery"
+msgstr "Галерея"
+
+#: .\gallery\templates\gallery\photo_list.html:9
+msgid "Add photo"
+msgstr "Додати фото"
+
+#: .\gallery\templates\gallery\photo_list.html:36
+msgid "No image available."
+msgstr "Немає зображень."
+
+#: .\gallery\views.py:26
+msgid "New photo"
+msgstr "Нове фото"
+
+#: .\gallery\views.py:39
+msgid "Update photo"
+msgstr "Оновити фото"
+
+#: .\gallery\views.py:57
+msgid "Delete photo"
+msgstr "Видалити фото"
+
+#: .\simple_booking\settings.py:198
+msgid "English"
+msgstr "Англійська"
+
+#: .\simple_booking\settings.py:199
+msgid "Ukrainian"
+msgstr "Українська"
+
+#: .\simple_booking\settings.py:200
+msgid "Russian"
+msgstr "Російська"
+
+#: .\templates\delete_form.html:11
+msgid "Are you sure you want to delete"
+msgstr "Ви впевнені, що бажаєте видалити"
+
+#: .\templates\includes\footer.html:8
+msgid "Contact Us"
+msgstr "Зв'язок"
+
+#: .\templates\includes\footer.html:16
+msgid "Follow Us"
+msgstr "Стежте за нами"
+
+#: .\templates\includes\footer.html:32
+msgid "Account"
+msgstr "Обліковий запис"
+
+#: .\templates\includes\footer.html:34
+msgid "Logout"
+msgstr "Вийти"
+
+#: .\templates\includes\footer.html:37 .\templates\registration\login.html:7
+#: .\templates\registration\login.html:14
+msgid "Login"
+msgstr "Вхід"
+
+#: .\templates\includes\locale.html:8
+msgid "MON,TUE,WEN,THU,FRI,SAT,SUN"
+msgstr "ПН,ВТ,СР,ЧТ,ПТ,СБ,НД"
+
+#: .\templates\includes\locale.html:9
+msgid "January,February,March,April,May,June,July,August,September,October,November,December"
+msgstr "Січень,Лютий,Березень,Квітень,Травень,Червень,Липень,Серпень,Вересень,Жовтень,Листопад,Грудень"
+
+#: .\templates\includes\locale.html:10
+#, python-brace-format
+msgid "From ${args[0]} to ${args[1]}"
+msgstr "З ${args[0]} до ${args[1]}"
+
+#: .\templates\includes\locale.html:11
+#, python-brace-format
+msgid "Busy from ${args[0]} to ${args[1]}"
+msgstr "Зайнято з ${args[0]} до ${args[1]}"
+
+#: .\templates\includes\locale.html:12
+msgid "Total price:"
+msgstr "Загальна ціна:"
+
+#: .\templates\includes\locale.html:13
+#, python-brace-format
+msgid "Total time: ${args[0]} min"
+msgstr "Загальний час: ${args[0]} хв."
+
+#: .\templates\includes\locale.html:14
+msgid "Date:"
+msgstr "Дата:"
+
+#: .\templates\includes\locale.html:15
+msgid "Select the master"
+msgstr "Виберіть майстра"
+
+#: .\templates\includes\locale.html:16
+msgid "Select a service"
+msgstr "Виберіть послугу"
+
+#: .\templates\includes\locale.html:17
+msgid "Choose time"
+msgstr "Виберіть час"
+
+#: .\templates\includes\locale.html:18
+msgid "Select a master to see his free days"
+msgstr "Виберіть виконавця, щоб побачити його вільні дні"
+
+#: .\templates\includes\locale.html:19
+msgid "You have not chosen a service."
+msgstr "Ви не вибрали послугу."
+
+#: .\templates\includes\locale.html:20
+msgid "Responce error."
+msgstr "Помилка відповіді."
+
+#: .\templates\includes\locale.html:22
+msgid "Booking on "
+msgstr "Запис на "
+
+#: .\templates\includes\navbar.html:64
+msgid "Menu"
+msgstr "Меню"
+
+#: .\templates\includes\navbar.html:67
+msgid "Home"
+msgstr "Головна"
+
+#: .\templates\includes\navbar.html:68
+msgid "Blog"
+msgstr "Блог"
+
+#: .\templates\includes\navbar.html:75
+msgid "Gallery"
+msgstr "Галерея"
+
+#: .\templates\includes\social_login.html:3
+msgid "Login with:"
+msgstr "Увійти з:"
+
+#: .\templates\registration\logged_out.html:7
+msgid "Logged out!"
+msgstr "Ви вийшли з системи!"
+
+#: .\templates\registration\logged_out.html:8
+msgid "Click here to login again."
+msgstr "Натисніть тут, щоб увійти знову."
+
+#: .\templates\registration\login.html:23
+msgid "Lost password?"
+msgstr "Забули пароль?"
+
+#: .\templates\registration\passsword_reset_email.html:2
+msgid "Someone asked for password reset for email"
+msgstr "Хтось просив скинути пароль для електронної пошти"
+
+#: .\templates\registration\passsword_reset_email.html:2
+msgid "Follow the link below:"
+msgstr "Перейдіть за посиланням нижче:"
+
+#: .\templates\registration\password_reset_complete.html:7
+msgid "The password has been changed!"
+msgstr "Пароль було змінено!"
+
+#: .\templates\registration\password_reset_complete.html:8
+msgid "Login again?"
+msgstr "Увійти знову?"
+
+#: .\templates\registration\password_reset_confirm.html:8
+msgid "Please enter (and confirm) your new password."
+msgstr "Будь ласка, введіть (і підтвердіть) ваш новий пароль."
+
+#: .\templates\registration\password_reset_confirm.html:15
+msgid "Change my password"
+msgstr "Змінити мій пароль"
+
+#: .\templates\registration\password_reset_confirm.html:18
+msgid "Password reset failed"
+msgstr "Не вдалося скинути пароль"
+
+#: .\templates\registration\password_reset_confirm.html:19
+msgid "The password reset link was invalid, possibly because it has already been used. Please request a new password reset."
+msgstr "Неприпустиме посилання для відновлення пароля, можливо тому, що воно вже використано. Будь-ласка, спробуйте запросити новий пароль ще раз."
+
+#: .\templates\registration\password_reset_done.html:7
+msgid "We've emailed you instructions for setting your password."
+msgstr "Ми надіслали вам інструкції для налаштування пароля."
+
+#: .\templates\registration\password_reset_done.html:8
+msgid "If they haven't arrived in a few minutes, check your spam folder."
+msgstr "Якщо вони не прибули через кілька хвилин, перевірте папку зі спамом."
+
+#: .\templates\registration\password_reset_form.html:7
+#: .\templates\registration\password_reset_form.html:14
+msgid "Reset password"
+msgstr "Скинути пароль"
+
+#: .\venv\Lib\site-packages\captcha\fields.py:26
+#: .\venv\Lib\site-packages\captcha\fields.py:27
+msgid "Error verifying reCAPTCHA, please try again."
+msgstr "Помилка перевірки reCAPTCHA, будь ласка, спробуйте ще раз."
+
+#: .\venv\Lib\site-packages\crispy_forms\tests\test_form_helper.py:129
+#: .\venv\Lib\site-packages\crispy_forms\tests\test_form_helper.py:139
+#: .\venv\Lib\site-packages\django\forms\fields.py:54
+msgid "This field is required."
+msgstr "Це поле є обов'язковим."
+
+#: .\venv\Lib\site-packages\crispy_forms\tests\test_layout.py:391
+msgid "i18n text"
+msgstr "i18n текст"
+
+#: .\venv\Lib\site-packages\crispy_forms\tests\test_layout.py:393
+msgid "i18n legend"
+msgstr "i18-н легенда"
+
+#: .\venv\Lib\site-packages\crispy_forms\tests\test_layout_objects.py:134
+#: .\venv\Lib\site-packages\django\core\validators.py:22
+msgid "Enter a valid value."
+msgstr "Введіть допустиме значення."
+
+#: .\venv\Lib\site-packages\django\contrib\messages\apps.py:7
+msgid "Messages"
+msgstr "Повідомлення"
+
+#: .\venv\Lib\site-packages\django\contrib\sitemaps\apps.py:8
+msgid "Site Maps"
+msgstr "Мапи сайту"
+
+#: .\venv\Lib\site-packages\django\contrib\staticfiles\apps.py:9
+msgid "Static Files"
+msgstr "Статичні Файли"
+
+#: .\venv\Lib\site-packages\django\contrib\syndication\apps.py:7
+msgid "Syndication"
+msgstr "Синдикація"
+
+#. Translators: String used to replace omitted page numbers in elided page
+#. range generated by paginators, e.g. [1, 2, '…', 5, 6, 7, '…', 9, 10].
+#: .\venv\Lib\site-packages\django\core\paginator.py:30
+msgid "…"
+msgstr "…"
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:51
+msgid "That page number is not an integer"
+msgstr "Цей номер сторінки не ціле число"
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:53
+msgid "That page number is less than 1"
+msgstr "Номер сторінки є меншим за 1"
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:58
+msgid "That page contains no results"
+msgstr "Ця сторінка не містить результатів"
+
+#: .\venv\Lib\site-packages\django\core\validators.py:93
+#: .\venv\Lib\site-packages\django\forms\fields.py:664
+msgid "Enter a valid URL."
+msgstr "Введіть припустиму URL-адресу."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:150
+msgid "Enter a valid integer."
+msgstr "Введіть допустиме ціле число."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:161
+msgid "Enter a valid email address."
+msgstr "Введіть дійсну адресу електронної пошти."
+
+#. Translators: "letters" means latin letters: a-z and A-Z.
+#: .\venv\Lib\site-packages\django\core\validators.py:262
+msgid "Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
+msgstr "Введіть припустимий \"slug\", що складається з букв, цифр, підкреслень або дефісів."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:269
+msgid "Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or hyphens."
+msgstr "Введіть припустимий \"slug\", що складається з літер Unicode, цифр, підкреслення або дефісів."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:278
+#: .\venv\Lib\site-packages\django\core\validators.py:298
+msgid "Enter a valid IPv4 address."
+msgstr "Введіть дійсну адресу IPv4."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:283
+#: .\venv\Lib\site-packages\django\core\validators.py:299
+msgid "Enter a valid IPv6 address."
+msgstr "Введіть дійсну адресу IPv6."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:293
+#: .\venv\Lib\site-packages\django\core\validators.py:297
+msgid "Enter a valid IPv4 or IPv6 address."
+msgstr "Введіть дійсну адресу IPv4 або IPv6."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:327
+msgid "Enter only digits separated by commas."
+msgstr "Введи лише символи, розділені комами."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:333
+#, python-format
+msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+msgstr "Переконайтеся, що це значення %(limit_value)s (це %(show_value)s)."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:366
+#, python-format
+msgid "Ensure this value is less than or equal to %(limit_value)s."
+msgstr "Переконайтеся, що це значення менше або дорівнює %(limit_value)s."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:375
+#, python-format
+msgid "Ensure this value is greater than or equal to %(limit_value)s."
+msgstr "Переконайтеся, що це значення більше або дорівнює %(limit_value)s."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:385
+#, python-format
+msgid "Ensure this value has at least %(limit_value)d character (it has %(show_value)d)."
+msgid_plural "Ensure this value has at least %(limit_value)d characters (it has %(show_value)d)."
+msgstr[0] "Переконайтеся, що це значення має принаймні %(limit_value)d символ (має %(show_value)d)."
+msgstr[1] "Переконайтеся, що це значення має принаймні %(limit_value)d символів (має %(show_value)d)."
+msgstr[2] "Переконайтеся, що це значення має принаймні %(limit_value)d символів (має %(show_value)d)."
+msgstr[3] "Переконайтеся, що це значення має принаймні %(limit_value)d символів (має %(show_value)d)."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:400
+#, python-format
+msgid "Ensure this value has at most %(limit_value)d character (it has %(show_value)d)."
+msgid_plural "Ensure this value has at most %(limit_value)d characters (it has %(show_value)d)."
+msgstr[0] "Переконайтеся, що це значення має не більше %(limit_value)d символів (має %(show_value)d)."
+msgstr[1] "Впевніться, що це значення має не більше %(limit_value)d символів (має %(show_value)d)."
+msgstr[2] "Впевніться, що це значення має не більше %(limit_value)d символів (має %(show_value)d)."
+msgstr[3] "Впевніться, що це значення має не більше %(limit_value)d символів (має %(show_value)d)."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:419
+#: .\venv\Lib\site-packages\django\forms\fields.py:292
+#: .\venv\Lib\site-packages\django\forms\fields.py:327
+msgid "Enter a number."
+msgstr "Введіть число."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:421
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit in total."
+msgid_plural "Ensure that there are no more than %(max)s digits in total."
+msgstr[0] "Переконайтеся, що в загальному не більше ніж %(max)s цифр."
+msgstr[1] "Переконайтеся, що в загальному, що не більше %(max)s цифр."
+msgstr[2] "Переконайтеся, що в загальному, що не більше %(max)s цифр."
+msgstr[3] "Переконайтеся, що в загальному, що не більше %(max)s цифр."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:426
+#, python-format
+msgid "Ensure that there are no more than %(max)s decimal place."
+msgid_plural "Ensure that there are no more than %(max)s decimal places."
+msgstr[0] "Переконайтеся, що не більше ніж %(max)s десяткового знаку."
+msgstr[1] "Переконайтеся, що тут не більше %(max)s десяткових знаків."
+msgstr[2] "Переконайтеся, що тут не більше %(max)s десяткових знаків."
+msgstr[3] "Переконайтеся, що тут не більше %(max)s десяткових знаків."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:431
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural "Ensure that there are no more than %(max)s digits before the decimal point."
+msgstr[0] "Переконайтеся, що до десяткової крапки немає не більше %(max)s цифр."
+msgstr[1] "Переконайтеся, що після десяткової крапки немає не більше %(max)s цифр."
+msgstr[2] "Переконайтеся, що після десяткової крапки немає не більше %(max)s цифр."
+msgstr[3] "Переконайтеся, що після десяткової крапки немає не більше %(max)s цифр."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:493
+#, python-format
+msgid "File extension “%(extension)s” is not allowed. Allowed extensions are: %(allowed_extensions)s."
+msgstr "Розширення файлу “%(extension)sне дозволено. Дозволені розширення: %(allowed_extensions)s."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:546
+msgid "Null characters are not allowed."
+msgstr "Нулі символи не допускаються."
+
+#: .\venv\Lib\site-packages\django\db\models\base.py:1197
+#: .\venv\Lib\site-packages\django\forms\models.py:768
+msgid "and"
+msgstr "та"
+
+#: .\venv\Lib\site-packages\django\db\models\base.py:1199
+#, python-format
+msgid "%(model_name)s with this %(field_labels)s already exists."
+msgstr "%(model_name)s з цим %(field_labels)s вже існує."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:100
+#, python-format
+msgid "Value %(value)r is not a valid choice."
+msgstr "Значення %(value)r не є допустимим вибором."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:101
+msgid "This field cannot be null."
+msgstr "Це поле не може бути null."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:102
+msgid "This field cannot be blank."
+msgstr "Це поле не може бути порожнім."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:103
+#, python-format
+msgid "%(model_name)s with this %(field_label)s already exists."
+msgstr "%(model_name)s з цим %(field_label)s вже існує."
+
+#. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
+#. Eg: "Title must be unique for pub_date year"
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:107
+#, python-format
+msgid "%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgstr "%(field_label)s має бути унікальним для %(date_field_label)s %(lookup_type)s."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:126
+#, python-format
+msgid "Field of type: %(field_type)s"
+msgstr "Поле типу: %(field_type)s"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:958
+#, python-format
+msgid "“%(value)s” value must be either True or False."
+msgstr "“%(value)s” значення повинна бути або True або False."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:959
+#, python-format
+msgid "“%(value)s” value must be either True, False, or None."
+msgstr "“%(value)s” значення має бути рівним True, False, або None."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:961
+msgid "Boolean (Either True or False)"
+msgstr "Логічне значення (True чи False)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1002
+#, python-format
+msgid "String (up to %(max_length)s)"
+msgstr "Рядок (до %(max_length)s)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1096
+msgid "Comma-separated integers"
+msgstr "Розділені комами цілі числа"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1145
+#, python-format
+msgid "“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD format."
+msgstr "“%(value)s” значення має неприпустимий формат дати. Це повинно бути у форматі YYYY-MM-DD."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1147
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1290
+#, python-format
+msgid "“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid date."
+msgstr "“%(value)s” значення має правильний формат (YYYY-MM-DD), але це неправильна дата."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1150
+msgid "Date (without time)"
+msgstr "Дата (без часу)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1288
+#, python-format
+msgid "“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ] format."
+msgstr "“%(value)s” значення має неприпустимий формат. Воно має бути у форматі РРРР-ММ-ДД HH:MM[:ss[.uuuuuu][TZ] формат."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1292
+#, python-format
+msgid "“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]) but it is an invalid date/time."
+msgstr "“%(value)sзначення має правильний формат (YYYY-MM-DD HH:MM[:ss[.uuuuuu][TZ]) але це неправильна дата/час."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1296
+msgid "Date (with time)"
+msgstr "Дата (з часом)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1444
+#, python-format
+msgid "“%(value)s” value must be a decimal number."
+msgstr "“%(value)s” значення має бути десятковим числом."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1446
+msgid "Decimal number"
+msgstr "Десяткове число"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1585
+#, python-format
+msgid "“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[.uuuuuu] format."
+msgstr "“%(value)sзначення має неправильний формат. Він повинен бути [DD] [[Г:]MM:]s[.uuuuuu] формат."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1588
+msgid "Duration"
+msgstr "Тривалість"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1638
+msgid "Email address"
+msgstr "Адреса електронної пошти"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1661
+msgid "File path"
+msgstr "Шлях до файлу"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1727
+#, python-format
+msgid "“%(value)s” value must be a float."
+msgstr "“%(value)s” значення має бути рівним платформі."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1729
+msgid "Floating point number"
+msgstr "Число з рухомою комою"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1767
+#, python-format
+msgid "“%(value)s” value must be an integer."
+msgstr "“%(value)s” значення має бути цілим числом."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1769
+msgid "Integer"
+msgstr "Ціле число"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1852
+msgid "Big (8 byte) integer"
+msgstr "Велике (8 байт) ціле число"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1867
+msgid "Small integer"
+msgstr "Мале ціле число"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1875
+msgid "IPv4 address"
+msgstr "Адреса IPv4"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1906
+msgid "IP address"
+msgstr "IP-адреса"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1986
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1987
+#, python-format
+msgid "“%(value)s” value must be either None, True or False."
+msgstr "“%(value)s” значення повинно бути або None, True або False."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1989
+msgid "Boolean (Either True, False or None)"
+msgstr "Логічний (або True, False або None )"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2043
+msgid "Positive big integer"
+msgstr "Додатне велике ціле число"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2056
+msgid "Positive integer"
+msgstr "Додатне ціле число"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2069
+msgid "Positive small integer"
+msgstr "Додатне маленьке ціле число"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2083
+#, python-format
+msgid "Slug (up to %(max_length)s)"
+msgstr "Мітка (до %(max_length)s)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2181
+#, python-format
+msgid "“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] format."
+msgstr "“%(value)s” значення має неприпустимий формат. Він повинен бути у форматі HH:MM[:ss[.uuuuuu]формат."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2183
+#, python-format
+msgid "“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an invalid time."
+msgstr "“%(value)sзначення має правильний формат (HH:MM[:s[.uuuuuu]]), але це неправильний час."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2334
+msgid "Raw binary data"
+msgstr "Сира двійкова інформація"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2399
+#, python-format
+msgid "“%(value)s” is not a valid UUID."
+msgstr "“%(value)s” не є дійсним UUID."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2401
+msgid "Universally unique identifier"
+msgstr "Універсально унікальний ідентифікатор"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\files.py:226
+msgid "File"
+msgstr "Файл"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\json.py:18
+msgid "A JSON object"
+msgstr "Об'єкт JSON"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\json.py:20
+msgid "Value must be valid JSON."
+msgstr "Значення має бути дійсним JSON."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:790
+#, python-format
+msgid "%(model)s instance with %(field)s %(value)r does not exist."
+msgstr "%(model)s примірник з %(field)s %(value)r не існує."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:792
+msgid "Foreign Key (type determined by related field)"
+msgstr "Зовнішній ключ (тип, визначений відповідним полем)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1045
+msgid "One-to-one relationship"
+msgstr "Один до одного відношення"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1099
+#, python-format
+msgid "%(from)s-%(to)s relationship"
+msgstr "%(from)s-%(to)s відносини"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1100
+#, python-format
+msgid "%(from)s-%(to)s relationships"
+msgstr "%(from)s-%(to)s відносини"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1142
+msgid "Many-to-many relationship"
+msgstr "Багато і багатьох відносин"
+
+#. Translators: If found as last label character, these punctuation
+#. characters will prevent the default label_suffix to be appended to the label
+#: .\venv\Lib\site-packages\django\forms\boundfield.py:150
+msgid ":?.!"
+msgstr ":?.!"
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:247
+msgid "Enter a whole number."
+msgstr "Введіть ціле число."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:391
+#: .\venv\Lib\site-packages\django\forms\fields.py:1132
+msgid "Enter a valid date."
+msgstr "Введіть дійсну дату."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:415
+#: .\venv\Lib\site-packages\django\forms\fields.py:1133
+msgid "Enter a valid time."
+msgstr "Введіть коректний час."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:443
+msgid "Enter a valid date/time."
+msgstr "Введіть коректну дату/час."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:477
+msgid "Enter a valid duration."
+msgstr "Введіть припустимий тривалість."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:478
+#, python-brace-format
+msgid "The number of days must be between {min_days} and {max_days}."
+msgstr "Кількість днів має бути між {min_days} і {max_days}."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:538
+msgid "No file was submitted. Check the encoding type on the form."
+msgstr "Файл не було надіслано. Перевірте тип кодування у формі."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:539
+msgid "No file was submitted."
+msgstr "Файл не надіслано."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:540
+msgid "The submitted file is empty."
+msgstr "Надісланий файл порожній."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:542
+#, python-format
+msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid_plural "Ensure this filename has at most %(max)d characters (it has %(length)d)."
+msgstr[0] "Переконайтеся, що це ім'я файлу має не більше %(max)d символів (воно має %(length)d)."
+msgstr[1] "Переконайтеся, що це ім'я файлу має не більше %(max)d символів (воно має %(length)d)."
+msgstr[2] "Переконайтеся, що це ім'я файлу має не більше %(max)d символів (воно має %(length)d)."
+msgstr[3] "Переконайтеся, що це ім'я файлу має не більше %(max)d символів (воно має %(length)d)."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:545
+msgid "Please either submit a file or check the clear checkbox, not both."
+msgstr "Будь ласка, або надішліть файл, або перевірте прапорець очищення не обох."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:606
+#: .\venv\Lib\site-packages\sorl\thumbnail\fields.py:43
+msgid "Upload a valid image. The file you uploaded was either not an image or a corrupted image."
+msgstr "Завантажити дійсне зображення. Файл завантажений не був ні зображенням, ні пошкодженим."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:768
+#: .\venv\Lib\site-packages\django\forms\fields.py:858
+#: .\venv\Lib\site-packages\django\forms\models.py:1309
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr "Виберіть дійсний вибір. %(value)s не є одним із доступних варіантів."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:859
+#: .\venv\Lib\site-packages\django\forms\fields.py:974
+#: .\venv\Lib\site-packages\django\forms\models.py:1308
+msgid "Enter a list of values."
+msgstr "Введіть список значень."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:975
+msgid "Enter a complete value."
+msgstr "Введіть повне значення."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1191
+msgid "Enter a valid UUID."
+msgstr "Введіть правильний UUID."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1221
+msgid "Enter a valid JSON."
+msgstr "Введіть правильний JSON."
+
+#. Translators: This is the default suffix added to form field labels
+#: .\venv\Lib\site-packages\django\forms\forms.py:76
+msgid ":"
+msgstr ":"
+
+#: .\venv\Lib\site-packages\django\forms\forms.py:203
+#, python-format
+msgid "(Hidden field %(name)s) %(error)s"
+msgstr "(Приховане поле %(name)s) %(error)s"
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:61
+#, python-format
+msgid "ManagementForm data is missing or has been tampered with. Missing fields: %(field_names)s. You may need to file a bug report if the issue persists."
+msgstr "Дані ManagementForm відсутні, або були приручені з відсутніми. Відсутні поля: %(field_names)s. Можливо, Вам доведеться подати звіт про помилку, якщо проблема повторюватиметься."
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:370
+#, python-format
+msgid "Please submit at most %d form."
+msgid_plural "Please submit at most %d forms."
+msgstr[0] "Будь ласка, відправте в принаймні %d форму."
+msgstr[1] "Будь ласка, надішліть не більше %d форм."
+msgstr[2] "Будь ласка, надішліть не більше %d форм."
+msgstr[3] "Будь ласка, надішліть не більше %d форм."
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:377
+#, python-format
+msgid "Please submit at least %d form."
+msgid_plural "Please submit at least %d forms."
+msgstr[0] "Будь ласка, надішліть принаймні %d форму."
+msgstr[1] "Будь ласка, надішліть принаймні %d форми."
+msgstr[2] "Будь ласка, надішліть принаймні %d форми."
+msgstr[3] "Будь ласка, надішліть принаймні %d форми."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:763
+#, python-format
+msgid "Please correct the duplicate data for %(field)s."
+msgstr "Виправте повторювані дані для %(field)s."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:767
+#, python-format
+msgid "Please correct the duplicate data for %(field)s, which must be unique."
+msgstr "Виправте повторювані дані для %(field)s, що мають бути унікальними."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:773
+#, python-format
+msgid "Please correct the duplicate data for %(field_name)s which must be unique for the %(lookup)s in %(date_field)s."
+msgstr "Будь ласка, виправте дубльовані дані для %(field_name)s , які повинні бути унікальними для %(lookup)s у %(date_field)s."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:782
+msgid "Please correct the duplicate values below."
+msgstr "Будь ласка, виправте повторювані значення нижче."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1109
+msgid "The inline value did not match the parent instance."
+msgstr "Інлайн значення не відповідає батьківському екземпляру."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1193
+msgid "Select a valid choice. That choice is not one of the available choices."
+msgstr "Виберіть дійсний вибір. Цей вибір не є одним із доступних варіантів."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1311
+#, python-format
+msgid "“%(pk)s” is not a valid value."
+msgstr "“%(pk)s\" не є допустимим значенням."
+
+#: .\venv\Lib\site-packages\django\forms\utils.py:172
+#, python-format
+msgid "%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it may be ambiguous or it may not exist."
+msgstr "%(datetime)s не може бути інтерпретований в часовому поясі %(current_timezone)s; це може бути неоднозначним або не існує."
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:403
+msgid "Clear"
+msgstr "Очистити"
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:404
+msgid "Currently"
+msgstr "В даний час"
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:405
+msgid "Change"
+msgstr "Змінити"
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:714
+msgid "Unknown"
+msgstr "Не вказано"
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:715
+msgid "Yes"
+msgstr "Так"
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:716
+msgid "No"
+msgstr "Ні"
+
+#. Translators: Please do not add spaces around commas.
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:805
+msgid "yes,no,maybe"
+msgstr "так, ні можливо"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:834
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:851
+#, python-format
+msgid "%(size)d byte"
+msgid_plural "%(size)d bytes"
+msgstr[0] "%(size)d байт"
+msgstr[1] "%(size)d байт"
+msgstr[2] "%(size)d байт"
+msgstr[3] "%(size)d байт"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:853
+#, python-format
+msgid "%s KB"
+msgstr "%s Кб"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:855
+#, python-format
+msgid "%s MB"
+msgstr "%s МБ"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:857
+#, python-format
+msgid "%s GB"
+msgstr "%s ГБ"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:859
+#, python-format
+msgid "%s TB"
+msgstr "%s ТБ"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:861
+#, python-format
+msgid "%s PB"
+msgstr "%s ПБ"
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:66
+msgid "p.m."
+msgstr "л.ст."
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:67
+msgid "a.m."
+msgstr "ранку m."
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:72
+msgid "PM"
+msgstr "Очистити кеш"
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:73
+msgid "AM"
+msgstr "ДП"
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:146
+msgid "midnight"
+msgstr "опівночі"
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:148
+msgid "noon"
+msgstr "полудень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:6
+msgid "Monday"
+msgstr "Понеділок"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:6
+msgid "Tuesday"
+msgstr "Вівторок"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:6
+msgid "Wednesday"
+msgstr "Середа"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:6
+msgid "Thursday"
+msgstr "Четвер"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:6
+msgid "Friday"
+msgstr "П'ятниця"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:7
+msgid "Saturday"
+msgstr "Субота"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:7
+msgid "Sunday"
+msgstr "Неділя"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:10
+msgid "Mon"
+msgstr "Mon"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:10
+msgid "Tue"
+msgstr "Вт"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:10
+msgid "Wed"
+msgstr "Ср"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:10
+msgid "Thu"
+msgstr "Thu"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:10
+msgid "Fri"
+msgstr "Пт"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:11
+msgid "Sat"
+msgstr "Сб"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:11
+msgid "Sun"
+msgstr "НД"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:14
+msgid "January"
+msgstr "Січень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:14
+msgid "February"
+msgstr "Лютий"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:14
+msgid "March"
+msgstr "Березень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:14
+msgid "April"
+msgstr "Квітень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:14
+msgid "May"
+msgstr "Травень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:14
+msgid "June"
+msgstr "Червень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:15
+msgid "July"
+msgstr "Липень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:15
+msgid "August"
+msgstr "Серпень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:15
+msgid "September"
+msgstr "Вересні"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:15
+msgid "October"
+msgstr "Жовтень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:15
+msgid "November"
+msgstr "Листопад"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:16
+msgid "December"
+msgstr "Грудень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:19
+msgid "jan"
+msgstr "січ"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:19
+msgid "feb"
+msgstr "лют"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:19
+msgid "mar"
+msgstr "бер"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:19
+msgid "apr"
+msgstr "квт"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:19
+msgid "may"
+msgstr "травень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:19
+msgid "jun"
+msgstr "чер"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:20
+msgid "jul"
+msgstr "лип"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:20
+msgid "aug"
+msgstr "сер"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:20
+msgid "sep"
+msgstr "вер"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:20
+msgid "oct"
+msgstr "жов"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:20
+msgid "nov"
+msgstr "лис"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:20
+msgid "dec"
+msgstr "гру"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:23
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr "Січ."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:24
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr "Лют."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:25
+msgctxt "abbrev. month"
+msgid "March"
+msgstr "Березень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:26
+msgctxt "abbrev. month"
+msgid "April"
+msgstr "Квітень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:27
+msgctxt "abbrev. month"
+msgid "May"
+msgstr "Травень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:28
+msgctxt "abbrev. month"
+msgid "June"
+msgstr "Червень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:29
+msgctxt "abbrev. month"
+msgid "July"
+msgstr "Липень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:30
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr "Серп."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:31
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr "Верт."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:32
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr "Жовт."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:33
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr "Лист."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:34
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr "Груд."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:37
+msgctxt "alt. month"
+msgid "January"
+msgstr "Січень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:38
+msgctxt "alt. month"
+msgid "February"
+msgstr "Лютий"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:39
+msgctxt "alt. month"
+msgid "March"
+msgstr "Березень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:40
+msgctxt "alt. month"
+msgid "April"
+msgstr "Квітень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:41
+msgctxt "alt. month"
+msgid "May"
+msgstr "Травень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:42
+msgctxt "alt. month"
+msgid "June"
+msgstr "Червень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:43
+msgctxt "alt. month"
+msgid "July"
+msgstr "Липень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:44
+msgctxt "alt. month"
+msgid "August"
+msgstr "Серпень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:45
+msgctxt "alt. month"
+msgid "September"
+msgstr "Вересні"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:46
+msgctxt "alt. month"
+msgid "October"
+msgstr "Жовтень"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:47
+msgctxt "alt. month"
+msgid "November"
+msgstr "Листопад"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:48
+msgctxt "alt. month"
+msgid "December"
+msgstr "Грудень"
+
+#: .\venv\Lib\site-packages\django\utils\ipv6.py:8
+msgid "This is not a valid IPv6 address."
+msgstr "Це не дійсна адреса IPv6."
+
+#: .\venv\Lib\site-packages\django\utils\text.py:71
+#, python-format
+msgctxt "String to return when truncating text"
+msgid "%(truncated_text)s…"
+msgstr "%(truncated_text)s…"
+
+#: .\venv\Lib\site-packages\django\utils\text.py:240
+msgid "or"
+msgstr "або"
+
+#. Translators: This string is used as a separator between list elements
+#: .\venv\Lib\site-packages\django\utils\text.py:259
+#: .\venv\Lib\site-packages\django\utils\timesince.py:94
+msgid ", "
+msgstr ", "
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:9
+#, python-format
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] "%d рік"
+msgstr[1] "%d років"
+msgstr[2] "%d років"
+msgstr[3] "%d років"
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:10
+#, python-format
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "%d місяць"
+msgstr[1] "%d місяців"
+msgstr[2] "%d місяців"
+msgstr[3] "%d місяців"
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:11
+#, python-format
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] "%d тиждень"
+msgstr[1] "%d тижнів"
+msgstr[2] "%d тижнів"
+msgstr[3] "%d тижнів"
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:12
+#, python-format
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d день"
+msgstr[1] "%d днів"
+msgstr[2] "%d днів"
+msgstr[3] "%d днів"
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:13
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d година"
+msgstr[1] "%d годин"
+msgstr[2] "%d годин"
+msgstr[3] "%d годин"
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:14
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d хвилина"
+msgstr[1] "%d хвилин"
+msgstr[2] "%d хвилин"
+msgstr[3] "%d хвилин"
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:110
+msgid "Forbidden"
+msgstr "Заборонено"
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:111
+msgid "CSRF verification failed. Request aborted."
+msgstr "Помилка верифікації CSRF. Запит перервано."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:115
+msgid "You are seeing this message because this HTTPS site requires a “Referer header” to be sent by your Web browser, but none was sent. This header is required for security reasons, to ensure that your browser is not being hijacked by third parties."
+msgstr "Ви бачите це повідомлення, тому що цей HTTPS сайт вимагає “Заголовка рефера” для відправки веб-браузера, але жоден з них не був відправлений. Цей заголовок необхідний з міркувань безпеки, щоб переконатися, що ваш браузер не захопив третіх осіб."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:120
+msgid "If you have configured your browser to disable “Referer” headers, please re-enable them, at least for this site, or for HTTPS connections, or for “same-origin” requests."
+msgstr "Якщо ви налаштували ваш браузер для відключення заголовків \"Посилання\", будь ласка, повторно включіть їх, принаймні для цього сайту або HTTPS з'єднань, або для «однакового походження» запитів."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:124
+msgid "If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or including the “Referrer-Policy: no-referrer” header, please remove them. The CSRF protection requires the “Referer” header to do strict referer checking. If you’re concerned about privacy, use alternatives like <a rel=\"noreferrer\" …> for links to third-party sites."
+msgstr "Якщо ви використовуєте <meta name=\"referrer\" content=\"no-referrer\"> тег або включно з заголовком \"Referrer-Policy: no-referrer\", будь ласка, видаліть їх. Захист CSRF вимагає від заголовка \"Referer\", щоб виконати сувору перевірку реферерів. Якщо вас цікавить приватність, то ви можете використовувати інші варіанти на кшталт <a rel=\"noreferrer\" …> для посилань на сторонні сайти."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:132
+msgid "You are seeing this message because this site requires a CSRF cookie when submitting forms. This cookie is required for security reasons, to ensure that your browser is not being hijacked by third parties."
+msgstr "Ви бачите це повідомлення, тому що для цього сайту потрібен CSRF кук під час обробки форм. Цей файл cookie є необхідним з міркувань безпеки, щоб переконатися, що ваш браузер не захопив третіх осіб."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:137
+msgid "If you have configured your browser to disable cookies, please re-enable them, at least for this site, or for “same-origin” requests."
+msgstr "Якщо ви налаштували ваш браузер для відключення резюме cookie, будь ласка, увімкніть їх, принаймні для цього сайту або для “однакового походження” запитів."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:142
+msgid "More information is available with DEBUG=True."
+msgstr "Доступна більше інформації з DEBUG=True."
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:41
+msgid "No year specified"
+msgstr "Не вказано рік"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:61
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:111
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:208
+msgid "Date out of range"
+msgstr "Дата поза діапазоном"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:90
+msgid "No month specified"
+msgstr "Не вказано місяць"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:142
+msgid "No day specified"
+msgstr "Не вказано день"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:188
+msgid "No week specified"
+msgstr "Не вказано жодного тижня"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:338
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:367
+#, python-format
+msgid "No %(verbose_name_plural)s available"
+msgstr "Немає доступних %(verbose_name_plural)s"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:594
+#, python-format
+msgid "Future %(verbose_name_plural)s not available because %(class_name)s.allow_future is False."
+msgstr "Майбутнє %(verbose_name_plural)s недоступне, оскільки %(class_name)s.allow_future є False."
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:628
+#, python-format
+msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
+msgstr "Неприпустимий рядок “%(datestr)s” заданий формат “%(format)s”"
+
+#: .\venv\Lib\site-packages\django\views\generic\detail.py:54
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr "Не знайдено %(verbose_name)s , що відповідає запиту"
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:67
+msgid "Page is not “last”, nor can it be converted to an int."
+msgstr "Сторінка не є \"останньою\", і вона не може бути перетворена в int."
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:72
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr "Недопустима сторінка (%(page_number)s): %(message)s"
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:154
+#, python-format
+msgid "Empty list and “%(class_name)s.allow_empty” is False."
+msgstr "Список порожній...%(class_name)s.allow_empty\" є хибним."
+
+#: .\venv\Lib\site-packages\django\views\static.py:40
+msgid "Directory indexes are not allowed here."
+msgstr "Індекси каталогів неприпустимі тут."
+
+#: .\venv\Lib\site-packages\django\views\static.py:42
+#, python-format
+msgid "“%(path)s” does not exist"
+msgstr "“%(path)s” не існує"
+
+#: .\venv\Lib\site-packages\django\views\static.py:80
+#, python-format
+msgid "Index of %(directory)s"
+msgstr "Індекс %(directory)s"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:7
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:221
+msgid "The install worked successfully! Congratulations!"
+msgstr "Встановлення успішно виконано! Вітаємо!"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:207
+#, python-format
+msgid "View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr "Переглянути <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" target=\"_blank\" rel=\"noopener\">нотатки релізу</a> для Django %(version)s"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:222
+#, python-format
+msgid "You are seeing this page because <a href=\"https://docs.djangoproject.com/en/%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not configured any URLs."
+msgstr "Ви бачите цю сторінку, тому що <a href=\"https://docs.djangoproject.com/en/%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener\">DEBUG=True</a> знаходиться у файлі налаштувань і не налаштовано жодних посилань."
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:230
+msgid "Django Documentation"
+msgstr "Django документація"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:231
+msgid "Topics, references, &amp; how-to’s"
+msgstr "Теми, посилання, &amp; посібник"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:239
+msgid "Tutorial: A Polling App"
+msgstr "Підручник: Опитування"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:240
+msgid "Get started with Django"
+msgstr "Почніть з Django"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:248
+msgid "Django Community"
+msgstr "Django Спільнота"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:249
+msgid "Connect, get help, or contribute"
+msgstr "Підключайте, отримайте допомогу або свій внесок"
+
+#: .\venv\Lib\site-packages\extra_settings\apps.py:11
+msgid "Extra Settings"
+msgstr "Додаткові параметри"
+
+#: .\venv\Lib\site-packages\extra_settings\models.py:92
+msgid "Type"
+msgstr "Тип"
+
+#: .\venv\Lib\site-packages\extra_settings\models.py:94
+#: .\venv\Lib\site-packages\extra_settings\models.py:95
+#: .\venv\Lib\site-packages\extra_settings\models.py:96
+#: .\venv\Lib\site-packages\extra_settings\models.py:97
+#: .\venv\Lib\site-packages\extra_settings\models.py:98
+#: .\venv\Lib\site-packages\extra_settings\models.py:99
+#: .\venv\Lib\site-packages\extra_settings\models.py:100
+#: .\venv\Lib\site-packages\extra_settings\models.py:101
+#: .\venv\Lib\site-packages\extra_settings\models.py:102
+#: .\venv\Lib\site-packages\extra_settings\models.py:103
+#: .\venv\Lib\site-packages\extra_settings\models.py:104
+#: .\venv\Lib\site-packages\extra_settings\models.py:105
+#: .\venv\Lib\site-packages\extra_settings\models.py:106
+#: .\venv\Lib\site-packages\extra_settings\models.py:107
+msgid "Value"
+msgstr "Цінність"
+
+#: .\venv\Lib\site-packages\extra_settings\models.py:127
+msgid "Setting"
+msgstr "Налаштування"
+
+#: .\venv\Lib\site-packages\extra_settings\models.py:128
+msgid "Settings"
+msgstr "Налаштування"
+
+#: .\venv\Lib\site-packages\httplib2\__init__.py:368
+#, python-format
+msgid "Content purported to be compressed with %s but failed to decompress."
+msgstr "Вміст має стиснений за допомогою %s , але не вдалося розпакувати."
+
+#: .\venv\Lib\site-packages\httplib2\__init__.py:532
+#, python-format
+msgid "Unsupported value for qop: %s."
+msgstr "Непідтримуване значення qop: %s."
+
+#: .\venv\Lib\site-packages\httplib2\__init__.py:536
+#: .\venv\Lib\site-packages\httplib2\__init__.py:614
+#, python-format
+msgid "Unsupported value for algorithm: %s."
+msgstr "Непідтримуване значення для алгоритму: %s."
+
+#: .\venv\Lib\site-packages\httplib2\__init__.py:609
+msgid "The challenge doesn't contain a server nonce, or this one is empty."
+msgstr "Задача не містить номер сервера, або вона пуста."
+
+#: .\venv\Lib\site-packages\httplib2\__init__.py:619
+#, python-format
+msgid "Unsupported value for pw-algorithm: %s."
+msgstr "Непідтримуване значення для алгоритму pw: %s."
+
+#: .\venv\Lib\site-packages\httplib2\__init__.py:1448
+msgid "Redirected but the response is missing a Location: header."
+msgstr "Перенаправлена, але у відповіді відсутня розташування: заголовок."
+
+#: .\venv\Lib\site-packages\tinymce\views.py:55
+msgid "Error running spellchecker"
+msgstr "Помилка виконання орфографії"
+

@@ -69,9 +69,9 @@ def gcal_data_return(request):
     exclude_id = []
     for master in query_set:
         timetable = master.timetable
-        if timetable is not Profile.TIME_TABLE.ALL \
-                and not (timetable is Profile.TIME_TABLE.MY and master.clients.filter(id__exact=request.user.profile.id).count() > 0) \
-                and not (timetable is Profile.TIME_TABLE.VERIFIED and request.user.profile.orders.count() > 0):
+        if timetable is not Profile.TIME_TABLE.ALL[0] \
+                and not (timetable is Profile.TIME_TABLE.MY[0] and master.clients.filter(id__exact=request.user.profile.id).count() > 0) \
+                and not (timetable is Profile.TIME_TABLE.VERIFIED[0] and request.user.profile.orders.count() > 0):
             exclude_id.append(master.id)
     query_set = query_set.exclude(id__in=exclude_id)
 

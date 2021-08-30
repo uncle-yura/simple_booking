@@ -126,7 +126,7 @@ ROOT_URLCONF = 'simple_booking.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -195,8 +195,9 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = os.environ.get('DJANGO_LANGUAGR_CODE', 'en-GB')
 
 LANGUAGES = [
-   ('uk', _('Ukrainian')),
    ('en', _('English')),
+   ('uk', _('Ukrainian')),
+   ('ru', _('Russian')),
 ]
 
 TIME_ZONE = 'Europe/Kiev'
@@ -249,7 +250,6 @@ else:
         'DJANGO_EMAIL_HOST_PASSWORD', 'password')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',

@@ -1,13 +1,13 @@
 {% load bootstrap_customizer %}
+{% load extra_settings %}
 {% load i18n %} 
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {% block title %}<title>{% translate "Booking" %}</title>{% endblock %}
+    {% block title %}<title>{% get_setting 'SITE_TITLE' default='Booking' %}</title>{% endblock %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% load static %}
-    {% load extra_settings %}
     <link rel="shortcut icon" type="image/png" href="{{ MEDIA_URL }}{% get_setting 'FAVICON_LOGO' default='icon.png' %}"/>
     <style lang="css">{% bootstrap_theme_css_above_the_fold %}</style>
     <!-- <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"> -->

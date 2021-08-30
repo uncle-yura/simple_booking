@@ -11,7 +11,7 @@
       {% csrf_token %}
         {{ form|crispy }}
         <br>
-      <input class="btn btn-primary" type="submit" value="login" />
+      <input class="btn btn-primary" type="submit" value='{% translate "Login" %}' />
       {% url 'login' as login_url %}
       {% if next in login_url %}
       <input type="hidden" name="next" value="{% url 'index' %}" />
