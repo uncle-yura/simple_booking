@@ -7,11 +7,11 @@
     <div class="carousel-inner" role="listbox">
     {% for article in top_posts %}
         <div class="carousel-item article banner {% if forloop.first %}active{% endif%}" style="background-image: url('{{ article.article_image.url }}');">      
-            <div class="carousel-caption" style="top: 10%; left: 5%; right: unset; bottom: unset; text-align: left;">
-                <h3>{{ article.article_title }}</h3>
-                <div style="overflow: hidden; max-height: 1.5em;">
-                    <p style="display: inline; white-space: nowrap;">{{ article.article_content|safe|truncatewords:20}}</p> 
-                </div>
+            <div class="carousel-caption col-sm-12 col-md-6 col-lg-6 col-xl-4" style="top: 15%; left: 10%; right: unset; bottom: unset; text-align: left;">
+                <h1>{{ article.article_title }}</h1>
+                <h2 style="overflow: hidden; max-height: 8em;">
+                    <div class="article_content" style="display: inline;">{{ article.article_content|safe|truncatechars_html:70}}</div> 
+                </h2>
                 <br>
                 <a href="{% url 'article' article.article_slug %}" style="text-decoration: none" class="btn btn-outline-info btn-sm">{% translate "Read more ..." %}</a>
             </div>  

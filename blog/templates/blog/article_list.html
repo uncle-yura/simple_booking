@@ -41,7 +41,7 @@
                                     {% endfor %}
                                 </p>
                                 <div style="overflow: hidden; max-height: 1.5em;">
-                                   <p style="display: inline; white-space: nowrap;">{{ article.article_content|safe|truncatewords:20}}</p> 
+                                   <div class="article_content" style="display: inline;">{{ article.article_content|safe|truncatechars_html:90}}</div> 
                                 </div>
                                 <br>
                                 <button class="btn btn-outline-primary btn-sm">{% translate "View post" %}</button>

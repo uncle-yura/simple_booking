@@ -13,6 +13,10 @@ body {
     background-size: cover; /* Resize the background image to cover the entire container */
 } 
 
+.article_content * {
+    font-size: 1em !important; 
+}
+
 .contacts_list p{
     margin-bottom: 0px;
 }
