@@ -18,7 +18,7 @@ def switch_lang(request):
 
 
 def index(request):
-    context = {'pricelist': JobType.objects.all().annotate(min_price=Min('prices__price')).annotate(max_price=Max('prices__price')),
+    context = {'pricelist': JobType.objects.filter(prices__isnull=False).all().annotate(min_price=Min('prices__price')).annotate(max_price=Max('prices__price')),
                'masters': Profile.objects.filter(user__groups__name='Master'),
                'reviews': Photo.objects.all().order_by('-id')[:12],
                }

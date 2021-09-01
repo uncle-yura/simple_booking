@@ -154,7 +154,7 @@ msgstr "Если у вас уже есть аккаунт, вы можете"
 
 #: .\base\templates\base\register.html:18
 msgid "login"
-msgstr "логин"
+msgstr "войти"
 
 #: .\base\templates\base\register.html:18
 msgid "here"

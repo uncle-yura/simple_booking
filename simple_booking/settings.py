@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'django_underconstruction',
     'django.contrib.sites',
     'bootstrap_customizer',
+    'colorful',
     'social_django',
     'captcha',
     'bootstrap',

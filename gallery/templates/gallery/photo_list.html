@@ -24,11 +24,11 @@
                         />
                     </a>
                     {% if perms.gallery.change_photo %}
-                    <form style="right:1em;"><button formaction="{% url 'edit-photo' photo.pk %}" class="btn btn-outline-warning btn-sm m-1">{% translate "Edit" %}</button></form>
+                    <form style="right:1em;"><button formaction="{% url 'edit-photo' photo.pk %}" class="btn btn-warning btn-sm m-1">{% translate "Edit" %}</button></form>
                     {% endif %}
 
                     {% if perms.gallery.delete_photo %}
-                    <form style="left:1em;"><button formaction="{% url 'delete-photo' photo.pk %}" class="btn btn-outline-danger btn-sm m-1">{% translate "Delete" %}</button></form>
+                    <form style="left:1em;"><button formaction="{% url 'delete-photo' photo.pk %}" class="btn btn-danger btn-sm m-1">{% translate "Delete" %}</button></form>
                     {% endif %} 
                 </div>
                 {% endfor %}

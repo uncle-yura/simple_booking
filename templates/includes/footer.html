@@ -2,9 +2,9 @@
 {% load i18n %} 
 {% load extra_settings %}
 <footer>
-    <div class="container-fluid bg-dark text-light mt-4 pt-4 px-5">
+    <div class="container-fluid bg-dark text-light pt-4">
             <div class="row">
-                <div class="contacts_list col-sm-12 col-md-4 col-lg-2">
+                <div class="contacts_list col-sm-12 col-md-4 col-lg-2 pt-3 px-2 px-sm-3">
                     <h6>{% translate "Contact Us" %}</h6>
                     {% for contact in contact_short %}
                     {{ contact.content_short|safe}}
@@ -12,7 +12,7 @@
                 </div>
 
                 {% if contact_social %}
-                <div class="contacts_list col-sm-12 col-md-4 col-lg-2">
+                <div class="contacts_list col-sm-12 col-md-4 col-lg-2 pt-3 px-2 px-sm-3">
                     <h6>{% translate "Follow Us" %}</h6>
                     {% for share in contact_social %}
                         <p><a href="{{ share.share_url }}">{% if share.share_icon %}<i class="{{ share.share_icon }}"></i>{% endif %} {{ share.share_text }}</a></p>
@@ -24,7 +24,7 @@
                     {% get_setting 'FOOTER_FOLLOW' %}
                 {% endautoescape %}
 
-                <div class="col-sm-12 col-md-4 col-lg-2">
+                <div class="col-sm-12 col-md-4 col-lg-2 pt-3 px-2 px-sm-3">
                     <h6>{% translate "Account" %}</h6>
                     {% if user.is_authenticated %}
                     <a class="btn btn-sm btn-outline-secondary" href="{% url 'logout'%}?next={{request.path}}">{% translate "Logout" %}</a>
@@ -35,7 +35,7 @@
                     {% endif %}
                     {% include 'includes/langswitch.html' %}
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-6">  
+                <div class="col-sm-12 col-md-12 col-lg-6 pt-3 px-2 px-sm-3">  
                     <h5>
                         <a class="navbar-brand" href="/">
                             <img src="{{ MEDIA_URL }}{% get_setting 'FOOTER_LOGO'  default='logo.png' %}" width="30" height="30" alt="logo">
