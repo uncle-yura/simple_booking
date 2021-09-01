@@ -1,60 +1,6 @@
 {% load static %}
 {% load i18n %} 
 {% load extra_settings %}
-<style>
-    body {
-      padding-top: 5em;
-    }
-
-    @media (min-width: 992px) {
-    .animate {
-        animation-duration: 0.3s;
-        -webkit-animation-duration: 0.3s;
-        animation-fill-mode: both;
-        -webkit-animation-fill-mode: both;
-    }
-    }
-
-    @keyframes slideIn {
-    0% {
-        transform: translateY(1rem);
-        opacity: 0;
-    }
-    100% {
-        transform:translateY(0rem);
-        opacity: 1;
-    }
-    0% {
-        transform: translateY(1rem);
-        opacity: 0;
-    }
-    }
-
-    @-webkit-keyframes slideIn {
-    0% {
-        -webkit-transform: transform;
-        -webkit-opacity: 0;
-    }
-    100% {
-        -webkit-transform: translateY(0);
-        -webkit-opacity: 1;
-    }
-    0% {
-        -webkit-transform: translateY(1rem);
-        -webkit-opacity: 0;
-    }
-    }
-
-    .slideIn {
-    -webkit-animation-name: slideIn;
-    animation-name: slideIn;
-    }
-
-    .dropdown-item:active {
-        background-color: rgba(161, 156, 156, 0.616);
-    }
-</style>
-
 <nav class="navbar fixed-top navbar-expand navbar-light bg-light" style="height: 5em;">
     <div class="col-5">
         <div class="dropdown">
@@ -89,7 +35,7 @@
             {% for share in contact_social %}
             <div class="mx-2">
                 <a class="text-dark" href="{{ share.share_url }}" style="font-size: 1.5em;">
-                    {% if share.share_icon %}<i class="{{ share.share_icon }}"></i>{% endif %}{{ share.share_text }}</a>    
+                    {% if share.share_icon %}<i class="{{ share.share_icon }}"></i>{% else %}{{ share.share_text }}{% endif %}</a>    
             </div>
             {% endfor %}
         {% endif %}

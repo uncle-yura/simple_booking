@@ -4,23 +4,19 @@
 <footer>
     <div class="container-fluid bg-dark text-light mt-4 pt-4 px-5">
             <div class="row">
-                <div class="col-sm-12 col-md-4 col-lg-2">
+                <div class="contacts_list col-sm-12 col-md-4 col-lg-2">
                     <h6>{% translate "Contact Us" %}</h6>
-                        {% for contact in contact_short %}
-                        {{ contact.content_short|safe}}
-                        {% endfor %}
+                    {% for contact in contact_short %}
+                    {{ contact.content_short|safe}}
+                    {% endfor %}
                 </div>
 
                 {% if contact_social %}
-                <div class="col-sm-12 col-md-4 col-lg-2">
+                <div class="contacts_list col-sm-12 col-md-4 col-lg-2">
                     <h6>{% translate "Follow Us" %}</h6>
-                    <ul class="list-inline">
-                        {% for share in contact_social %}
-                            <li class="list-inline-item">
-                                <a href="{{ share.share_url }}">{% if share.share_icon %}<i class="{{ share.share_icon }}"></i>{% endif %}{{ share.share_text }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    {% for share in contact_social %}
+                        <p><a href="{{ share.share_url }}">{% if share.share_icon %}<i class="{{ share.share_icon }}"></i>{% endif %} {{ share.share_text }}</a></p>
+                    {% endfor %}
                 </div>
                 {% endif %}
 

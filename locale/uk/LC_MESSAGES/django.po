@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-30 15:45+0300\n"
+"POT-Creation-Date: 2021-09-01 11:36+0300\n"
 "PO-Revision-Date: 2021-08-30 10:36\n"
 "Last-Translator: uncle-yura <uncle-yura@tuta.io>\n"
 "Language-Team: Ukrainian\n"
@@ -71,8 +71,8 @@ msgstr "по"
 msgid "View all prices"
 msgstr "Переглянути всі ціни"
 
-#: .\base\templates\base\index.html:72 .\templates\includes\navbar.html:72
-#: .\templates\includes\navbar.html:97
+#: .\base\templates\base\index.html:72 .\templates\includes\navbar.html:18
+#: .\templates\includes\navbar.html:43
 msgid "Book a service"
 msgstr "Запис"
 
@@ -143,7 +143,8 @@ msgstr "Відгуки"
 msgid "There are no any review."
 msgstr "Немає жодного відгуку."
 
-#: .\base\templates\base\register.html:7 .\templates\includes\footer.html:38
+#: .\base\templates\base\register.html:7 .\templates\includes\footer.html:34
+#: .\templates\includes\social_login.html:3
 msgid "Register"
 msgstr "Зареєструватися"
 
@@ -867,8 +868,8 @@ msgstr "Введіть посилання на обліковий запис с�
 msgid "Enter here the contact name."
 msgstr "Введіть тут ім'я контакту."
 
-#: .\contact\models.py:41 .\contact\templates\contact\contact.html:27
-#: .\templates\includes\navbar.html:73
+#: .\contact\models.py:41 .\contact\templates\contact\contact.html:28
+#: .\templates\includes\navbar.html:19
 msgid "Contact"
 msgstr "Контакт"
 
@@ -904,11 +905,11 @@ msgstr "Повідомлення"
 msgid "Enter the message of your email here."
 msgstr "Введіть повідомлення Вашої електронного листа тут."
 
-#: .\contact\templates\contact\contact.html:20
+#: .\contact\templates\contact\contact.html:21
 msgid "There are no contacts."
 msgstr "Контактів немає."
 
-#: .\contact\templates\contact\contact.html:34
+#: .\contact\templates\contact\contact.html:35
 msgid "Send"
 msgstr "Надіслати"
 
@@ -952,15 +953,15 @@ msgstr "Оновити фото"
 msgid "Delete photo"
 msgstr "Видалити фото"
 
-#: .\simple_booking\settings.py:194
+#: .\simple_booking\settings.py:195
 msgid "English"
 msgstr "Англійська"
 
-#: .\simple_booking\settings.py:195
+#: .\simple_booking\settings.py:196
 msgid "Ukrainian"
 msgstr "Українська"
 
-#: .\simple_booking\settings.py:196
+#: .\simple_booking\settings.py:197
 msgid "Russian"
 msgstr "Російська"
 
@@ -976,15 +977,15 @@ msgstr "Зв'язок"
 msgid "Follow Us"
 msgstr "Стежте за нами"
 
-#: .\templates\includes\footer.html:32
+#: .\templates\includes\footer.html:28
 msgid "Account"
 msgstr "Обліковий запис"
 
-#: .\templates\includes\footer.html:34
+#: .\templates\includes\footer.html:30
 msgid "Logout"
 msgstr "Вийти"
 
-#: .\templates\includes\footer.html:37 .\templates\registration\login.html:7
+#: .\templates\includes\footer.html:33 .\templates\registration\login.html:7
 #: .\templates\registration\login.html:14
 msgid "Login"
 msgstr "Вхід"
@@ -1052,33 +1053,35 @@ msgstr "Помилка відповіді."
 msgid "Booking on "
 msgstr "Запис на "
 
-#: .\templates\includes\navbar.html:64
+#: .\templates\includes\navbar.html:10
 msgid "Menu"
 msgstr "Меню"
 
-#: .\templates\includes\navbar.html:67
+#: .\templates\includes\navbar.html:13
 msgid "Home"
 msgstr "Головна"
 
-#: .\templates\includes\navbar.html:68
+#: .\templates\includes\navbar.html:14
 msgid "Blog"
 msgstr "Блог"
 
-#: .\templates\includes\navbar.html:75
+#: .\templates\includes\navbar.html:21
 msgid "Gallery"
 msgstr "Галерея"
 
 #: .\templates\includes\pagination.html:11
 msgid "Page"
-msgstr ""
+msgstr "Сторінка"
 
 #: .\templates\includes\pagination.html:11
 msgid "of"
-msgstr ""
+msgstr "з"
 
 #: .\templates\includes\social_login.html:3
-msgid "Login with:"
-msgstr "Увійти з:"
+#, fuzzy
+#| msgid "Login with:"
+msgid " or Login with:"
+msgstr " або Увійти з:"
 
 #: .\templates\registration\logged_out.html:7
 msgid "Logged out!"

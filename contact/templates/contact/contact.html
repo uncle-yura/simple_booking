@@ -7,11 +7,12 @@
         <div class='col mb-2'>
             {% if contacts %}
                 {% for contact in contacts %}
-                <div class='card p-4 mb-2'>
-                    <h5 class="font-weight-bold text-center">{{ contact.name }}</h5>
-                    <hr>
-                    <div class="card-text">
-                        <p>{{ contact.content|safe }}</p>
+                <div class='card mb-2'>
+                    <div class="card-body">
+                        <h4 class="card-title">{{ contact.name }}</h4>
+                        <div class="contacts_list card-text">
+                            {{ contact.content|safe }}
+                        </div> 
                     </div>
                 </div>
                 {% endfor %}
@@ -24,7 +25,7 @@
 
         <div class='col-sm-12 col-md-12 col-lg-7 col-xl-7 pb-4'>
             <div class='card p-4 position-sticky' style='top: 6em;'>
-                <h4 class='card-title font-weight-bold text-center'>{% translate "Contact" %}</h1>
+                <h4 class='card-title font-weight-bold text-center'>{% translate "Contact" %}</h4>
                 <hr>
                 <div class='card-text'>                
                     <form method='POST'>
