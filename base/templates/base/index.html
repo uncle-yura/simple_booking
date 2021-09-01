@@ -7,7 +7,7 @@
     <div class="carousel-inner" role="listbox">
     {% for article in top_posts %}
         <div class="carousel-item article banner {% if forloop.first %}active{% endif%}" style="background-image: url('{{ article.article_image.url }}');">      
-            <div class="carousel-caption">
+            <div class="carousel-caption" style="top: 10%; left: 5%; right: unset; bottom: unset; text-align: left;">
                 <h3>{{ article.article_title }}</h3>
                 <div style="overflow: hidden; max-height: 1.5em;">
                     <p style="display: inline; white-space: nowrap;">{{ article.article_content|safe|truncatewords:20}}</p> 

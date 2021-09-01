@@ -2,7 +2,7 @@
 {% load i18n %} 
 {% load extra_settings %}
 <footer>
-    <div class="container-fluid bg-dark text-light pt-4">
+    <div class="container-fluid bg-dark text-light mt-2 pt-4">
             <div class="row">
                 <div class="contacts_list col-sm-12 col-md-4 col-lg-2 pt-3 px-2 px-sm-3">
                     <h6>{% translate "Contact Us" %}</h6>
@@ -36,12 +36,8 @@
                     {% include 'includes/langswitch.html' %}
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-6 pt-3 px-2 px-sm-3">  
-                    <h5>
-                        <a class="navbar-brand" href="/">
-                            <img src="{{ MEDIA_URL }}{% get_setting 'FOOTER_LOGO'  default='logo.png' %}" width="30" height="30" alt="logo">
-                        </a>
-                    </h5>
                     <p style="font-size: 12px">
+                        <div class="logo-image" style="float: left; background-image: url('{{ MEDIA_URL }}{% get_setting 'FOOTER_LOGO' default='logo.png' %}'); margin-right: 5px;"></div>
                         {% autoescape off %}
                             {% get_setting 'FOOTER_DISCLOSURE' default='Disclosure' %}
                         {% endautoescape %}

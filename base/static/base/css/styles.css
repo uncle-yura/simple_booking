@@ -5,6 +5,14 @@ body {
     padding-top: 5em;
 }
 
+.logo-image {
+    height: 4em; 
+    width: 4em;
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+} 
+
 .contacts_list p{
     margin-bottom: 0px;
 }

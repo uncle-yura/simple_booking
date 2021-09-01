@@ -24,10 +24,8 @@
         </div>
     </div>
 
-    <div class="col-2 text-center d-none d-sm-block">
-        <a class="navbar-brand" href="/">
-            <img src="{{ MEDIA_URL }}{% get_setting 'NAVBAR_LOGO' default='logo.png' %}" width="30" height="30" alt="LOGO">
-        </a>
+    <div class="col-2 text-center d-none d-sm-block" style="text-align: center;">
+        <div class="logo-image" style="display: inline-block; background-image: url('{{ MEDIA_URL }}{% get_setting 'NAVBAR_LOGO' default='logo.png' %}');"></div>
     </div>
 
     <div class="col-7 col-sm-5 d-flex flex-row align-items-center justify-content-end">  
