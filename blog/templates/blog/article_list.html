@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-lg-8 col-md-7 col-sm-12 text-dark container">
                                 <h5>{{ article.article_title }}</h5>
-                                <p class="card-text text-muted" style="font-size:12px">{{ article.article_published }}</p>
+                                <p class="card-text text-muted" style="font-size:12px">{{ article.article_published|date:"Y-m-d H:i" }}</p>
                                 <p>
                                     {% for tag in article.article_tags.all %}
                                         <span class="badge badge-info" style ="font-size:14px; color: white">{{ tag }}</span>

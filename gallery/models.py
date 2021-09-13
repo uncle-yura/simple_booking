@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 
 from uuid_storage.storage import UUIDStorage
 from datetime import datetime
@@ -22,4 +23,5 @@ class Photo(models.Model):
         storage=UUIDStorage)
 
     def __str__(self):
-        return str(self.published) + self.title
+        to_tz = timezone.get_default_timezone()
+        return self.published.astimezone(to_tz).strftime("%Y-%m-%d %H:%M ") + self.title

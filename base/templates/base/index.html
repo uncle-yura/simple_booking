@@ -204,7 +204,7 @@
                                             {% if review.title%}
                                                 <p>{{ review.title }}</p>
                                             {% endif %}
-                                            <span class="badge badge-pill badge-light">{{ review.published }}</span>
+                                            <span class="badge badge-pill badge-light font-weight-normal">{{ review.published|date:"Y-m-d H:i" }}</span>
                                         </div>
                                     </div>
                                 </div>
