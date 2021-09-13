@@ -871,7 +871,7 @@ msgstr "Введіть тут ім'я контакту."
 #: .\contact\models.py:41 .\contact\templates\contact\contact.html:28
 #: .\templates\includes\navbar.html:19
 msgid "Contact"
-msgstr "Контакт"
+msgstr "Зв'язок"
 
 #: .\contact\models.py:42
 msgid "Enter the content of the contact block here."

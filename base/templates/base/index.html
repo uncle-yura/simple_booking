@@ -75,7 +75,7 @@
                 <div class="modal" id="pricelistModalScrollable" tabindex="-1" role="dialog" aria-labelledby="pricelistModalScrollableLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header bg-light">
                                 <h5 class="modal-title" id="pricelistModalCenteredLabel">{% translate "Our prices" %}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="{% translate 'Close' %}">
                                 <span aria-hidden="true">&times;</span>
@@ -113,7 +113,7 @@
             {% endwith %}
         {% else %}
         <div class='card'>
-            <div class="card-header">
+            <div class="card-header bg-light">
                 {% translate "Our prices" %}
             </div>
             <div class="card-body">
@@ -149,7 +149,7 @@
             </div>
             {% else %}
             <div class='card'>
-                <div class="card-header">
+                <div class="card-header bg-light">
                     {% translate "Our masters" %}
                 </div>
                 <div class="card-body">
@@ -161,7 +161,7 @@
 
         <div class='col-sm-12 col-md-12 col-lg-12 col-xl-4 pb-4'>
             <div class='card' style="height: 50vh;">
-                <div class="card-header">
+                <div class="card-header bg-light">
                     {% translate "How to find us" %}
                 </div>
                 {% translate "<div class='card-body'>No way</div>" as no_way %}

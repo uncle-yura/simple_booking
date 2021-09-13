@@ -177,7 +177,7 @@ function drawCalendar(booking_range) {
         let weekdays = getLocalText('dayNames').split(',');
         for(let i=0; i<7; i++) {
             let div = document.createElement('div');
-            div.className = "calendar_weekday_name";
+            div.className = "calendar_weekday_name bg-white";
             div.innerHTML = weekdays[i];
             parent.append(div);  
         }      
@@ -208,7 +208,7 @@ function drawCalendar(booking_range) {
 
     for(let i=0; i<booking_range; i++){
         let div = document.createElement('div');
-        div.className = "calendar_day calendar_day_active";
+        div.className = "calendar_day calendar_day_active bg-secondary rounded-sm";
         div.setAttribute("value",firstDay.toISOString());
 
         div.onclick = function() {

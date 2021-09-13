@@ -11,16 +11,18 @@ class Event {
         this.min_step = min_step;
 
         this.card = document.createElement('div');
-        this.card.className = "timetable_event";
+        
         this.card.id = id;
 
         this._dragging = false;
 
         if(!id) {
             this.card.onclick =  this.click_callback.bind(this);
+            this.card.className = "timetable_event bg-warning";
         } else {
             this.card.onmousedown = this.mouse_down.bind(this);
             this.card.onmouseup = this.mouse_up.bind(this);
+            this.card.className = "timetable_event bg-success";
         }
 
         this.update_position();

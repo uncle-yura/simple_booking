@@ -46,11 +46,11 @@
 }
 
 .timetable_event {
+    opacity: .7;
     position: absolute;
     width: 70%;
     left: 20%;
     z-index: 1;
-    background: rgba(208, 152, 71, 0.4);
     box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
     border-radius: .25rem;
     box-sizing: border-box;
@@ -76,10 +76,6 @@
     align-items: center;
 }
 
-#id_timetable_new_date{
-    background:rgba(47, 152, 86, 0.4);
-}
-
 .timetable_events_container{
     min-height: 75rem;
     height: 200vh; 
@@ -94,7 +90,6 @@
 }
 
 .calendar_weekday_name{
-    background-color: white;
     width: 14.28%;
     float: left;
     text-align: center;
@@ -112,7 +107,7 @@
 }
 
 .calendar_day_active{
-    background-color: #7c7c7c7d;
+    opacity: .8;
     padding-top: 0.25em;
     padding-left: 0.5em;
 }
