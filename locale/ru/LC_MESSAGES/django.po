@@ -1842,7 +1842,7 @@ msgstr "Нет"
 #. Translators: Please do not add spaces around commas.
 #: .\venv\Lib\site-packages\django\template\defaultfilters.py:805
 msgid "yes,no,maybe"
-msgstr "да,нет, может быть"
+msgstr "да,нет,может быть"
 
 #: .\venv\Lib\site-packages\django\template\defaultfilters.py:834
 #: .\venv\Lib\site-packages\django\template\defaultfilters.py:851
@@ -1881,19 +1881,19 @@ msgstr "%s ПБ"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:66
 msgid "p.m."
-msgstr "ч. 00 м."
+msgstr "п.п."
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:67
 msgid "a.m."
-msgstr "00 мин."
+msgstr "д.п."
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:72
 msgid "PM"
-msgstr "ЛС"
+msgstr "ПП"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:73
 msgid "AM"
-msgstr "АР"
+msgstr "ДП"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:146
 msgid "midnight"
@@ -1933,7 +1933,7 @@ msgstr "Воскресенье"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Mon"
-msgstr "Mon"
+msgstr "Пн"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Tue"
@@ -1945,7 +1945,7 @@ msgstr "Ср"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Thu"
-msgstr "Thu"
+msgstr "Чт"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Fri"
@@ -2009,11 +2009,11 @@ msgstr "Декабрь"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
 msgid "jan"
-msgstr "ян"
+msgstr "янв"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
 msgid "feb"
-msgstr "феб"
+msgstr "фев"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
 msgid "mar"
@@ -2021,19 +2021,19 @@ msgstr "мар"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
 msgid "apr"
-msgstr "пр"
+msgstr "апр"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
 msgid "may"
-msgstr "может"
+msgstr "май"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
 msgid "jun"
-msgstr "юн"
+msgstr "июнь"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "jul"
-msgstr "юл"
+msgstr "июль"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "aug"
@@ -2041,7 +2041,7 @@ msgstr "авг"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "sep"
-msgstr "Sep"
+msgstr "сен"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "oct"
@@ -2049,7 +2049,7 @@ msgstr "окт"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "nov"
-msgstr "Ноя"
+msgstr "ноя"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "dec"
@@ -2063,7 +2063,7 @@ msgstr "Янв."
 #: .\venv\Lib\site-packages\django\utils\dates.py:24
 msgctxt "abbrev. month"
 msgid "Feb."
-msgstr "Feb."
+msgstr "Фев."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:25
 msgctxt "abbrev. month"
@@ -2113,7 +2113,7 @@ msgstr "Нояб."
 #: .\venv\Lib\site-packages\django\utils\dates.py:34
 msgctxt "abbrev. month"
 msgid "Dec."
-msgstr "Декак."
+msgstr "Дек."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:37
 msgctxt "alt. month"

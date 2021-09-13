@@ -1842,7 +1842,7 @@ msgstr "Ні"
 #. Translators: Please do not add spaces around commas.
 #: .\venv\Lib\site-packages\django\template\defaultfilters.py:805
 msgid "yes,no,maybe"
-msgstr "так, ні можливо"
+msgstr "так,ні,можливо"
 
 #: .\venv\Lib\site-packages\django\template\defaultfilters.py:834
 #: .\venv\Lib\site-packages\django\template\defaultfilters.py:851
@@ -1881,15 +1881,15 @@ msgstr "%s ПБ"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:66
 msgid "p.m."
-msgstr "л.ст."
+msgstr "п.п."
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:67
 msgid "a.m."
-msgstr "ранку m."
+msgstr "д.п."
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:72
 msgid "PM"
-msgstr "Очистити кеш"
+msgstr "ПП"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:73
 msgid "AM"
@@ -1933,7 +1933,7 @@ msgstr "Неділя"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Mon"
-msgstr "Mon"
+msgstr "Пн"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Tue"
@@ -1945,7 +1945,7 @@ msgstr "Ср"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Thu"
-msgstr "Thu"
+msgstr "Чт"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Fri"
@@ -1957,7 +1957,7 @@ msgstr "Сб"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:11
 msgid "Sun"
-msgstr "НД"
+msgstr "Нд"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:14
 msgid "January"
@@ -1993,7 +1993,7 @@ msgstr "Серпень"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:15
 msgid "September"
-msgstr "Вересні"
+msgstr "Вересень"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:15
 msgid "October"
@@ -2021,15 +2021,15 @@ msgstr "бер"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
 msgid "apr"
-msgstr "квт"
+msgstr "квіт"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
 msgid "may"
-msgstr "травень"
+msgstr "трав"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
 msgid "jun"
-msgstr "чер"
+msgstr "черв"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "jul"
@@ -2037,7 +2037,7 @@ msgstr "лип"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "aug"
-msgstr "сер"
+msgstr "серп"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "sep"
@@ -2045,15 +2045,15 @@ msgstr "вер"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "oct"
-msgstr "жов"
+msgstr "жовт"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "nov"
-msgstr "лис"
+msgstr "лист"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "dec"
-msgstr "гру"
+msgstr "груд"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:23
 msgctxt "abbrev. month"
@@ -2068,27 +2068,27 @@ msgstr "Лют."
 #: .\venv\Lib\site-packages\django\utils\dates.py:25
 msgctxt "abbrev. month"
 msgid "March"
-msgstr "Березень"
+msgstr "Бер."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:26
 msgctxt "abbrev. month"
 msgid "April"
-msgstr "Квітень"
+msgstr "Квіт."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:27
 msgctxt "abbrev. month"
 msgid "May"
-msgstr "Травень"
+msgstr "Трав."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:28
 msgctxt "abbrev. month"
 msgid "June"
-msgstr "Червень"
+msgstr "Черв."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:29
 msgctxt "abbrev. month"
 msgid "July"
-msgstr "Липень"
+msgstr "Лип."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:30
 msgctxt "abbrev. month"
@@ -2098,7 +2098,7 @@ msgstr "Серп."
 #: .\venv\Lib\site-packages\django\utils\dates.py:31
 msgctxt "abbrev. month"
 msgid "Sept."
-msgstr "Верт."
+msgstr "Вер."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:32
 msgctxt "abbrev. month"
@@ -2158,7 +2158,7 @@ msgstr "Серпень"
 #: .\venv\Lib\site-packages\django\utils\dates.py:45
 msgctxt "alt. month"
 msgid "September"
-msgstr "Вересні"
+msgstr "Вересень"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:46
 msgctxt "alt. month"
@@ -2504,8 +2504,8 @@ msgstr "Непідтримуване значення для алгоритму 
 
 #: .\venv\Lib\site-packages\httplib2\__init__.py:1448
 msgid "Redirected but the response is missing a Location: header."
-msgstr "Перенаправлена, але у відповіді відсутня розташування: заголовок."
+msgstr "Перенаправлено, але у відповіді відсутня розташування: заголовок."
 
 #: .\venv\Lib\site-packages\tinymce\views.py:55
 msgid "Error running spellchecker"
-msgstr "Помилка виконання орфографії"
+msgstr "Помилка виконання орфографічної перевірки"
