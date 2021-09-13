@@ -1001,7 +1001,7 @@ msgstr ""
 #: .\templates\includes\locale.html:10
 #, python-brace-format
 msgid "From ${args[0]} to ${args[1]}"
-msgstr "От ${args[0]} до ${args[1]}"
+msgstr "С ${args[0]} до ${args[1]}"
 
 #: .\templates\includes\locale.html:11
 #, python-brace-format
