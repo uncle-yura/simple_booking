@@ -92,7 +92,6 @@ MIDDLEWARE = [
 
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.instagram.InstagramOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
@@ -246,6 +245,7 @@ else:
     EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_HOST_USER', 'email')
     EMAIL_HOST_PASSWORD = os.environ.get(
         'DJANGO_EMAIL_HOST_PASSWORD', 'password')
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER # For verify email app
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

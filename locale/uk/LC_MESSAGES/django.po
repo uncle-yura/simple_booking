@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-01 11:36+0300\n"
+"POT-Creation-Date: 2021-09-14 17:57+0300\n"
 "PO-Revision-Date: 2021-08-30 10:36\n"
 "Last-Translator: uncle-yura <uncle-yura@tuta.io>\n"
 "Language-Team: Ukrainian\n"
@@ -72,7 +72,7 @@ msgid "View all prices"
 msgstr "Переглянути всі ціни"
 
 #: .\base\templates\base\index.html:72 .\templates\includes\navbar.html:18
-#: .\templates\includes\navbar.html:43
+#: .\templates\includes\navbar.html:41
 msgid "Book a service"
 msgstr "Запис"
 
@@ -139,7 +139,7 @@ msgstr "<div class='card-body'>Немає шляху</div>"
 msgid "Reviews"
 msgstr "Відгуки"
 
-#: .\base\templates\base\index.html:223
+#: .\base\templates\base\index.html:224
 msgid "There are no any review."
 msgstr "Немає жодного відгуку."
 
@@ -223,7 +223,7 @@ msgstr "Посилання"
 msgid "Enter here the link of tag (Example: photos)"
 msgstr "Введіть тут посилання на мітку (Приклад: photos)"
 
-#: .\blog\models.py:56 .\gallery\models.py:10
+#: .\blog\models.py:56 .\gallery\models.py:11
 msgid "Title"
 msgstr "Заголовок"
 
@@ -231,11 +231,11 @@ msgstr "Заголовок"
 msgid "Enter here the article title."
 msgstr "Введіть тут назву статті."
 
-#: .\blog\models.py:61 .\gallery\models.py:15
+#: .\blog\models.py:61 .\gallery\models.py:16
 msgid "Date published"
 msgstr "Дата публікації"
 
-#: .\blog\models.py:62 .\gallery\models.py:16
+#: .\blog\models.py:62 .\gallery\models.py:17
 msgid "Enter here thr published date."
 msgstr "Введіть тут дату публікації."
 
@@ -355,7 +355,7 @@ msgstr "Введіть тут текст, який буде відображат
 msgid "Enter here the time it takes for this job."
 msgstr "Введіть тут час, необхідний для цієї роботи."
 
-#: .\booking\models.py:42 .\gallery\models.py:19
+#: .\booking\models.py:42 .\gallery\models.py:20
 #: .\venv\Lib\site-packages\django\db\models\fields\files.py:375
 msgid "Image"
 msgstr "Зображення"
@@ -921,11 +921,11 @@ msgstr "Повідомлення надіслано"
 msgid "Message not sent, please try again later."
 msgstr "Повідомлення не надіслано, спробуйте ще раз пізніше."
 
-#: .\gallery\models.py:11
+#: .\gallery\models.py:12
 msgid "Enter here the photo title."
 msgstr "Введіть тут назву фотографії."
 
-#: .\gallery\models.py:20
+#: .\gallery\models.py:21
 msgid "Upload your image here."
 msgstr "Завантажте ваше зображення тут."
 
@@ -1078,8 +1078,6 @@ msgid "of"
 msgstr "з"
 
 #: .\templates\includes\social_login.html:3
-#, fuzzy
-#| msgid "Login with:"
 msgid " or Login with:"
 msgstr " або Увійти з:"
 
