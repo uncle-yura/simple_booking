@@ -25,7 +25,9 @@
     </div>
 
     <div class="col-2 text-center d-none d-sm-block" style="text-align: center;">
-        <div class="logo-image" style="display: inline-block; background-image: url('{{ MEDIA_URL }}{% get_setting 'NAVBAR_LOGO' default='logo.png' %}');"></div>
+        <a href="{% url 'index'%}">
+            <div class="logo-image" style="display: inline-block; background-image: url('{{ MEDIA_URL }}{% get_setting 'NAVBAR_LOGO' default='logo.png' %}');"></div>
+        </a>
     </div>
 
     <div class="col-7 col-sm-5 d-flex flex-row align-items-center justify-content-end">  

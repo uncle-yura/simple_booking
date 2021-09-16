@@ -82,17 +82,17 @@ export DJANGO_RECAPTCHA_PUBLIC_KEY="DJANGO_RECAPTCHA_PUBLIC_KEY"
 
 ### Configuration django-extra-settings
 
-ABOUT_US (Text) - Text block on index page
-FAVICON_LOGO (Image) - Favicon image
-FOOTER_BLOCK (Text) - Escape block in footer
-FOOTER_COPYRIGHT (String) - Copyright string
-FOOTER_DISCLOSURE (Text) - Disclosure text in footer	
-FOOTER_FOLLOW (Text) - Escape block after follow block
-FOOTER_LOGO	(Image) - Logo image in footer block
-HEADER_BLOCK (Text) - Escape block in header
-HOW_TO_FIND	(Text) - Escape block in HOW_TO_FIND
-NAVBAR_LOGO	(Image) - Logo image in navbar
-PRICE_CURRENCY (String) - Currency string (Example: usd)
-SITE_COUNTRY (String) - Currency string (Example: USA)
-SITE_NAME (String) - Currency string (Example: Booking)
-SITE_TITLE (String) - Currency string (Example: Booking site)
+* ABOUT_US (Text) - Text block on index page
+* FAVICON_LOGO (Image) - Favicon image
+* FOOTER_BLOCK (Text) - Escape block in footer
+* FOOTER_COPYRIGHT (String) - Copyright string
+* FOOTER_DISCLOSURE (Text) - Disclosure text in footer	
+* FOOTER_FOLLOW (Text) - Escape block after follow block
+* FOOTER_LOGO	(Image) - Logo image in footer block
+* HEADER_BLOCK (Text) - Escape block in header
+* HOW_TO_FIND	(Text) - Escape block in HOW_TO_FIND
+* NAVBAR_LOGO	(Image) - Logo image in navbar
+* PRICE_CURRENCY (String) - Currency string (Example: usd)
+* SITE_COUNTRY (String) - Currency string (Example: USA)
+* SITE_NAME (String) - Currency string (Example: Booking)
+* SITE_TITLE (String) - Currency string (Example: Booking site)

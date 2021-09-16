@@ -4,9 +4,9 @@ from django.core.validators import RegexValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
-from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext as __
+from django.core.files import File
 
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -16,10 +16,12 @@ from uuid_storage.storage import UUIDStorage
 
 from dateutil import parser
 from datetime import datetime, timedelta
+from io import BytesIO
+from PIL import Image
 
 import pytz
 import json
-
+import os
 
 class JobType(models.Model):
     name = models.CharField(
@@ -51,6 +53,16 @@ class JobType(models.Model):
 
 
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
+
+
+def compress_image(image):
+    im = Image.open(image)
+    if im.mode != 'RGB':
+        im = im.convert('RGB')
+    im_io = BytesIO()
+    im.save(im_io, 'webp', quality=80, optimize=True)
+    new_image = File(im_io, os.path.splitext(image.name)[0]+".webp")
+    return new_image
 
 
 class Profile(models.Model):
@@ -145,6 +157,13 @@ class Profile(models.Model):
         help_text=_("Select users who can always book with you."),
         blank=True,
         )
+
+    def save(self,*args, **kwargs):
+        if self.avatar:
+            image = self.avatar
+            if image.size > 0.3*1024*1024:
+                self.avatar = compress_image(image)
+        super(Profile, self).save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.user}'
