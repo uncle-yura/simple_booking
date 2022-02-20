@@ -10,6 +10,7 @@
                 {% csrf_token %}
                 <p>{% translate "Are you sure you want to delete" %} "{{ object }}"?</p>               
                 <br>
+                {{ form|crispy }}     
                 <button class="btn btn-primary" type="submit">{% translate "Delete" %}</button>
                 <a class="btn btn-outline-secondary" href="{{request.META.HTTP_REFERER|escape}}">{% translate "Back" %}</a>
             </form>
