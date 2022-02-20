@@ -287,7 +287,7 @@ class Order(models.Model):
         )
 
     def __str__(self):
-        return f'{self.client}, {self.booking_date}'
+        return f'#{self.id}'
 
     @classmethod
     def make_new_event(cls, work_type, client_comment, booking_date, profile):

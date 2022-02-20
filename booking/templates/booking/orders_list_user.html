@@ -10,6 +10,7 @@
     <table class="table table-striped table-hover">
       <thead>
         <tr>
+            <td>#</td>
             <th>{% translate "Master" %}</th>                        
             <th>{% translate "Date" %}</th>
             <th>{% translate "State" %}</th>
@@ -19,6 +20,7 @@
       <tbody>
         {% for order in order_list %}
         <tr>
+          <td>{{order.id}}</td>
           <td>{{order.master}}</td>
           <td>{{order.booking_date}}</td>
           <td>{{order.get_state_display}}</td>

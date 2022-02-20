@@ -13,8 +13,8 @@ class OrdersInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('client', 'booking_date', 'master', )
-    list_filter = ('booking_date', 'master')
+    list_display = ('id', 'client', 'booking_date', 'master', )
+    list_filter = ('booking_date', 'master', 'state')
 
 
 @admin.register(JobType)

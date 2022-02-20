@@ -9,6 +9,7 @@
     <table class="table table-striped table-hover">
       <thead>
         <tr>
+            <th>#</th>
             <th>{% translate "Client" %}</th>                        
             <th>{% translate "Date" %}</th>
             <th>{% translate "Action" %}</th>
@@ -17,6 +18,7 @@
       <tbody>
         {% for order in order_list %}
         <tr>
+          <td>{{order.id}}</td>
           <td>{{order.client}}</td>
           <td>{{order.booking_date}}</td>
           <td>
