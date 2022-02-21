@@ -1,0 +1,52 @@
+version: "3.9"
+services:
+  backend: &backend
+    build:
+      context: ./backend
+      target: dev
+    volumes:
+      - ./backend:/usr/src/app
+    command:
+      python ./manage.py runserver 0.0.0.0:8080
+    ports:
+      - 8080:8080
+    environment:
+      - SQL_BACKEND=postgresql
+      - SQL_HOST=db_pg
+      - SQL_NAME=dbdevbooking
+      - SQL_PORT=5432
+      - SQL_PW=example
+      - SQL_USER=example
+    env_file: ./backend/.env.dev
+    depends_on:
+      db_pg:
+        condition: service_healthy
+
+  backend_migration:
+    <<: *backend
+    image: ${BACKEND_MIGRATION_IMAGE:-empty}:${BACKEND_MIGRATION_TAG:-empty}
+    command: >
+      sh -c "python ./manage.py migrate &&
+      python ./manage.py creategroups &&
+      python ./manage.py collectstatic --noinput &&
+      python ./manage.py seeddata &&
+      python ./manage.py compilemessages --locale=uk &&
+      python ./manage.py compilemessages --locale=ru"
+    ports: []
+
+  db_pg:
+    container_name: db_pg
+    image: postgres:12.0-alpine
+    ports:
+      - "6543:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: dbdevbooking
+      POSTGRES_USER: example
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
