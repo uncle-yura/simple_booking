@@ -7,7 +7,7 @@ services:
     volumes:
       - ./backend:/usr/src/app
     command:
-      python ./manage.py runserver 0.0.0.0:8080
+      ["wait-for-it", "-t", "60", "db_pg:5432", "--", "python", "manage.py", "runserver", "0.0.0.0:8080"]
     ports:
       - 8080:8080
     environment:
@@ -19,15 +19,15 @@ services:
       - SQL_USER=example
     env_file: ./backend/.env.dev
     depends_on:
-      db_pg:
-        condition: service_healthy
+      - db_pg
 
   backend_migration:
     <<: *backend
     image: ${BACKEND_MIGRATION_IMAGE:-empty}:${BACKEND_MIGRATION_TAG:-empty}
     command: >
-      sh -c "python ./manage.py migrate &&
+      sh -c "wait-for-it -t 60 db_pg:5432 -- python ./manage.py migrate &&
       python ./manage.py creategroups &&
+      python ./manage.py createtheme &&
       python ./manage.py collectstatic --noinput &&
       python ./manage.py seeddata &&
       python ./manage.py compilemessages --locale=uk &&
@@ -46,7 +46,7 @@ services:
       POSTGRES_DB: dbdevbooking
       POSTGRES_USER: example
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
+      test: ["CMD-SHELL", "pg_isready -U example -d dbdevbooking"]
       interval: 10s
       timeout: 5s
       retries: 5
