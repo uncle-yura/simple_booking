@@ -30,6 +30,9 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
+if DEBUG:
+    SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
+
 ALLOWED_HOSTS = os.environ.get('SERVERNAMES', '').split()
 
 if not DEBUG:
