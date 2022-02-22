@@ -189,9 +189,12 @@ class Profile(models.Model):
         return (self.clients.all() | self.white_list.all()).exclude(pk__in=self.black_list.all()).order_by().distinct()
 
     def get_gcal_account(self):
-        with open(settings.SERVICE_SECRETS) as json_file:
-            data = json.load(json_file)
-            return data['client_email']
+        try:
+            with open(settings.SERVICE_SECRETS) as json_file:
+                data = json.load(json_file)
+                return data['client_email']
+        except FileNotFoundError:
+            return None
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):

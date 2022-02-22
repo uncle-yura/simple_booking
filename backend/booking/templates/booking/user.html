@@ -50,6 +50,7 @@
                     <p class="text-muted mb-0"  style="font-size: 12px">{% get_verbose_field_name user.profile 'gcal_link' %}:</p>
                     <p> {{ user.profile.gcal_link|truncatechars:15 }} </p>
                     <p class="text-muted mb-0"  style="font-size: 12px">{% translate "Service account:" %}</p>
+                    {% if user.profile.get_gcal_account %}
                     <button type="button" onclick="copyToClipboard('service_account_link')" class="btn btn-sm btn-secondary">{% translate "Copy link" %}</button>
                     <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <span class="sr-only">{% translate "Toggle Dropdown" %}</span>
@@ -57,6 +58,9 @@
                     <div class="dropdown-menu">
                       <a class="dropdown-item" id="service_account_link" href="mailto:{{ user.profile.get_gcal_account }}">{{ user.profile.get_gcal_account }}</a>
                     </div>
+                    {% else %}
+                        {% translate "Google service account is not configured." %}
+                    {% endif %}
                     <div class="text-right mt-3">
                         <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#profileMasterModal">{% translate "Edit Profile" %}</button>
                     </div>

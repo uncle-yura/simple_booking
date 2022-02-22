@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-14 17:57+0300\n"
+"POT-Creation-Date: 2022-02-22 22:19+0200\n"
 "PO-Revision-Date: 2021-08-30 10:36\n"
 "Last-Translator: uncle-yura <uncle-yura@tuta.io>\n"
 "Language-Team: Ukrainian\n"
@@ -28,7 +28,7 @@ msgid "Are you sure you want to delete your account?"
 msgstr "Ви впевнені, що хочете видалити свій обліковий запис?"
 
 #: .\base\templates\base\delete_user.html:14
-#: .\booking\templates\booking\orders_list_user.html:28
+#: .\booking\templates\booking\orders_list_user.html:30
 #: .\booking\templates\booking\update_order.html:32
 msgid "Cancel"
 msgstr "Скасувати"
@@ -72,7 +72,7 @@ msgid "View all prices"
 msgstr "Переглянути всі ціни"
 
 #: .\base\templates\base\index.html:72 .\templates\includes\navbar.html:18
-#: .\templates\includes\navbar.html:41
+#: .\templates\includes\navbar.html:43
 msgid "Book a service"
 msgstr "Запис"
 
@@ -84,10 +84,10 @@ msgstr "Наші ціни"
 #: .\booking\templates\booking\new_order.html:62
 #: .\booking\templates\booking\update_order.html:56
 #: .\booking\templates\booking\update_order.html:64
-#: .\booking\templates\booking\user.html:95
-#: .\booking\templates\booking\user.html:108
-#: .\booking\templates\booking\user.html:120
-#: .\booking\templates\booking\user.html:132
+#: .\booking\templates\booking\user.html:99
+#: .\booking\templates\booking\user.html:112
+#: .\booking\templates\booking\user.html:124
+#: .\booking\templates\booking\user.html:136
 #: .\booking\templates\booking\view_user.html:56
 #: .\booking\templates\booking\view_user.html:68
 msgid "Close"
@@ -100,12 +100,12 @@ msgstr "Закрити"
 msgid "Name"
 msgstr "Ім'я"
 
-#: .\base\templates\base\index.html:90 .\booking\models.py:37
+#: .\base\templates\base\index.html:90 .\booking\models.py:39
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2186
 msgid "Time"
 msgstr "Час"
 
-#: .\base\templates\base\index.html:91 .\booking\models.py:208
+#: .\base\templates\base\index.html:91 .\booking\models.py:230
 #: .\booking\templates\booking\price_list_public.html:13
 #: .\booking\templates\booking\price_list_user.html:13
 msgid "Price"
@@ -335,232 +335,232 @@ msgstr "Введіть Ваше прізвище тут."
 msgid "Enter your email address here."
 msgstr "Введіть адресу Вашої електронної пошти."
 
-#: .\booking\models.py:26
+#: .\booking\models.py:28
 msgid "Job name"
 msgstr "Назва"
 
-#: .\booking\models.py:27
+#: .\booking\models.py:29
 msgid "Enter here job name."
 msgstr "Введіть тут назву роботи."
 
-#: .\booking\models.py:31
+#: .\booking\models.py:33
 msgid "Description"
 msgstr "Опис"
 
-#: .\booking\models.py:32
+#: .\booking\models.py:34
 msgid "Enter here the text to be displayed as description of job. "
 msgstr "Введіть тут текст, який буде відображатися як опис роботи. "
 
-#: .\booking\models.py:38
+#: .\booking\models.py:40
 msgid "Enter here the time it takes for this job."
 msgstr "Введіть тут час, необхідний для цієї роботи."
 
-#: .\booking\models.py:42 .\gallery\models.py:20
+#: .\booking\models.py:44 .\gallery\models.py:20
 #: .\venv\Lib\site-packages\django\db\models\fields\files.py:375
 msgid "Image"
 msgstr "Зображення"
 
-#: .\booking\models.py:43
+#: .\booking\models.py:45
 msgid "Upload your cover image here."
 msgstr "Завантажте зображення для обкладинки тут."
 
-#: .\booking\models.py:58
+#: .\booking\models.py:70
 msgid "All"
 msgstr "Всі"
 
-#: .\booking\models.py:59 .\booking\templates\booking\user.html:41
+#: .\booking\models.py:71 .\booking\templates\booking\user.html:41
 msgid "My clients"
 msgstr "Мої клієнти"
 
-#: .\booking\models.py:60
+#: .\booking\models.py:72
 msgid "Verified clients"
 msgstr "Перевірені клієнти"
 
-#: .\booking\models.py:61
+#: .\booking\models.py:73
 msgid "Nobody"
 msgstr "Ніхто"
 
-#: .\booking\models.py:69
+#: .\booking\models.py:81
 msgid "Phone number must be entered in the format: '+380123456789'."
 msgstr "Номер телефону повинен бути введений в форматі: '+380123456789'."
 
-#: .\booking\models.py:73
+#: .\booking\models.py:85
 msgid "Profile photo"
 msgstr "Фотографія профілю"
 
-#: .\booking\models.py:74
+#: .\booking\models.py:86
 msgid "Upload your avatar image here."
 msgstr "Завантажити ваш аватар."
 
-#: .\booking\models.py:80
+#: .\booking\models.py:92
 msgid "Phone"
 msgstr "Телефон"
 
-#: .\booking\models.py:81
+#: .\booking\models.py:93
 msgid "Enter your phone number here (Example: +380123456789)"
 msgstr "Введіть тут Ваш номер телефону (приклад: +380123456789)"
 
-#: .\booking\models.py:87 .\booking\models.py:242
+#: .\booking\models.py:99 .\booking\models.py:264
 msgid "Comment"
 msgstr "Коментар"
 
-#: .\booking\models.py:88
+#: .\booking\models.py:100
 msgid "Enter the text about the profile owner here."
 msgstr "Введіть текст про власника профілю тут."
 
-#: .\booking\models.py:93
+#: .\booking\models.py:105
 msgid "Discount"
 msgstr "Знижка"
 
-#: .\booking\models.py:94
+#: .\booking\models.py:106
 msgid "Enter the profile discount value here."
 msgstr "Введіть тут значення знижки для профілю."
 
-#: .\booking\models.py:101 .\booking\templates\booking\view_user.html:42
+#: .\booking\models.py:113 .\booking\templates\booking\view_user.html:42
 msgid "Masters"
 msgstr "Майстри"
 
-#: .\booking\models.py:102
+#: .\booking\models.py:114
 msgid "Your masters listed here."
 msgstr "Тут перераховані ваші майстри."
 
-#: .\booking\models.py:108
+#: .\booking\models.py:120
 msgid "Clients"
 msgstr "Клієнти"
 
-#: .\booking\models.py:109
+#: .\booking\models.py:121
 msgid "Your clients listed here."
 msgstr "Тут перераховані Ваші клієнти."
 
-#: .\booking\models.py:114
+#: .\booking\models.py:126
 msgid "GCalendar link"
 msgstr "Посилання на GCalendar"
 
-#: .\booking\models.py:115
+#: .\booking\models.py:127
 msgid "Enter your google calendar link here."
 msgstr "Введіть тут посилання на Ваш Google календар."
 
-#: .\booking\models.py:120 .\booking\templates\booking\user.html:44
+#: .\booking\models.py:132 .\booking\templates\booking\user.html:44
 msgid "Timetable"
 msgstr "Розклад"
 
-#: .\booking\models.py:121
+#: .\booking\models.py:133
 msgid "Select your current service booking mode."
 msgstr "Оберіть свій поточний режим бронювання послуг."
 
-#: .\booking\models.py:127
+#: .\booking\models.py:139
 msgid "Booking delay"
 msgstr "Затримка бронювання"
 
-#: .\booking\models.py:128
+#: .\booking\models.py:140
 msgid "Enter the minimum delay for booking today."
 msgstr "Введіть мінімальну затримку для бронювання на сьогодні."
 
-#: .\booking\models.py:132
+#: .\booking\models.py:144
 msgid "Booking range"
 msgstr "Діапазон бронювання"
 
-#: .\booking\models.py:133
+#: .\booking\models.py:145
 msgid "Enter how many days in advance the booking can be made."
 msgstr "Введіть скільки днів заздалегідь можна зробити бронювання."
 
-#: .\booking\models.py:138
+#: .\booking\models.py:150
 #: .\booking\templates\booking\clients_list_user.html:38 .\booking\views.py:377
 msgid "Black list"
 msgstr "Чорний список"
 
-#: .\booking\models.py:139
+#: .\booking\models.py:151
 msgid "Select users who cannot book with you."
 msgstr "Виберіть користувачів, які не зможуть у Вас забронювати."
 
-#: .\booking\models.py:144
+#: .\booking\models.py:156
 #: .\booking\templates\booking\clients_list_user.html:37 .\booking\views.py:356
 msgid "White list"
 msgstr "Білий список"
 
-#: .\booking\models.py:145
+#: .\booking\models.py:157
 msgid "Select users who can always book with you."
 msgstr "Виберіть користувачів, які завжди зможуть забронювати у Вас."
 
-#: .\booking\models.py:195
+#: .\booking\models.py:217
 msgid "Owner"
 msgstr "Власник"
 
-#: .\booking\models.py:196
+#: .\booking\models.py:218
 msgid "Select the pricelist owner here."
 msgstr "Виберіть власника прайс-листа тут."
 
-#: .\booking\models.py:202 .\booking\models.py:233
+#: .\booking\models.py:224 .\booking\models.py:255
 #: .\booking\templates\booking\price_list_public.html:12
 #: .\booking\templates\booking\price_list_user.html:12
 msgid "Job"
 msgstr "Робота"
 
-#: .\booking\models.py:203
+#: .\booking\models.py:225
 msgid "Select the job here."
 msgstr "Оберіть роботи тут."
 
-#: .\booking\models.py:209
+#: .\booking\models.py:231
 msgid "Enter the price for this job here."
 msgstr "Введіть ціну для цієї роботи тут."
 
-#: .\booking\models.py:220
+#: .\booking\models.py:242
 msgid "Active"
 msgstr "Активно"
 
-#: .\booking\models.py:221
+#: .\booking\models.py:243
 msgid "Canceled"
 msgstr "Скасовано"
 
-#: .\booking\models.py:225
+#: .\booking\models.py:247
 #: .\booking\templates\booking\clients_list_user.html:12
-#: .\booking\templates\booking\orders_list_master.html:12
+#: .\booking\templates\booking\orders_list_master.html:13
 msgid "Client"
 msgstr "Клієнт"
 
-#: .\booking\models.py:226
+#: .\booking\models.py:248
 msgid "Select the client here."
 msgstr "Виберіть клієнта тут."
 
-#: .\booking\models.py:234
+#: .\booking\models.py:256
 msgid "Select the job for this order here."
 msgstr "Виберіть завдання для цього замовлення тут."
 
-#: .\booking\models.py:237
-#: .\booking\templates\booking\orders_list_master.html:13
-#: .\booking\templates\booking\orders_list_user.html:14
+#: .\booking\models.py:259
+#: .\booking\templates\booking\orders_list_master.html:14
+#: .\booking\templates\booking\orders_list_user.html:15
 msgid "Date"
 msgstr "Дата"
 
-#: .\booking\models.py:238
+#: .\booking\models.py:260
 msgid "Select your booking date here."
 msgstr "Оберіть дату бронювання тут."
 
-#: .\booking\models.py:243
+#: .\booking\models.py:265
 msgid "Enter a comment for your booking here."
 msgstr "Введіть свій коментар до вашого бронювання тут."
 
-#: .\booking\models.py:249 .\booking\templates\booking\orders_list_user.html:13
+#: .\booking\models.py:271 .\booking\templates\booking\orders_list_user.html:14
 msgid "Master"
 msgstr "Майстер"
 
-#: .\booking\models.py:250
+#: .\booking\models.py:272
 msgid "Select the master here."
 msgstr "Виберіть майстра тут."
 
-#: .\booking\models.py:257 .\booking\templates\booking\orders_list_user.html:15
+#: .\booking\models.py:279 .\booking\templates\booking\orders_list_user.html:16
 msgid "State"
 msgstr "Стан"
 
-#: .\booking\models.py:258
+#: .\booking\models.py:280
 msgid "Select your booking status here."
 msgstr "Виберіть статус бронювання тут."
 
-#: .\booking\models.py:264
+#: .\booking\models.py:286
 msgid "Event"
 msgstr "Подія"
 
-#: .\booking\models.py:265
+#: .\booking\models.py:287
 msgid "Google calendar event ID."
 msgstr "Подія Google календаря."
 
@@ -573,15 +573,15 @@ msgid "Last action"
 msgstr "Остання дія"
 
 #: .\booking\templates\booking\clients_list_user.html:14
-#: .\booking\templates\booking\orders_list_master.html:14
-#: .\booking\templates\booking\orders_list_user.html:16
+#: .\booking\templates\booking\orders_list_master.html:15
+#: .\booking\templates\booking\orders_list_user.html:17
 #: .\booking\templates\booking\price_list_user.html:14
 msgid "Action"
 msgstr "Дія"
 
 #: .\booking\templates\booking\clients_list_user.html:23
-#: .\booking\templates\booking\orders_list_master.html:23
-#: .\booking\templates\booking\orders_list_user.html:30
+#: .\booking\templates\booking\orders_list_master.html:25
+#: .\booking\templates\booking\orders_list_user.html:32
 msgid "View"
 msgstr "Дивитись"
 
@@ -590,12 +590,12 @@ msgid "There are no clients."
 msgstr "Немає клієнтів."
 
 #: .\booking\templates\booking\clients_list_user.html:41
-#: .\booking\templates\booking\orders_list_master.html:38
-#: .\booking\templates\booking\orders_list_user.html:45
+#: .\booking\templates\booking\orders_list_master.html:40
+#: .\booking\templates\booking\orders_list_user.html:47
 #: .\booking\templates\booking\price_list_user.html:41
 #: .\booking\templates\booking\view_order.html:36
 #: .\booking\templates\booking\view_user.html:77
-#: .\gallery\templates\gallery\photo.html:17 .\templates\delete_form.html:14
+#: .\gallery\templates\gallery\photo.html:17 .\templates\delete_form.html:15
 #: .\templates\update_form.html:15
 msgid "Back"
 msgstr "Назад"
@@ -622,12 +622,12 @@ msgstr "Завантажується..."
 msgid "Orders list"
 msgstr "Список замовлень"
 
-#: .\booking\templates\booking\orders_list_master.html:33
-#: .\booking\templates\booking\orders_list_user.html:40
+#: .\booking\templates\booking\orders_list_master.html:35
+#: .\booking\templates\booking\orders_list_user.html:42
 msgid "There are no orders."
 msgstr "Нема замовлень."
 
-#: .\booking\templates\booking\orders_list_user.html:27
+#: .\booking\templates\booking\orders_list_user.html:29
 #: .\booking\templates\booking\price_list_user.html:23
 #: .\gallery\templates\gallery\photo_list.html:27
 msgid "Edit"
@@ -648,7 +648,7 @@ msgstr "Прайс-лист"
 
 #: .\booking\templates\booking\price_list_user.html:24
 #: .\gallery\templates\gallery\photo_list.html:31
-#: .\templates\delete_form.html:13
+#: .\templates\delete_form.html:14
 #: .\venv\Lib\site-packages\django\forms\formsets.py:417
 msgid "Delete"
 msgstr "Видалити"
@@ -679,8 +679,8 @@ msgid "Delete profile"
 msgstr "Видалити профіль"
 
 #: .\booking\templates\booking\user.html:29
-#: .\booking\templates\booking\user.html:61
-#: .\booking\templates\booking\user.html:94
+#: .\booking\templates\booking\user.html:65
+#: .\booking\templates\booking\user.html:98
 msgid "Edit Profile"
 msgstr "Редагувати профіль"
 
@@ -700,37 +700,41 @@ msgstr "Мої роботи"
 msgid "Service account:"
 msgstr "Обліковий запис сервісу:"
 
-#: .\booking\templates\booking\user.html:53
+#: .\booking\templates\booking\user.html:54
 msgid "Copy link"
 msgstr "Скопіювати"
 
-#: .\booking\templates\booking\user.html:55
+#: .\booking\templates\booking\user.html:56
 msgid "Toggle Dropdown"
 msgstr "Переключити випадаючий список"
 
-#: .\booking\templates\booking\user.html:69
+#: .\booking\templates\booking\user.html:62
+msgid "Google service account is not configured."
+msgstr "Сервіс аккаунт Google не налаштовано."
+
+#: .\booking\templates\booking\user.html:73
 msgid "Your orders"
 msgstr "Ваші замовлення"
 
-#: .\booking\templates\booking\user.html:72
+#: .\booking\templates\booking\user.html:76
 msgid "My orders"
 msgstr "Мої замовлення"
 
-#: .\booking\templates\booking\user.html:74
+#: .\booking\templates\booking\user.html:78
 msgid "Your masters:"
 msgstr "Ваші майстри:"
 
-#: .\booking\templates\booking\user.html:82
+#: .\booking\templates\booking\user.html:86
 msgid "You haven't had a single master yet."
 msgstr "У вас ще немає жодного майстра."
 
-#: .\booking\templates\booking\user.html:106
-#: .\booking\templates\booking\user.html:130
+#: .\booking\templates\booking\user.html:110
+#: .\booking\templates\booking\user.html:134
 #: .\booking\templates\booking\view_user.html:66
 msgid "Save changes"
 msgstr "Зберегти зміни"
 
-#: .\booking\templates\booking\user.html:119
+#: .\booking\templates\booking\user.html:123
 msgid "Edit Master Profile"
 msgstr "Редагувати майстер-профіль"
 
@@ -953,15 +957,15 @@ msgstr "Оновити фото"
 msgid "Delete photo"
 msgstr "Видалити фото"
 
-#: .\simple_booking\settings.py:195
+#: .\simple_booking\settings.py:198
 msgid "English"
 msgstr "Англійська"
 
-#: .\simple_booking\settings.py:196
+#: .\simple_booking\settings.py:199
 msgid "Ukrainian"
 msgstr "Українська"
 
-#: .\simple_booking\settings.py:197
+#: .\simple_booking\settings.py:200
 msgid "Russian"
 msgstr "Російська"
 

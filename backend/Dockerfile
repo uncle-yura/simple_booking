@@ -1,6 +1,6 @@
 FROM python:3.7 AS base
 
-WORKDIR /usr/src/app
+WORKDIR /usr/srс/backend
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
     gettext \
