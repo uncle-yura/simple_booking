@@ -2,7 +2,7 @@
 
 import datetime
 from django.db import migrations, models
-import uuid_storage.storage
+import base.storage
 
 
 class Migration(migrations.Migration):
@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(blank=True, help_text='Enter here the photo title.', max_length=200, verbose_name='Title')),
                 ('published', models.DateTimeField(default=datetime.datetime.now, help_text='Enter here thr published date.', verbose_name='Date published')),
-                ('image', models.ImageField(help_text='Upload your image here.', storage=uuid_storage.storage.UUIDStorage, upload_to='images/', verbose_name='Image')),
+                ('image', models.ImageField(help_text='Upload your image here.', storage=base.storage.UUIDStorage, upload_to='images/', verbose_name='Image')),
             ],
         ),
     ]

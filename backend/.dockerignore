@@ -18,7 +18,6 @@ __pycache__
 
 media/
 static/
-pgdata/
 venv/
 
 Dockerfile

@@ -5,7 +5,7 @@ from django.conf import settings
 import django.core.validators
 from django.db import migrations, models
 import django.db.models.deletion
-import uuid_storage.storage
+import base.storage
 
 
 class Migration(migrations.Migration):
@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(help_text='Enter here job name.', max_length=100, verbose_name='Job name')),
                 ('description', models.TextField(blank=True, help_text='Enter here the text to be displayed as description of job. ', max_length=200, verbose_name='Description')),
                 ('time_interval', models.DurationField(default=datetime.timedelta(seconds=900), help_text='Enter here the time it takes for this job.', verbose_name='Time')),
-                ('image', models.ImageField(blank=True, help_text='Upload your cover image here.', storage=uuid_storage.storage.UUIDStorage, upload_to='images/', verbose_name='Image')),
+                ('image', models.ImageField(blank=True, help_text='Upload your cover image here.', storage=base.storage.UUIDStorage, upload_to='images/', verbose_name='Image')),
             ],
         ),
         migrations.CreateModel(
@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
             name='Profile',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('avatar', models.ImageField(blank=True, help_text='Upload your avatar image here.', storage=uuid_storage.storage.UUIDStorage, upload_to='images/', verbose_name='Profile photo')),
+                ('avatar', models.ImageField(blank=True, help_text='Upload your avatar image here.', storage=base.storage.UUIDStorage, upload_to='images/', verbose_name='Profile photo')),
                 ('phone_number', models.CharField(blank=True, help_text='Enter your phone number here (Example: +380123456789)', max_length=17, validators=[django.core.validators.RegexValidator(message="Phone number must be entered in the format: '+380123456789'.", regex='^\\+?1?\\d{9,15}$')], verbose_name='Phone')),
                 ('comment', models.TextField(blank=True, help_text='Enter the text about the profile owner here.', max_length=200, verbose_name='Comment')),
                 ('discount', models.DecimalField(decimal_places=2, default=0, help_text='Enter the profile discount value here.', max_digits=2, verbose_name='Discount')),

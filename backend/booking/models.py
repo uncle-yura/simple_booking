@@ -12,7 +12,7 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-from uuid_storage.storage import UUIDStorage
+from base.storage import UUIDStorage
 
 from dateutil import parser
 from datetime import datetime, timedelta

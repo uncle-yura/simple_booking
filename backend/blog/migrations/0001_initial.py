@@ -4,7 +4,7 @@ import blog.models
 import datetime
 from django.db import migrations, models
 import tinymce.models
-import uuid_storage.storage
+import base.storage
 
 
 class Migration(migrations.Migration):
@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('article_title', models.CharField(help_text='Enter here the article title.', max_length=200, verbose_name='Title')),
                 ('article_published', models.DateTimeField(default=datetime.datetime.now, help_text='Enter here thr published date.', verbose_name='Date published')),
-                ('article_image', models.ImageField(help_text='Upload article cover here.', storage=uuid_storage.storage.UUIDStorage, upload_to='images/', verbose_name='Cover')),
+                ('article_image', models.ImageField(help_text='Upload article cover here.', storage=base.storage.UUIDStorage, upload_to='images/', verbose_name='Cover')),
                 ('article_content', tinymce.models.HTMLField(help_text='Enter here the article content.', verbose_name='Article')),
                 ('article_slug', models.SlugField(default=blog.models.generate_slug, help_text='Enter here the link of article (Example: happy_new_post).', verbose_name='Link')),
                 ('article_top_posts', models.BooleanField(default=False, help_text='Activate if you want to pin this post on the main page.', verbose_name='Top')),

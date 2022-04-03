@@ -75,7 +75,6 @@ INSTALLED_APPS = [
     'contact.apps.ContactConfig',
     'gallery.apps.GalleryConfig',
     'django_cleanup.apps.CleanupConfig',
-    'uuid_storage.apps.UuidStorageConfig',
 ]
 
 MIDDLEWARE = [
@@ -121,7 +120,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', ]
 
 SITE_ID = 1
 
-ROOT_URLCONF = 'simple_booking.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -147,7 +146,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'simple_booking.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database

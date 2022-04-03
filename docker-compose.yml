@@ -1,13 +1,28 @@
 version: "3.9"
+volumes:
+  static_volume:
+  locale_volume:
+  media_volume:
+  db_volume:
+
 services:
   backend: &backend
     build:
       context: ./backend
       target: dev
     volumes:
-      - ./backend:/usr/src/backend
-    command:
-      ["wait-for-it", "-t", "60", "db_pg:5432", "--", "python", "manage.py", "runserver", "0.0.0.0:8080"]
+      - static_volume:/usr/src/backend/static
+      - locale_volume:/usr/src/backend/locale
+      - media_volume:/usr/src/backend/media
+      - ./backend/base:/usr/src/backend/base
+      - ./backend/blog:/usr/src/backend/blog
+      - ./backend/booking:/usr/src/backend/booking
+      - ./backend/config:/usr/src/backend/config
+      - ./backend/contact:/usr/src/backend/contact
+      - ./backend/gallery:/usr/src/backend/gallery
+      - ./backend/templates:/usr/src/backend/templates
+    command: >
+      sh -c "wait-for-it -t 60 db_pg:5432 -- python ./manage.py runserver 0.0.0.0:8080"
     ports:
       - 8080:8080
     environment:
@@ -40,7 +55,7 @@ services:
     ports:
       - "6543:5432"
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - db_volume:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: example
       POSTGRES_DB: dbdevbooking

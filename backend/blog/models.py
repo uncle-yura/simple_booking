@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy  as _
 
 from tinymce.models import HTMLField
-from uuid_storage.storage import UUIDStorage
+from base.storage import UUIDStorage
 from datetime import datetime
 
 
