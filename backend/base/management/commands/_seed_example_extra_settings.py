@@ -2,22 +2,17 @@ import os
 import shutil
 
 from django.conf import settings
+from base.services import get_example_assets_folder, get_lorem_ipsum
 from extra_settings.models import Setting
 
 
-class SeedExampleExtraSettings:
+class ExampleExtraSettings:
     FILENAME = "favicon.png"
     DATA = (
         (
             "ABOUT_US",
             Setting.TYPE_TEXT,
-            "<p>Lorem <b>ipsum</b> dolor sit amet, consectetur adipiscing elit, \
-sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris \
-nisi ut aliquip ex ea commodo consequat.</p> <p>Duis aute irure dolor in \
-reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \
-pariatur. Excepteur sint occaecat cupidatat non proident, sunt in \
-culpa qui officia deserunt mollit anim id est laborum.</p>",
+            get_lorem_ipsum(),
         ),
         ("FAVICON_LOGO", Setting.TYPE_IMAGE, FILENAME),
         ("FOOTER_BLOCK", Setting.TYPE_TEXT, "<!-- Escape block in footer -->"),
@@ -25,10 +20,7 @@ culpa qui officia deserunt mollit anim id est laborum.</p>",
         (
             "FOOTER_DISCLOSURE",
             Setting.TYPE_TEXT,
-            "<p>Lorem <b>ipsum</b> dolor sit amet, consectetur adipiscing elit, \
-sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris \
-nisi ut aliquip ex ea commodo consequat.</p>",
+            get_lorem_ipsum()[:248],
         ),
         (
             "FOOTER_FOLLOW",
@@ -44,7 +36,7 @@ nisi ut aliquip ex ea commodo consequat.</p>",
 embed?pb=!1m18!1m12!1m3!1d2540.801446267819!2d30.5194681006375!3d50.444798928654905!\
 2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4ce5670881b1d%3A0xf37306f112c\
 fa22c!2z0JrQuNGX0LIsINCj0LrRgNCw0ZfQvdCwLCAwMjAwMA!5e0!3m2!1suk!2sus!4v1648989135754\
-!5m2!1suk!2sus" width="600" height="450" style="border:0;" allowfullscreen="" \
+!5m2!1suk!2sus" height="450" style="border:0;" allowfullscreen="" \
 loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
         ),
         ("NAVBAR_LOGO", Setting.TYPE_IMAGE, FILENAME),
@@ -58,14 +50,10 @@ loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
         self.stdout = stdout
         self.stderr = stderr
 
-    def create_data(self, *args, **kwargs):
-        assets = os.path.join(
-            settings.BASE_DIR, "base", "management", "commands", "assets"
-        )
-
+    def create_data(self):
         shutil.copyfile(
             os.path.join(
-                assets,
+                get_example_assets_folder(),
                 self.FILENAME,
             ),
             os.path.join(settings.MEDIA_ROOT, self.FILENAME),

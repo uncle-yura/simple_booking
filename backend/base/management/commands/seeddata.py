@@ -1,8 +1,11 @@
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from ._seed_example_data import SeedExampleData
-from ._seed_example_extra_settings import SeedExampleExtraSettings
-from ._seed_user_data import SeedUserData
+from ._seed_example_gallery_data import ExampleGalleryData
+from ._seed_example_booking_data import ExampleBookingData
+from ._seed_example_extra_settings import ExampleExtraSettings
+from ._seed_example_user_data import ExampleUserData
+from ._seed_example_blog_data import ExampleBlogData
+from ._seed_example_contact_data import ExampleContactData
 
 
 class Command(BaseCommand):
@@ -10,17 +13,15 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         with transaction.atomic():
-            self.stdout.write("Seeding auth_user table")
-            seed_users = SeedUserData(self.stdout, self.stderr)
-            seed_users.create_users()
-            self.stdout.write(self.style.SUCCESS("Done"))
-
-            self.stdout.write("Seeding extra_settings table")
-            seed_settings = SeedExampleExtraSettings(self.stdout, self.stderr)
-            seed_settings.create_data()
-            self.stdout.write(self.style.SUCCESS("Done"))
-
-            self.stdout.write("Seeding data table")
-            seed_data = SeedExampleData(self.stdout, self.stderr)
-            seed_data.create_data()
-            self.stdout.write(self.style.SUCCESS("Done"))
+            for data in (
+                ExampleUserData,
+                ExampleExtraSettings,
+                ExampleGalleryData,
+                ExampleBookingData,
+                ExampleContactData,
+                ExampleBlogData,
+            ):
+                self.stdout.write(f"Seeding {data.__name__}")
+                seed_users = data(self.stdout, self.stderr)
+                seed_users.create_data()
+                self.stdout.write(self.style.SUCCESS("Done"))
