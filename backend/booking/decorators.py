@@ -17,11 +17,11 @@ def require_ajax(func):
 
 def check_orders_count(func):
     def decorator(request, *args, **kwargs):
-        order_limit = Setting.get('FUTURE_ORDERS_LIMIT', default=3)
+        order_limit = Setting.get("FUTURE_ORDERS_LIMIT", default=3)
 
         if request.user.profile.get_future_orders_count() >= order_limit:
             messages.error(request, _("You have too many booked orders."))
-            return redirect('index')
+            return redirect("index")
         return func(request, *args, **kwargs)
 
     return decorator
@@ -29,8 +29,8 @@ def check_orders_count(func):
 
 def is_master(func):
     def decorator(request, *args, **kwargs):
-        if not request.user.groups.filter(name='Master').exists():
-            return redirect('index')
+        if not request.user.groups.filter(name="Master").exists():
+            return redirect("index")
         return func(request, *args, **kwargs)
 
     return decorator

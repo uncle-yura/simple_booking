@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import *
+from .views import PhotoListView, PhotoCreateView, PhotoDeleteView, PhotoUpdateView, PhotoDetailView
 
 urlpatterns = [
     path("", PhotoListView.as_view(), name="gallery-home"),

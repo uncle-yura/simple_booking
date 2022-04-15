@@ -25,18 +25,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get(
-    'DJANGO_SECRET_KEY', 'django-insecure-x9-5w5rix&5(-o$lgplwo!kvxl(a3p9o=0l6!c%$5fm4n#32-!')
+    "DJANGO_SECRET_KEY",
+    "django-insecure-x9-5w5rix&5(-o$lgplwo!kvxl(a3p9o=0l6!c%$5fm4n#32-!",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
+DEBUG = bool(os.environ.get("DJANGO_DEBUG", True))
 
 if DEBUG:
-    SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
+    SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
 
-ALLOWED_HOSTS = os.environ.get('SERVERNAMES', '').split()
+ALLOWED_HOSTS = os.environ.get("SERVERNAMES", "").split()
 
 if not DEBUG:
-    SECURE_HSTS_SECONDS = int(os.environ.get('SERVER_HSTS_SECONDS', 3600))
+    SECURE_HSTS_SECONDS = int(os.environ.get("SERVER_HSTS_SECONDS", 3600))
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     SECURE_SSL_REDIRECT = True
@@ -45,108 +47,115 @@ if not DEBUG:
     SESSION_SAVE_EVERY_REQUEST = True
     CSRF_COOKIE_SECURE = True
 
-UNDER_CONSTRUCTION = bool(os.environ.get('DJANGO_UNDER_CONSTRUCTION', False))
+UNDER_CONSTRUCTION = bool(os.environ.get("DJANGO_UNDER_CONSTRUCTION", False))
 
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_honeypot',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django_underconstruction',
-    'django.contrib.sites',
-    'bootstrap_customizer',
-    'colorful',
-    'social_django',
-    'captcha',
-    'bootstrap',
-    'fontawesome',
-    'crispy_forms',
-    'extra_settings',
-    'verify_email.apps.VerifyEmailConfig',
-    'tinymce',
-    'booking.apps.BookingConfig',
-    'blog.apps.BlogConfig',
-    'base.apps.BaseConfig',
-    'contact.apps.ContactConfig',
-    'gallery.apps.GalleryConfig',
-    'django_cleanup.apps.CleanupConfig',
+    "admin_honeypot",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django_underconstruction",
+    "django.contrib.sites",
+    "bootstrap_customizer",
+    "colorful",
+    "social_django",
+    "captcha",
+    "bootstrap",
+    "fontawesome",
+    "crispy_forms",
+    "extra_settings",
+    "verify_email.apps.VerifyEmailConfig",
+    "tinymce",
+    "booking.apps.BookingConfig",
+    "blog.apps.BlogConfig",
+    "base.apps.BaseConfig",
+    "contact.apps.ContactConfig",
+    "gallery.apps.GalleryConfig",
+    "django_cleanup.apps.CleanupConfig",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_underconstruction.middleware.UnderConstructionMiddleware',
-    'django.contrib.sites.middleware.CurrentSiteMiddleware',
-    'bootstrap_customizer.middleware.BootstrapThemeMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_underconstruction.middleware.UnderConstructionMiddleware",
+    "django.contrib.sites.middleware.CurrentSiteMiddleware",
+    "bootstrap_customizer.middleware.BootstrapThemeMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.facebook.FacebookOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
+    "social_core.backends.google.GoogleOAuth2",
+    "social_core.backends.facebook.FacebookOAuth2",
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
-SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get(
-    'DJANGO_AUTH_FACEBOOK_KEY', '123456789012345')
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get("DJANGO_AUTH_FACEBOOK_KEY", "123456789012345")
 SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get(
-    'DJANGO_AUTH_FACEBOOK_SECRET', '1234567890abcdef1234567890abcdef')
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', ]
-SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-    'fields': 'id, name, email, picture.type(large)'
-}
+    "DJANGO_AUTH_FACEBOOK_SECRET", "1234567890abcdef1234567890abcdef"
+)
+SOCIAL_AUTH_FACEBOOK_SCOPE = [
+    "email",
+]
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {"fields": "id, name, email, picture.type(large)"}
 SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [
-    ('name', 'name'),
-    ('email', 'email'),
-    ('picture', 'picture'),
+    ("name", "name"),
+    ("email", "email"),
+    ("picture", "picture"),
 ]
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get(
-    'DJANGO_AUTH_GOOGLE_KEY', '123456789012-1234567890abcdefghijklmnoprstuvwx.apps.googleusercontent.com')
+    "DJANGO_AUTH_GOOGLE_KEY",
+    "123456789012-1234567890abcdefghijklmnoprstuvwx.apps.googleusercontent.com",
+)
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get(
-    'DJANGO_AUTH_GOOGLE_SECRET', '1234567890abcdefghijklm ')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', ]
+    "DJANGO_AUTH_GOOGLE_SECRET", "1234567890abcdefghijklm "
+)
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    "email",
+]
 
 SITE_ID = 1
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.template.context_processors.media',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'blog.context_processors.menu',
-                'blog.context_processors.share',
-                'blog.context_processors.top_posts',
-                'contact.context_processors.contact_short',
-                'contact.context_processors.contact_social',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [
+            os.path.join(BASE_DIR, "templates"),
+        ],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.template.context_processors.media",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "blog.context_processors.menu",
+                "blog.context_processors.share",
+                "blog.context_processors.top_posts",
+                "contact.context_processors.contact_short",
+                "contact.context_processors.contact_social",
+                "social_django.context_processors.backends",
+                "social_django.context_processors.login_redirect",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = "config.wsgi.application"
 
 
 # Database
@@ -157,14 +166,13 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
-
-    'default': {
-        'ENGINE': 'django.db.backends.'+os.environ.get('SQL_BACKEND', 'postgresql_psycopg2'),
-        'NAME': os.environ.get('SQL_NAME', 'django_db'),
-        'USER': os.environ.get('SQL_USER', 'user_name'),
-        'PASSWORD': os.environ.get('SQL_PW', 'password'),
-        'HOST': os.environ.get('SQL_HOST', '127.0.0.1'),
-        'PORT': os.environ.get('SQL_PORT', '5432'),
+    "default": {
+        "ENGINE": "django.db.backends." + os.environ.get("SQL_BACKEND", "postgresql_psycopg2"),
+        "NAME": os.environ.get("SQL_NAME", "django_db"),
+        "USER": os.environ.get("SQL_USER", "user_name"),
+        "PASSWORD": os.environ.get("SQL_PW", "password"),
+        "HOST": os.environ.get("SQL_HOST", "127.0.0.1"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
 
@@ -174,16 +182,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -191,15 +199,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = os.environ.get('DJANGO_LANGUAGR_CODE', 'en-GB')
+LANGUAGE_CODE = os.environ.get("DJANGO_LANGUAGR_CODE", "en-GB")
 
 LANGUAGES = [
-   ('en', _('English')),
-   ('uk', _('Ukrainian')),
-   ('ru', _('Russian')),
+    ("en", _("English")),
+    ("uk", _("Ukrainian")),
+    ("ru", _("Russian")),
 ]
 
-TIME_ZONE = 'Europe/Kiev'
+TIME_ZONE = "Europe/Kiev"
 
 USE_I18N = True
 
@@ -207,96 +215,97 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'),]
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, "locale"),
+]
 
-ADMIN_URL = os.environ.get('DJANGO_ADMIN_URL', 'notsecureadmin')
+ADMIN_URL = os.environ.get("DJANGO_ADMIN_URL", "notsecureadmin")
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = "/"
 
 VERIFICATION_SUCCESS_TEMPLATE = None
 
 if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = os.environ.get('DJANGO_EMAIL_HOST', 'localhost')
-    EMAIL_USE_TLS = bool(os.environ.get('DJANGO_EMAIL_USE_TLS', False))
-    EMAIL_USE_SSL = bool(os.environ.get('DJANGO_EMAIL_USE_SSL', False))
-    EMAIL_PORT = int(os.environ.get('DJANGO_EMAIL_PORT', 587))
-    EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_HOST_USER', 'email')
-    EMAIL_HOST_PASSWORD = os.environ.get(
-        'DJANGO_EMAIL_HOST_PASSWORD', 'password')
-    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER # For verify email app
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = os.environ.get("DJANGO_EMAIL_HOST", "localhost")
+    EMAIL_USE_TLS = bool(os.environ.get("DJANGO_EMAIL_USE_TLS", False))
+    EMAIL_USE_SSL = bool(os.environ.get("DJANGO_EMAIL_USE_SSL", False))
+    EMAIL_PORT = int(os.environ.get("DJANGO_EMAIL_PORT", 587))
+    EMAIL_HOST_USER = os.environ.get("DJANGO_EMAIL_HOST_USER", "email")
+    EMAIL_HOST_PASSWORD = os.environ.get("DJANGO_EMAIL_HOST_PASSWORD", "password")
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # For verify email app
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MESSAGE_TAGS = {
-    messages.DEBUG: 'alert-info',
-    messages.INFO: 'alert-info',
-    messages.SUCCESS: 'alert-success',
-    messages.WARNING: 'alert-warning',
-    messages.ERROR: 'alert-danger',
+    messages.DEBUG: "alert-info",
+    messages.INFO: "alert-info",
+    messages.SUCCESS: "alert-success",
+    messages.WARNING: "alert-warning",
+    messages.ERROR: "alert-danger",
 }
 
-SERVICE_SECRETS = os.path.join(BASE_DIR, 'service_secret.json')
+SERVICE_SECRETS = os.path.join(BASE_DIR, "service_secret.json")
 
 TINYMCE_DEFAULT_CONFIG = {
-    'height': '40em',
-    'width': '100%',
-    'cleanup_on_startup': True,
-    'custom_undo_redo_levels': 20,
-    'selector': 'textarea',
-    'browser_spellcheck': False,
-    'theme': 'silver',
-    'branding': False,
-    'plugins': '''
+    "height": "40em",
+    "width": "100%",
+    "cleanup_on_startup": True,
+    "custom_undo_redo_levels": 20,
+    "selector": "textarea",
+    "browser_spellcheck": False,
+    "theme": "silver",
+    "branding": False,
+    "plugins": """
             textcolor save link media preview codesample contextmenu
             table code lists fullscreen  insertdatetime  nonbreaking
             contextmenu directionality searchreplace wordcount visualblocks
             visualchars code fullscreen autolink lists  charmap print  hr
             anchor pagebreak paste
-            ''',
-    'toolbar1': '''
+            """,
+    "toolbar1": """
             fullscreen preview | bold italic underline | fontselect,
             fontsizeselect  | forecolor backcolor | alignleft alignright |
-            aligncenter alignjustify | indent outdent 
-            ''',
-    'toolbar2': '''
+            aligncenter alignjustify | indent outdent
+            """,
+    "toolbar2": """
             visualblocks visualchars |
             charmap hr pagebreak nonbreaking anchor |  code |
             bullist numlist table |
             link media paste| codesample
-            ''',
-    'contextmenu': 'formats | link',
-    'menubar': True,
-    'statusbar': True,
-    'paste_data_images': True,
-    'block_unsupported_drop ': True,
+            """,
+    "contextmenu": "formats | link",
+    "menubar": True,
+    "statusbar": True,
+    "paste_data_images": True,
+    "block_unsupported_drop ": True,
 }
 
-RECAPTCHA_ACTIVE = bool(os.environ.get('DJANGO_RECAPTCHA_ACTIVE', False))
-RECAPTCHA_PUBLIC_KEY = os.environ.get(
-    'DJANGO_RECAPTCHA_PUBLIC_KEY', 'recaptchapublickeymustbehere')
+RECAPTCHA_ACTIVE = bool(os.environ.get("DJANGO_RECAPTCHA_ACTIVE", False))
+RECAPTCHA_PUBLIC_KEY = os.environ.get("DJANGO_RECAPTCHA_PUBLIC_KEY", "recaptchapublickeymustbehere")
 RECAPTCHA_PRIVATE_KEY = os.environ.get(
-    'DJANGO_RECAPTCHA_PRIVATE_KEY', 'recaptchaprivatekeymustbehere')
+    "DJANGO_RECAPTCHA_PRIVATE_KEY", "recaptchaprivatekeymustbehere"
+)

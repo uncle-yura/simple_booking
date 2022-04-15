@@ -3,6 +3,7 @@ import os
 import random
 from django.conf import settings
 import py_avataaars
+from PIL import Image, ImageDraw, ImageFont
 
 
 def get_example_assets_folder():
@@ -17,6 +18,17 @@ nisi ut aliquip ex ea commodo consequat.</p> <p>Duis aute irure dolor in \
 reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \
 pariatur. Excepteur sint occaecat cupidatat non proident, sunt in \
 culpa qui officia deserunt mollit anim id est laborum.</p>"
+
+
+def save_generated_image(filename, text):
+    colors = ["black", "white", "blue", "red", "green", "yellow", "orange", "brown"]
+    img = Image.new("RGB", (200, 400), color=random.choice(colors))
+
+    fnt = ImageFont.load_default()
+    d = ImageDraw.Draw(img)
+    d.text((10, 100), text, font=fnt, fill=random.choice(colors))
+
+    img.save(filename)
 
 
 def save_random_avatar_image(filename):

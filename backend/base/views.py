@@ -46,9 +46,7 @@ def register(request):
             return redirect("index")
         messages.error(request, _("Unsuccessful registration. Invalid information."))
     form = NewUserForm
-    return render(
-        request=request, template_name="base/register.html", context={"form": form}
-    )
+    return render(request=request, template_name="base/register.html", context={"form": form})
 
 
 class UserDelete(LoginRequiredMixin, DeleteView):

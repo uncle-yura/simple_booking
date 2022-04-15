@@ -9,7 +9,7 @@ register = template.Library()
 
 @register.filter
 def duration(timedelta):
-    """ Format a duration field --> 2h and 30 min or only 45 min """
+    """Format a duration field --> 2h and 30 min or only 45 min"""
     total_seconds = int(timedelta.total_seconds())
     hours = total_seconds // 3600
     minutes = round((total_seconds % 3600) / 60)
@@ -18,12 +18,12 @@ def duration(timedelta):
         minutes = 0
     if hours and minutes:
         # Display both
-        return _('{} h et {} min').format(hours, minutes)
+        return _("{} h et {} min").format(hours, minutes)
     elif hours:
         # Display only hours
-        return _('{} h').format(hours)
+        return _("{} h").format(hours)
     # Display only minutes
-    return _('{} min').format(minutes)
+    return _("{} min").format(minutes)
 
 
 @register.filter

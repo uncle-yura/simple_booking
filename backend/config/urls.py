@@ -20,34 +20,34 @@ from django.conf.urls.static import static
 from bootstrap_customizer import urls as bootstrap_customizer_urls
 
 urlpatterns = [
-    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
-    path(settings.ADMIN_URL+'/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('verification/', include('verify_email.urls')),
-    path('tinymce/', include('tinymce.urls')),
-    path('bootstrap_customizer/', include(bootstrap_customizer_urls)),
-    path('social-auth/', include('social_django.urls', namespace="social")),
-    path('i18n/', include('django.conf.urls.i18n')),
+    path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
+    path(settings.ADMIN_URL + "/", admin.site.urls),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("verification/", include("verify_email.urls")),
+    path("tinymce/", include("tinymce.urls")),
+    path("bootstrap_customizer/", include(bootstrap_customizer_urls)),
+    path("social-auth/", include("social_django.urls", namespace="social")),
+    path("i18n/", include("django.conf.urls.i18n")),
 ]
 
 urlpatterns += [
-    path('', include('base.urls')),
+    path("", include("base.urls")),
 ]
 
 urlpatterns += [
-    path('booking/', include('booking.urls')),
+    path("booking/", include("booking.urls")),
 ]
 
 urlpatterns += [
-    path('blog/', include('blog.urls')),
+    path("blog/", include("blog.urls")),
 ]
 
 urlpatterns += [
-    path('contact/', include('contact.urls')),
+    path("contact/", include("contact.urls")),
 ]
 
 urlpatterns += [
-    path('gallery/', include('gallery.urls')),
+    path("gallery/", include("gallery.urls")),
 ]
 
 if settings.DEBUG:

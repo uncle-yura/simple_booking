@@ -11,15 +11,21 @@ from .models import Contact
 class ContactForm(ModelForm):
     class Meta:
         model = Contact
-        fields = '__all__'
+        fields = "__all__"
 
     if settings.RECAPTCHA_ACTIVE:
         captcha = ReCaptchaField()
 
     def send_email(self):
-        mail = send_mail(self.cleaned_data['subject'],
-                         _('Message from {}: {}').format(self.cleaned_data["email"], self.cleaned_data["message"]),
-                         settings.EMAIL_HOST_USER,
-                         [Setting.get('CONTACT_EMAIL'), ],
-                         fail_silently=False)
+        mail = send_mail(
+            self.cleaned_data["subject"],
+            _("Message from {}: {}").format(
+                self.cleaned_data["email"], self.cleaned_data["message"]
+            ),
+            settings.EMAIL_HOST_USER,
+            [
+                Setting.get("CONTACT_EMAIL"),
+            ],
+            fail_silently=False,
+        )
         return mail

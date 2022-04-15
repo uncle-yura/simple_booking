@@ -11,16 +11,19 @@ class Photo(models.Model):
         verbose_name=_("Title"),
         help_text=_("Enter here the photo title."),
         max_length=200,
-        blank=True)
+        blank=True,
+    )
     published = models.DateTimeField(
         verbose_name=_("Date published"),
         help_text=_("Enter here thr published date."),
-        default=datetime.now)
+        default=datetime.now,
+    )
     image = models.ImageField(
         verbose_name=_("Image"),
         help_text=_("Upload your image here."),
-        upload_to='images/',
-        storage=UUIDStorage)
+        upload_to="images/",
+        storage=UUIDStorage,
+    )
 
     def __str__(self):
         to_tz = timezone.get_default_timezone()

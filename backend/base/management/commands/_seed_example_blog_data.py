@@ -42,9 +42,7 @@ class ExampleBlogData:
             article, created = Article.objects.get_or_create(id=index)
             if created:
                 article.article_title = f"Test title {index}"
-                save_random_avatar_image(
-                    os.path.join(settings.MEDIA_ROOT, f"blog-{index}.png")
-                )
+                save_random_avatar_image(os.path.join(settings.MEDIA_ROOT, f"blog-{index}.png"))
                 article.article_image = f"blog-{index}.png"
                 article.article_content = get_lorem_ipsum()
                 if index < 5:
