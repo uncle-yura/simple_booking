@@ -3,6 +3,10 @@ Simple website for providing services
 
 ### Quick start
 * Clone this repo
+* Run `docker-compose up -d`
+
+### Manual
+* Clone this repo
 * Create a .env file or use environment variables in another method 
 * Install all dependencies `pip install -r requirements.txt`
 * Make migrations `python manage.py makemigrations`

@@ -19,7 +19,7 @@ reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \
 pariatur."
 
     def create_job_type(self):
-        for index in range(10):
+        for index in range(1, 11):
             jobtype, created = JobType.objects.get_or_create(id=index)
             if created:
                 jobtype.name = f"Test job #{index}"
@@ -38,7 +38,7 @@ Image for example job #{index}",
                 jobtype.save()
 
     def create_price_list(self):
-        for index in range(10):
+        for index in range(1, 11):
             pricelist = PriceList.objects.filter(id=index).first()
             if not pricelist:
                 PriceList.objects.create(
@@ -49,7 +49,7 @@ Image for example job #{index}",
                 )
 
     def create_order(self):
-        for index in range(5):
+        for index in range(1, 6):
             order, created = Order.objects.get_or_create(id=index)
             if created:
                 order.client = Profile.objects.filter(user=4).first()

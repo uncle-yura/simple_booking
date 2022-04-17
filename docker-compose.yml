@@ -22,25 +22,19 @@ services:
       - ./backend/gallery:/usr/src/backend/gallery
       - ./backend/templates:/usr/src/backend/templates
     command: >
-      sh -c "wait-for-it -t 60 db_pg:5432 -- python ./manage.py runserver 0.0.0.0:8080"
+      sh -c "wait-for-it -t 60 db_sb:$$SQL_PORT -- python ./manage.py runserver 0.0.0.0:8080"
     ports:
       - 8080:8080
-    environment:
-      - SQL_BACKEND=postgresql
-      - SQL_HOST=db_pg
-      - SQL_NAME=dbdevbooking
-      - SQL_PORT=5432
-      - SQL_PW=example
-      - SQL_USER=example
-    env_file: ./backend/.env.dev
+    env_file: .env.dev
     depends_on:
-      - db_pg
+      db_sb:
+        condition: service_healthy
 
   backend_migration:
     <<: *backend
     image: ${BACKEND_MIGRATION_IMAGE:-empty}:${BACKEND_MIGRATION_TAG:-empty}
     command: >
-      sh -c "wait-for-it -t 60 db_pg:5432 -- python ./manage.py migrate &&
+      sh -c "wait-for-it -t 60 db_sb:$$SQL_PORT -- python ./manage.py migrate &&
       python ./manage.py creategroups &&
       python ./manage.py createtheme &&
       python ./manage.py collectstatic --noinput &&
@@ -49,19 +43,27 @@ services:
       python ./manage.py compilemessages --locale=ru"
     ports: []
 
-  db_pg:
-    container_name: db_pg
-    image: postgres:12.0-alpine
+  db_sb:
+    container_name: db_sb
+    image: mariadb:10.5.8
+    # image: postgres:12.0-alpine
     ports:
-      - "6543:5432"
+      - '6543:3306'
+      # - "6543:5432"
     volumes:
-      - db_volume:/var/lib/postgresql/data
+      - db_volume:/var/lib/mysql
+      # - db_volume:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: example
-      POSTGRES_DB: dbdevbooking
-      POSTGRES_USER: example
+      MYSQL_DATABASE: dbdevbooking
+      MYSQL_USER: example
+      MYSQL_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: example
+      # POSTGRES_PASSWORD: example
+      # POSTGRES_DB: dbdevbooking
+      # POSTGRES_USER: example
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U example -d dbdevbooking"]
+      test: mysql --user=$$MYSQL_USER --password=$$MYSQL_PASSWORD -e 'SHOW DATABASES;'
+      # test: ["CMD-SHELL", "pg_isready -U example -d $$POSTGRES_DB"]
       interval: 10s
       timeout: 5s
       retries: 5

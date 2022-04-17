@@ -21,7 +21,7 @@ class ExampleBlogData:
 
     def create_social_share(self):
         for index, value in enumerate(("Facebook", "Twitter")):
-            share, created = SocialShare.objects.get_or_create(id=index)
+            share, created = SocialShare.objects.get_or_create(id=index + 1)
             if created:
                 share.share_name = value
                 share.share_icon = f"fab fa-{value.lower()}"
@@ -31,28 +31,28 @@ class ExampleBlogData:
 
     def create_tags(self):
         for index, value in enumerate(("Blog Tag 1", "Blog Tag 2")):
-            tag, created = Tag.objects.get_or_create(id=index)
+            tag, created = Tag.objects.get_or_create(id=index + 1)
             if created:
                 tag.tag_name = value
                 tag.tag_slug = f"{value.lower().replace(' ', '_')}"
                 tag.save()
 
     def create_articles(self):
-        for index in range(10):
+        for index in range(1, 11):
             article, created = Article.objects.get_or_create(id=index)
             if created:
                 article.article_title = f"Test title {index}"
                 save_random_avatar_image(os.path.join(settings.MEDIA_ROOT, f"blog-{index}.png"))
                 article.article_image = f"blog-{index}.png"
                 article.article_content = get_lorem_ipsum()
-                if index < 5:
-                    article.article_tags.set((1,))
+                if index < 6:
+                    article.article_tags.set((2,))
                 article.article_top_posts = False
                 article.article_slug += f"{index}"
                 article.save()
 
         for index, value in enumerate(("Our office", "Our work", "Our result")):
-            article, created = Article.objects.get_or_create(id=index + 10)
+            article, created = Article.objects.get_or_create(id=index + 11)
             if created:
                 article.article_title = value
                 shutil.copyfile(
@@ -64,7 +64,7 @@ class ExampleBlogData:
                 )
                 article.article_image = self.article_images[index]
                 article.article_content = get_lorem_ipsum()
-                article.article_tags.set((0,))
+                article.article_tags.set((1,))
                 article.article_top_posts = True
                 article.article_slug += f"{index}"
                 article.save()

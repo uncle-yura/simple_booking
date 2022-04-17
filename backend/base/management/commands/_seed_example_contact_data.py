@@ -4,7 +4,7 @@ from contact.models import ContactsList, SocialContact
 class ExampleContactData:
     def create_social_contact(self):
         for index, value in enumerate(("Instagram", "Facebook", "Twitter")):
-            social, created = SocialContact.objects.get_or_create(id=index)
+            social, created = SocialContact.objects.get_or_create(id=index + 1)
             if created:
                 social.share_name = value
                 social.share_icon = f"fab fa-{value.lower()}"
@@ -13,7 +13,7 @@ class ExampleContactData:
                 social.save()
 
     def create_contacts_list(self):
-        for index in range(3):
+        for index in range(1, 4):
             contact, created = ContactsList.objects.get_or_create(id=index)
             if created:
                 contact.name = f"Example contact #{index}"

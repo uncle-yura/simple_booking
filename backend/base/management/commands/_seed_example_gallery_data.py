@@ -11,7 +11,7 @@ class ExampleGalleryData:
         self.stderr = stderr
 
     def create_data(self):
-        for index in range(10):
+        for index in range(1, 11):
             photo, created = Photo.objects.get_or_create(id=index)
             if created:
                 name = f"photo-{index}.png"
