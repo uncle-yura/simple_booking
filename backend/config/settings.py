@@ -15,6 +15,8 @@ from django.utils.translation import gettext_lazy as _
 
 from pathlib import Path
 
+import base64
+import json
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -268,7 +270,7 @@ MESSAGE_TAGS = {
     messages.ERROR: "alert-danger",
 }
 
-SERVICE_SECRETS = os.path.join(BASE_DIR, "service_secret.json")
+SERVICE_SECRETS = json.loads(base64.b64decode(os.environ.get("SERVICE_SECRETS_B64", "e30=")))
 
 TINYMCE_DEFAULT_CONFIG = {
     "height": "40em",

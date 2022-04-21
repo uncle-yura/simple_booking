@@ -20,7 +20,6 @@ from io import BytesIO
 from PIL import Image
 
 import pytz
-import json
 import os
 
 
@@ -176,7 +175,7 @@ class Profile(models.Model):
         return f"{self.user}"
 
     def get_master_calendar(self):
-        credentials = service_account.Credentials.from_service_account_file(
+        credentials = service_account.Credentials.from_service_account_info(
             settings.SERVICE_SECRETS, scopes=SCOPES
         )
         service = build("calendar", "v3", credentials=credentials)
@@ -210,12 +209,7 @@ class Profile(models.Model):
         )
 
     def get_gcal_account(self):
-        try:
-            with open(settings.SERVICE_SECRETS) as json_file:
-                data = json.load(json_file)
-                return data["client_email"]
-        except FileNotFoundError:
-            return None
+        return settings.SERVICE_SECRETS.get("client_email", "")
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):

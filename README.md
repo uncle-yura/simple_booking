@@ -20,7 +20,8 @@ Simple website for providing services
 * Create google project https://console.cloud.google.com 
 * Enable google calendar API
 * Create service account and OAuth2 key https://console.cloud.google.com/apis/credentials
-* Save service json credentials to 'service_secret.json' in root simple_booking directory
+* Save service json credentials to 'service_secret.json'
+* Run `openssl base64 -in service_secret.json -A` and save output to environment variable SERVICE_SECRETS_B64
 * Add service account to users list in your google calendar
 * Create facebook APP https://developers.facebook.com/apps
 * Get facebook OAuth2 key https://developers.facebook.com/apps/YOUR_APP/settings/basic/
