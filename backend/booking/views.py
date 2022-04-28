@@ -1,4 +1,5 @@
-from django.http.response import Http404
+from django.conf import settings
+from django.http.response import Http404, HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.views.generic import (
     ListView,
@@ -7,6 +8,8 @@ from django.views.generic import (
     CreateView,
     DetailView,
 )
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -38,6 +41,7 @@ from booking.models import Order, PriceList, Profile
 from .templatetags.time_extras import duration
 
 from googleapiclient.errors import HttpError
+from secrets import compare_digest
 
 from datetime import datetime, date, timedelta
 
@@ -75,6 +79,44 @@ def userpage(request):
             "master_form": master_form,
         },
     )
+
+
+@csrf_exempt
+@require_POST
+def gcal_event_webhook(request):
+    given_token = request.headers.get("x-goog-channel-token", "")
+    if not compare_digest(given_token, settings.SERVICE_WEBHOOK_TOKEN):
+        return HttpResponseForbidden(
+            "Incorrect token in header.",
+            content_type="text/plain",
+        )
+
+    if request.headers.get("x-goog-resource-state", "") == "exists":
+        id = int(request.headers.get("x-goog-channel-id"))
+        master_profile = Profile.objects.filter(id=id).first()
+        try:
+            events = (
+                master_profile.get_master_calendar()
+                .list(
+                    calendarId=master_profile.gcal_link,
+                    singleEvents=True,
+                    updatedMin=datetime.today() - timedelta(minutes=1),
+                )
+                .execute()
+            )
+        except HttpError:
+            return _("Server connection error, unable to get event.")
+
+        page_token = True
+        while page_token:
+            event_dict = {event["id"]: event for event in events["items"]}
+            orders = Order.objects.filter(gcal_event_id__in=event_dict.keys()).all()
+            for order in orders:
+                order.booking_date = event_dict[order.gcal_event_id]["start"]
+                order.save()
+            page_token = events.get("nextPageToken")
+
+    return HttpResponse("OK.", content_type="text/plain")
 
 
 @login_required

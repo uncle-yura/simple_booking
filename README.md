@@ -78,6 +78,13 @@ export DJANGO_EMAIL_USE_SSL=""
 export DJANGO_EMAIL_USE_TLS="True"
 ```
 
+#### Google service parameters:
+```
+export SERVICE_SECRETS_B64="base64encodedservicesecretfile"
+export SERVICE_WEBHOOK_TOKEN="googlecalndarwebhooktoken"
+export SERVICE_WEBHOOK_URL="https://localhost/booking/google/webhook"
+```
+
 #### Recaptcha parameters:
 ```
 export DJANGO_RECAPTCHA_ACTIVE=""

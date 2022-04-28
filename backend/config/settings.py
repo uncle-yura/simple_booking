@@ -271,6 +271,8 @@ MESSAGE_TAGS = {
 }
 
 SERVICE_SECRETS = json.loads(base64.b64decode(os.environ.get("SERVICE_SECRETS_B64", "e30=")))
+SERVICE_WEBHOOK_TOKEN = os.environ.get("SERVICE_WEBHOOK_TOKEN", "googlecalndarwebhooktoken")
+SERVICE_WEBHOOK_URL = os.environ.get("SERVICE_WEBHOOK_URL", "http://localhost/booking/google/webhook")
 
 TINYMCE_DEFAULT_CONFIG = {
     "height": "40em",

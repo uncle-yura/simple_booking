@@ -1,9 +1,12 @@
-import io
 import os
 import random
-from django.conf import settings
 import py_avataaars
+
 from PIL import Image, ImageDraw, ImageFont
+from io import BytesIO
+
+from django.conf import settings
+from django.core.files import File
 
 
 def get_example_assets_folder():
@@ -32,7 +35,7 @@ def save_generated_image(filename, text):
 
 
 def save_random_avatar_image(filename):
-    bytes = io.BytesIO()
+    bytes = BytesIO()
 
     def r(enum_):
         return random.choice(list(enum_))
@@ -60,3 +63,13 @@ def save_random_avatar_image(filename):
 
     with open(filename, "wb") as outfile:
         outfile.write(bytes.getbuffer())
+
+
+def compress_image(image):
+    im = Image.open(image)
+    if im.mode != "RGB":
+        im = im.convert("RGB")
+    im_io = BytesIO()
+    im.save(im_io, "webp", quality=80, optimize=True)
+    new_image = File(im_io, os.path.splitext(image.name)[0] + ".webp")
+    return new_image

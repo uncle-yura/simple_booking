@@ -6,21 +6,17 @@ from django.dispatch import receiver
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext as __
-from django.core.files import File
 
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-
+from base.services import compress_image
+from booking.services import get_calendar_service
 from base.storage import UUIDStorage
 
+from googleapiclient.errors import HttpError
 from dateutil import parser
 from datetime import datetime, timedelta
-from io import BytesIO
-from PIL import Image
+
 
 import pytz
-import os
 
 
 class JobType(models.Model):
@@ -50,19 +46,6 @@ class JobType(models.Model):
 
     def __str__(self):
         return f"{self.name}"
-
-
-SCOPES = ["https://www.googleapis.com/auth/calendar"]
-
-
-def compress_image(image):
-    im = Image.open(image)
-    if im.mode != "RGB":
-        im = im.convert("RGB")
-    im_io = BytesIO()
-    im.save(im_io, "webp", quality=80, optimize=True)
-    new_image = File(im_io, os.path.splitext(image.name)[0] + ".webp")
-    return new_image
 
 
 class Profile(models.Model):
@@ -134,6 +117,12 @@ class Profile(models.Model):
         max_length=200,
         blank=True,
     )
+    gcal_resource_id = models.CharField(
+        verbose_name=_("GCalendar resourceId"),
+        help_text=_("Event watch resourceId."),
+        max_length=200,
+        blank=True,
+    )
     timetable = models.CharField(
         verbose_name=_("Timetable"),
         help_text=_("Select your current service booking mode."),
@@ -175,11 +164,44 @@ class Profile(models.Model):
         return f"{self.user}"
 
     def get_master_calendar(self):
-        credentials = service_account.Credentials.from_service_account_info(
-            settings.SERVICE_SECRETS, scopes=SCOPES
-        )
-        service = build("calendar", "v3", credentials=credentials)
+        service = get_calendar_service()
         return service.events()
+
+    def start_watch_calendar(self, force=False):
+        if not self.gcal_resource_id or force:
+            events = self.get_master_calendar()
+            watch = events.watch(
+                calendarId=self.gcal_link,
+                body=dict(
+                    id=self.id,
+                    type="web_hook",
+                    address=settings.SERVICE_WEBHOOK_URL,
+                    token=settings.SERVICE_WEBHOOK_TOKEN,
+                ),
+            )
+            try:
+                result = watch.execute()
+            except HttpError:
+                return False
+            else:
+                self.gcal_resource_id = result["resourceId"]
+                self.save()
+                return True
+        return False
+
+    def stop_watch_calendar(self):
+        if self.gcal_resource_id:
+            service = get_calendar_service()
+            try:
+                service.channels().stop(
+                    body=dict(id=self.id, resourceId=self.gcal_resource_id)
+                ).execute()
+            except HttpError:
+                self.gcal_resource_id = ""
+                self.save()
+            finally:
+                return True
+        return False
 
     def get_future_orders_count(self):
         return self.orders.filter(
